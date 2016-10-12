@@ -17,10 +17,39 @@ namespace SWEN_344_Bookstore.Models {
     }
 
     public class ActiveUser {
-        private List<Book> receipts;
+        public List<Book> receipts { get; set; } //should probably be it's own objects with date, hasOwnership, etc
+        public List<Book> shoppingCart { get; set; }
+
+        public void buyBook () {
+            //for each book in shoppingCart
+                //spend some money
+                //addReceipt(book);
+        }
+
+        public void returnBook(Book book) {
+            //increment Bookstore stock + 1
+            //set the receipt hasOwnership to false
+            //remove book from User
+        }
+
+        public List<Book> getReceipts () {
+            return this.receipts;
+        }
 
         public void addReceipt (Book book) {
             this.receipts.Add(book);
+        }
+
+        public List<Book> getShoppingCart () {
+            return this.shoppingCart;
+        }
+
+        public void addToShoppingCart (Book book) {
+            this.shoppingCart.Add(book);
+        }
+
+        public void removeFromShoppingCart (Book book) {
+            this.shoppingCart.Remove(book);
         }
     }
 
@@ -28,6 +57,19 @@ namespace SWEN_344_Bookstore.Models {
     }
 
     public class Instructer : ActiveUser {
+        private List<Book> classBooks { get; set; }
+
+        public void addClassBook (Book book) {
+            this.classBooks.Add(book);
+        }
+
+        public void removeClassBook(Book book) {
+            this.classBooks.Remove(book);
+        }
+
+        public List<Book> getClassBooks () {
+            return this.classBooks;
+        }
     }
 
     public class Admin : User {
