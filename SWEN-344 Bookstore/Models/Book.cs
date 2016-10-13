@@ -5,49 +5,54 @@ using System.Web;
 
 namespace SWEN_344_Bookstore.Models {
     public class Book {
-        private int b_id { get; set; }
-        private string author { get; set; }
-        private List<string> reviews { get; set; }
+        private int Bid { get; set; }
+        private string Author { get; set; }
+        private List<string> Reviews { get; set; }
 
         /**
          * We may not need constructors because of how
-         * the fields are set up
+         * the fields are set up/how we use the database
          **/
-        public Book (int b_id,string author) {
-            this.b_id = b_id;
-            this.author = author;
+        public Book (int bid,string author) {
+            this.Bid = bid;
+            this.Author = author;
         }
 
-        public void setAuthor (string author) {
-            this.author = author;
+        public void SetAuthor (string author) {
+            this.Author = author;
         }
 
-        public List<string> getReviews () {
-            return this.reviews;
+        public List<string> GetReviews () {
+            return this.Reviews;
         }
 
-        public void addReview (string review) {
-            this.reviews.Add(review);
+        public void AddReview (string review) {
+            this.Reviews.Add(review);
         }
     }
 
     public class InventoryBook {
-        private Book book;
-        private int stock;
-        public bool isEnabled;
+        private Book _book;
+        private int Stock;
+        public bool IsEnabled;
 
-        public InventoryBook(Book book) {
-            this.book = book;
-            this.stock = 0;
-            this.isEnabled = false;
+        public InventoryBook (Book book) {
+            this._book = book;
+            this.Stock = 0;
+            this.IsEnabled = false;
         }
 
-        public void enable() {
-            this.isEnabled = true;
+        public int GetStock () {
+            return this.Stock;
+        }
+            
+        public void Enable () {
+            this.IsEnabled = true;
         }
 
-        public void disable() {
-            this.isEnabled = false;
+
+        public void Disable () {
+            this.IsEnabled = false;
         }
     }
 }
