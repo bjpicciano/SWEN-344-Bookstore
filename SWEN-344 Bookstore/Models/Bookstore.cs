@@ -18,9 +18,21 @@ namespace SWEN_344_Bookstore.Models
         {
             var inventoryBook = new InventoryBook(book);
 
-            // if Inventory !contains inventoryBook
-            this.Inventory.Add(inventoryBook);
-            // else increment stock + 1
+            // if Inventory contains inventoryBook, increment its stock by 1
+            Boolean exists = false;
+            foreach(InventoryBook ib in Inventory)
+            {
+                if(ib.GetBook() == book)
+                {
+                    ib.incStock();
+                    exists = true;
+                }
+            }
+            // else add it to Inventory
+            if(exists == false)
+            {
+                this.Inventory.Add(inventoryBook);
+            }
         }
     }
 
