@@ -16,6 +16,11 @@ namespace SWEN_344_Bookstore.Models {
         public Book (int b_id,string author) {
             this.b_id = b_id;
             this.author = author;
+            
+        }
+        public void setBookName (string bookName)
+        {
+            this.bookName = bookName;
         }
 
         public void setAuthor (string author) {

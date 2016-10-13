@@ -19,4 +19,12 @@ namespace SWEN_344_Bookstore.Models {
             // else increment stock + 1
         }
     }
+
+    public class ShoppingCart
+    {
+        public string BookName;
+        public string BookAuthor;
+        public string BookPrice;
+
+    }
 }
