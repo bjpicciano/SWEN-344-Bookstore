@@ -45,7 +45,22 @@ namespace SWEN_344_Bookstore.Models {
         public int GetStock () {
             return this.Stock;
         }
-            
+
+        public Book GetBook()
+        {
+            return this._book;
+        }    
+
+        public void incStock()
+        {
+            this.Stock++;
+        }
+
+        public void decStock()
+        {
+            this.Stock--;
+        }
+
         public void Enable () {
             this.IsEnabled = true;
         }
