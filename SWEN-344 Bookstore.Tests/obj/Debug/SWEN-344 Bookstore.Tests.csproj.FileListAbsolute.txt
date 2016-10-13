@@ -1,0 +1,56 @@
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\ApplicationInsights.config
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\csc.exe
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.CSharp.Core.targets
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\System.Collections.Immutable.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\System.Reflection.Metadata.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\vbc.exe
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\VBCSCompiler.exe
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\SWEN-344 Bookstore.Tests.dll.config
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\SWEN-344 Bookstore.Tests.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\SWEN-344 Bookstore.Tests.pdb
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\SWEN-344 Bookstore.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Helpers.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Mvc.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Razor.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Optimization.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Security.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Owin.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\EntityFramework.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\SWEN-344 Bookstore.pdb
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Helpers.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Mvc.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Razor.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\System.Web.Optimization.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Security.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\EntityFramework.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\obj\Debug\SWEN-344 Bookstore.Tests.csprojResolveAssemblyReference.cache
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\obj\Debug\SWEN-344 Bookstore.Tests.dll
+D:\Program Files\GitHub\SWEN-344 Bookstore\SWEN-344 Bookstore.Tests\obj\Debug\SWEN-344 Bookstore.Tests.pdb
