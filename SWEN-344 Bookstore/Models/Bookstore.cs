@@ -36,11 +36,14 @@ namespace SWEN_344_Bookstore.Models
         }
     }
 
+
+    //need to refactor Book
+
     public class ShoppingCart
     {
 
 
-        public List<CartItem> Items { get; private set; }
+        public List<Book> Items { get; private set; }
 
         // Readonly properties can only be set in initialization or in a constructor
         public static readonly ShoppingCart Instance;
@@ -64,13 +67,13 @@ namespace SWEN_344_Bookstore.Models
         public void AddItem(int productId)
         {
             // Create a new item to add to the cart
-            CartItem newItem = new CartItem(productId);
+            Book newItem = new Book(productId);
 
             // If this item already exists in our list of items, increase the quantity
             // Otherwise, add the new item to the list
             if (Items.Contains(newItem))
             {
-                foreach (CartItem item in Items)
+                foreach (Book item in Items)
                 {
                     if (item.Equals(newItem))
                     {
@@ -99,9 +102,9 @@ namespace SWEN_344_Bookstore.Models
             }
 
             // Find the item and update the quantity
-            CartItem updatedItem = new CartItem(productId);
+            Book updatedItem = new Book(productId);
 
-            foreach (CartItem item in Items)
+            foreach (Book item in Items)
             {
                 if (item.Equals(updatedItem))
                 {
@@ -116,7 +119,7 @@ namespace SWEN_344_Bookstore.Models
          */
         public void RemoveItem(int productId)
         {
-            CartItem removedItem = new CartItem(productId);
+            Book removedItem = new Book(productId);
             Items.Remove(removedItem);
         }
 
@@ -128,7 +131,7 @@ namespace SWEN_344_Bookstore.Models
         public decimal GetSubTotal()
         {
             decimal subTotal = 0;
-            foreach (CartItem item in Items)
+            foreach (Book item in Items)
                 subTotal += item.TotalPrice;
 
             return subTotal;
