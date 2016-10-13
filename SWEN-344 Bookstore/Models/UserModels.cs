@@ -9,47 +9,47 @@ using System.Web;
  **/
 namespace SWEN_344_Bookstore.Models {
     public class User {
-        private int uid { get; set; }
+        private int Uid { get; set; }
 
-        public int getUid () {
-            return this.uid;
+        public int GetUid () {
+            return this.Uid;
         }
     }
 
     public class ActiveUser {
-        public List<Book> receipts { get; set; } //should probably be it's own objects with date, hasOwnership, etc
-        public List<Book> shoppingCart { get; set; }
+        public List<Book> Receipts { get; set; } //should probably be it's own objects with date, hasOwnership, etc
+        public List<Book> ShoppingCart { get; set; }
 
-        public void buyBook () {
-            //for each book in shoppingCart
+        public void BuyBook () {
+            //for each book in ShoppingCart
                 //spend some money
                 //addReceipt(book);
         }
 
-        public void returnBook(Book book) {
+        public void ReturnBook(Book book) {
             //increment Bookstore stock + 1
             //set the receipt hasOwnership to false
             //remove book from User
         }
 
-        public List<Book> getReceipts () {
-            return this.receipts;
+        public List<Book> GetReceipts () {
+            return this.Receipts;
         }
 
-        public void addReceipt (Book book) {
-            this.receipts.Add(book);
+        public void AddReceipt (Book book) {
+            this.Receipts.Add(book);
         }
 
-        public List<Book> getShoppingCart () {
-            return this.shoppingCart;
+        public List<Book> GetShoppingCart () {
+            return this.ShoppingCart;
         }
 
-        public void addToShoppingCart (Book book) {
-            this.shoppingCart.Add(book);
+        public void AddToShoppingCart (Book book) {
+            this.ShoppingCart.Add(book);
         }
 
-        public void removeFromShoppingCart (Book book) {
-            this.shoppingCart.Remove(book);
+        public void RemoveFromShoppingCart (Book book) {
+            this.ShoppingCart.Remove(book);
         }
     }
 
@@ -57,18 +57,18 @@ namespace SWEN_344_Bookstore.Models {
     }
 
     public class Instructer : ActiveUser {
-        private List<Book> classBooks { get; set; }
+        private List<Book> ClassBooks { get; set; }
 
-        public void addClassBook (Book book) {
-            this.classBooks.Add(book);
+        public void AddClassBook (Book book) {
+            this.ClassBooks.Add(book);
         }
 
-        public void removeClassBook(Book book) {
-            this.classBooks.Remove(book);
+        public void RemoveClassBook(Book book) {
+            this.ClassBooks.Remove(book);
         }
 
-        public List<Book> getClassBooks () {
-            return this.classBooks;
+        public List<Book> GetClassBooks () {
+            return this.ClassBooks;
         }
     }
 
