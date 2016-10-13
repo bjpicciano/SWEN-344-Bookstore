@@ -1,5 +1,6 @@
 .vs
 /packages
+/SWEN-344 Bookstore.Tests/obj
 /SWEN-344 Bookstore.Tests/bin
 /SWEN-344 Bookstore/obj
 /SWEN-344 Bookstore/bin
