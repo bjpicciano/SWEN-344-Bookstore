@@ -7,7 +7,7 @@ namespace SWEN_344_Bookstore.Models {
     public class Book {
         private int Bid { get; set; }
         private string Author { get; set; }
-        private List<string> Reviews { get; set; }
+        private List<string> Reviews { get; }
 
         /**
          * We may not need constructors because of how
@@ -18,26 +18,18 @@ namespace SWEN_344_Bookstore.Models {
             this.Author = author;
         }
 
-        public void SetAuthor (string author) {
-            this.Author = author;
-        }
-
-        public List<string> GetReviews () {
-            return this.Reviews;
-        }
-
+        // Database call
         public void AddReview (string review) {
-            this.Reviews.Add(review);
         }
     }
 
     public class InventoryBook {
-        private Book _book;
-        private int Stock;
-        public bool IsEnabled;
+        private Book Book { get; }
+        private int Stock { get; set; }
+        public bool IsEnabled { get; set; }
 
         public InventoryBook (Book book) {
-            this._book = book;
+            this.Book = book;
             this.Stock = 0;
             this.IsEnabled = false;
         }
@@ -46,25 +38,19 @@ namespace SWEN_344_Bookstore.Models {
             return this.Stock;
         }
 
-        public Book GetBook()
+        public void AddToStock (int val)
         {
-            return this._book;
-        }    
-
-        public void incStock()
-        {
-            this.Stock++;
+            this.Stock += val;
         }
 
-        public void decStock()
+        public void RemoveFromStockStock(int val)
         {
-            this.Stock--;
+            this.Stock -= val;
         }
 
         public void Enable () {
             this.IsEnabled = true;
         }
-
 
         public void Disable () {
             this.IsEnabled = false;
