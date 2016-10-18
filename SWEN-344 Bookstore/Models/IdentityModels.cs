@@ -29,5 +29,7 @@ namespace SWEN_344_Bookstore.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SWEN_344_Bookstore.Models.Book> Books { get; set; }
     }
 }

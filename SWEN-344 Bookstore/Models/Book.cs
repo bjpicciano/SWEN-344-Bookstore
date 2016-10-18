@@ -2,21 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.SQLite;
+
 
 namespace SWEN_344_Bookstore.Models {
-    public class Book {
-        private int Bid { get; set; }
-        private string Author { get; set; }
-        private List<string> Reviews { get; }
 
-        /**
+    public class Book {
+        public int BookId { get; set; }
+        public string Author { get; set; }
+        public float Price { get; set; }
+        public string Name { get; set; }
+
+        /*
          * We may not need constructors because of how
          * the fields are set up/how we use the database
-         **/
-        public Book (int bid,string author) {
-            this.Bid = bid;
-            this.Author = author;
+        */
+
+
+        public class ClassBook
+        {
+            public int ClassId { get; set; }
+            public int BookId { get; set; }
         }
+
+
+
 
         // Database call
         public void AddReview (string review) {
@@ -34,13 +44,19 @@ namespace SWEN_344_Bookstore.Models {
             this.IsEnabled = false;
         }
 
-        public int GetStock () {
+        public int GetStock (SQLiteConnection db) {
+            db.Update;
             return this.Stock;
         }
 
-        public void AddToStock (int val)
+        public void AddToStock (SQLiteConnection db, string name, string author, float price, int id)
         {
-            this.Stock += val;
+            var s = new Book { Name = name, Author = author, Price = price, BookId = id};
+            db.Insert(s);
+
+
+
+            //this.Book += val;
         }
 
         public void RemoveFromStockStock(int val)
@@ -54,6 +70,16 @@ namespace SWEN_344_Bookstore.Models {
 
         public void Disable () {
             this.IsEnabled = false;
+        }
+
+        internal Book GetBook()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void incStock()
+        {
+            throw new NotImplementedException();
         }
     }
 }

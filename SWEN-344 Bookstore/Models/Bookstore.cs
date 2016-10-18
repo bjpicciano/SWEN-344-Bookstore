@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 namespace SWEN_344_Bookstore.Models
 {
     public class Bookstore
@@ -20,26 +19,27 @@ namespace SWEN_344_Bookstore.Models
 
             // if Inventory contains inventoryBook, increment its stock by 1
             Boolean exists = false;
-            foreach(InventoryBook ib in Inventory)
+            foreach (InventoryBook ib in Inventory)
             {
-                if(ib.GetBook() == book)
+                if (ib.GetBook() == book)
                 {
                     ib.incStock();
                     exists = true;
                 }
             }
             // else add it to Inventory
-            if(exists == false)
+            if (exists == false)
             {
                 this.Inventory.Add(inventoryBook);
             }
         }
     }
+}
 
 
     //need to refactor Book
 
-    public class ShoppingCart
+ /*   public class ShoppingCart
     {
 
 
@@ -56,7 +56,7 @@ namespace SWEN_344_Bookstore.Models
         }
 
         // A protected constructor ensures that an object can't be created from outside
-        protected ShoppingCart() { }
+        //protected ShoppingCart() { }
 
 
 
@@ -64,34 +64,35 @@ namespace SWEN_344_Bookstore.Models
         /*
          * AddItem() - Adds an item to the shopping 
          */
-        public void AddItem(int productId)
-        {
-            // Create a new item to add to the cart
-            Book newItem = new Book(productId);
+        /*     public void AddItem(int productId)
+             {
+                 // Create a new item to add to the cart
+                 Book newItem = new Book(productId);
 
-            // If this item already exists in our list of items, increase the quantity
-            // Otherwise, add the new item to the list
-            if (Items.Contains(newItem))
-            {
-                foreach (Book item in Items)
-                {
-                    if (item.Equals(newItem))
-                    {
-                        item.Quantity++;
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                newItem.Quantity = 1;
-                Items.Add(newItem);
-            }
-        }
+                 // If this item already exists in our list of items, increase the quantity
+                 // Otherwise, add the new item to the list
+                 if (Items.Contains(newItem))
+                 {
+                     foreach (Book item in Items)
+                     {
+                         if (item.Equals(newItem))
+                         {
+                             item.Quantity++;
+                             return;
+                         }
+                     }
+                 }
+                 else
+                 {
+                     newItem.Quantity = 1;
+                     Items.Add(newItem);
+                 }
+             }
+     */
 
         /*
          * SetItemQuantity() - Changes the quantity of an item in the cart
-         */
+         
         public void SetItemQuantity(int productId, int quantity)
         {
             // If we are setting the quantity to 0, remove the item entirely
@@ -113,10 +114,10 @@ namespace SWEN_344_Bookstore.Models
                 }
             }
         }
-
+        */
         /*
          * RemoveItem() - Removes an item from the shopping cart
-         */
+         
         public void RemoveItem(int productId)
         {
             Book removedItem = new Book(productId);
@@ -128,7 +129,7 @@ namespace SWEN_344_Bookstore.Models
          * GetSubTotal() - returns the total price of all of the items
          *                 before tax, shipping, etc.
          */
-        public decimal GetSubTotal()
+     /*   public decimal GetSubTotal()
         {
             decimal subTotal = 0;
             foreach (Book item in Items)
@@ -139,3 +140,4 @@ namespace SWEN_344_Bookstore.Models
 
     }
 }
+*/
