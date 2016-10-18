@@ -16,7 +16,7 @@ namespace Database_Test
         {
             Console.WriteLine("SQLite Database");
 
-            SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\Swen344.sqlite; Version=3; Integrated Security=True");
+            SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\BookStore.sql; Version=3; Integrated Security=True");
 
             string query = "SELECT * FROM [Table] ";
 
