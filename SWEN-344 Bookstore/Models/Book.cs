@@ -45,14 +45,14 @@ namespace SWEN_344_Bookstore.Models {
         }
 
         public int GetStock (SQLiteConnection db) {
-            db.Update;
+           // db.Update;
             return this.Stock;
         }
 
         public void AddToStock (SQLiteConnection db, string name, string author, float price, int id)
         {
             var s = new Book { Name = name, Author = author, Price = price, BookId = id};
-            db.Insert(s);
+          //  db.Insert(s);
 
 
 
