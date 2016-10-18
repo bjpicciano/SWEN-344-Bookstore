@@ -9,45 +9,60 @@ using System.Data.SQLite;
 
 namespace Database_Test
 {
-    class SQLite_Database
+    public class SQLite_Database
     {
+        private static SQLite_Database singletonInstance;
 
-        public void SQLiteDB()
+        public static SQLite_Database getInstance()
+        {
+            if(singletonInstance == null)
+            {
+                singletonInstance = new SQLite_Database();
+            }
+            return singletonInstance;
+        }
+
+        private SQLiteConnection dbConnection;
+
+        private SQLite_Database()
+        {
+            OpenDatabase();
+        }
+
+
+
+        private void OpenDatabase()
         {
             Console.WriteLine("SQLite Database");
+            dbConnection = new SQLiteConnection(@"Data Source=C:\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
+            dbConnection.Open();
+        }
 
-            SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\Users\Ryan\Desktop\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
+        public void InsertInventoryBook(int quantity, Boolean enabled, int reviewid)
+        {
+            SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(Quantity, Enabled, ReviewID) values (" + quantity + ", " + enabled + ", " + reviewid + ")", dbConnection);
+            insert.ExecuteNonQuery();
+        }
 
-            string query = "SELECT * FROM InventoryBook";
-
-            SQLiteCommand command = new SQLiteCommand(query, connection);
-            connection.Open();
-
-
-            SQLiteCommand newCommand = new SQLiteCommand("insert into InventoryBook(InventoryBookID, Quantity, Enabled, ReviewID) values (1,3,\"TRUE\",1)", connection);
-            newCommand.ExecuteNonQuery();
-            SQLiteDataReader reader = command.ExecuteReader();
+        public Object[] GetInventoryBook(int InventoryBookID)
+        {
+            string query = "SELECT * FROM InventoryBook where InventoryBookID == " + InventoryBookID;
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            Object[] toReturn = new Object[4];
             try
             {
-                Console.WriteLine(" ----------------------------------------------------");
-                while (reader.Read())
-                {
-                    System.Diagnostics.Debug.WriteLine(reader.NextResult());
-                    Console.WriteLine(" ----------------------------------------------------");
-                }
-                Console.WriteLine(" ----------------------------------------------------");
-                //Console.ReadLine();
+                toReturn[0] = InventoryBookID;
+                toReturn[1] = rdr.GetInt32(1);
+                toReturn[2] = rdr.GetBoolean(2);
+                toReturn[3] = rdr.GetInt32(3);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-                //Console.ReadLine();
+                return null;
             }
-            finally
-            {
-                reader.Close();
-                connection.Close();
-            }
+            rdr.Close();
+            return toReturn;
         }
     }
 }

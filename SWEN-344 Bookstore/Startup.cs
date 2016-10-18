@@ -10,8 +10,10 @@ namespace SWEN_344_Bookstore
         {
             System.Diagnostics.Debug.WriteLine("fug");
             ConfigureAuth(app);
-            Database_Test.SQLite_Database fug = new Database_Test.SQLite_Database();
-            fug.SQLiteDB();
+            Database_Test.SQLite_Database fug = Database_Test.SQLite_Database.getInstance();
+            System.Object[] book = fug.GetInventoryBook(7);
+            
+  
         }
     }
 }
