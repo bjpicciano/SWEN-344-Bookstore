@@ -17,8 +17,9 @@ namespace Database_Test
             Console.WriteLine("SQLite Database");
 
             SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\BookStore.sql; Version=3; Integrated Security=True");
+            connection.Open();
 
-            string query = "SELECT * FROM [Table] ";
+           /* string query = "SELECT * FROM [Table] ";
 
             SQLiteCommand command = new SQLiteCommand(query, connection);
             connection.Open();
@@ -43,6 +44,7 @@ namespace Database_Test
                 reader.Close();
                 connection.Close();
             }
+            */
         }
     }
 }
