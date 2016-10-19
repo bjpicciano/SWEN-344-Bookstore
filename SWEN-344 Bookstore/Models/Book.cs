@@ -49,14 +49,14 @@ namespace SWEN_344_Bookstore.Models {
             return this.Stock;
         }
 
-        public void AddToStock (SQLiteConnection db, string name, string author, float price, int id)
+        public void AddToStock (int quantity)
         {
-            var s = new Book { Name = name, Author = author, Price = price, BookId = id};
-          //  db.Insert(s);
+            Stock += quantity;
+        }
 
-
-
-            //this.Book += val;
+        public void SetEnabled(Boolean enabled)
+        {
+            IsEnabled = enabled;
         }
 
         public void RemoveFromStockStock(int val)
