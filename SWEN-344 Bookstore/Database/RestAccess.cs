@@ -13,6 +13,7 @@ namespace SWEN_344_Bookstore.Database
     public class RestAccess
     {
         private static RestAccess singletonInstance;
+        //This is the singleton access method. You should never instantiate a RestAccess object, instead just call GetInstance().
         public static RestAccess GetInstance() { if (singletonInstance == null) { singletonInstance = new RestAccess(); } return singletonInstance; }
 
 
@@ -41,6 +42,32 @@ namespace SWEN_344_Bookstore.Database
             }
         }
 
+        /* Tries to create a book with the information given. If it succeeds, it returns a task with a result of true.
+         * If it fails, it returns a task with a result of false.
+         */ 
+        public async Task<Boolean> CreateBook(String auth, float price, String name)
+        {
+            HttpResponseMessage response = await client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name, null);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /* Tries to update a book with an ID of bookID with the information given. If it succeeds, it returns a task with a result of true.
+         * If it fails, it returns a task with a result of false.
+         */ 
+        public async Task<Boolean> UpdateBook(int bookID, String auth, float price, String name)
+        {
+            HttpResponseMessage response = await client.PutAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name, null);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /*Gets a string that includes all book info, then cuts that string up into individual book infos and parses each seperatly
          *to get the list of all books.
          */
@@ -53,7 +80,6 @@ namespace SWEN_344_Bookstore.Database
                 books.Add(ParseForBook(toChop.Substring(toChop.IndexOf("{"), toChop.IndexOf("}") - toChop.IndexOf("{") + 1)));
                 toChop = toChop.Substring(toChop.IndexOf("}") + 1);
             }
-
             return books;
         }
 

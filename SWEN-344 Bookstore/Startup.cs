@@ -17,8 +17,8 @@ namespace SWEN_344_Bookstore
             //fug.InsertInventoryBook(20, true, 2);
             //InventoryBook book = fug.GetInventoryBook(2);
             RestAccess ra = RestAccess.GetInstance();
-            System.Diagnostics.Debug.WriteLine(ra.GetBooks().ToArray()[0].Author);
-  
+            //System.Diagnostics.Debug.WriteLine(ra.GetBooks().ToArray()[0].Author);
+            ra.CreateBook("rxh4133", 200.37f, "How to access web apis");
         }
     }
 }
