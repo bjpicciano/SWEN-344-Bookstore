@@ -86,6 +86,7 @@
     <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\ManageControllerTest.cs" />
+    <Compile Include="Database\RestAccessTest.cs" />
     <Compile Include="Models\BookStoreTest.cs" />
     <Compile Include="Models\BookTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
