@@ -30,12 +30,18 @@ namespace SWEN_344_Bookstore.Tests.Controllers
         {
             // Arrange
             AccountController controller = new AccountController();
-
             // Act
             ViewResult result = controller.Register() as ViewResult;
-
             // Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ConfirmEmail()
+        {
+            AccountController controller = new AccountController();
+            var res = controller.ConfirmEmail("userId", "hi");
+            
         }
 
         [TestMethod]
@@ -43,10 +49,8 @@ namespace SWEN_344_Bookstore.Tests.Controllers
         {
             // Arrange
             AccountController controller = new AccountController();
-
             // Act
             ViewResult result = controller.ForgotPassword() as ViewResult;
-
             // Assert
             Assert.IsNotNull(result);
         }
@@ -88,6 +92,14 @@ namespace SWEN_344_Bookstore.Tests.Controllers
         public void LogOff()
         {
             AccountController controller = new AccountController();
+            controller.Login("");
+            var result = (RedirectToRouteResult)controller.LogOff();
+
+            result.RouteValues["action"].Equals("Index");
+            result.RouteValues["controller"].Equals("Home");
+
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Home", result.RouteValues["controller"]);
 
         }
         [TestMethod]

@@ -44,7 +44,7 @@ namespace SWEN_344_Bookstore.Models {
             this.IsEnabled = false;
         }
 
-        public int GetStock (SQLiteConnection db) {
+        public int GetStock (/*SQLiteConnection db*/) {
            // db.Update;
             return this.Stock;
         }
