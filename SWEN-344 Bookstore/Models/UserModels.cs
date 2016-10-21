@@ -10,9 +10,16 @@ using System.Web;
 namespace SWEN_344_Bookstore.Models {
     public class User {
         private int Uid { get; set; }
+        private String email;
+        private String fname;
+        private String lname;
 
         public int GetUid () {
             return this.Uid;
+        }
+        public User(int id, String el, String fn, String ln)
+        {
+            Uid = id; email = el; fname = fn; lname = ln;
         }
     }
 

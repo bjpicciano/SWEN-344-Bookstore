@@ -10,15 +10,11 @@ namespace SWEN_344_Bookstore.Models
 
         public List<InventoryBook> GetInventory()
         {
-            if (this.Inventory != null)
-            {
-                return this.Inventory;
-            }
-            else
+            if(this.Inventory == null)
             {
                 this.Inventory = new List<InventoryBook>();
-                return this.Inventory;
             }
+            return this.Inventory;
         }
 
         public void AddToInventory(Book book)

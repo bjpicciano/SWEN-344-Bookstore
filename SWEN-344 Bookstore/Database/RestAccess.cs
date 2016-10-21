@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Windows.Markup;
 using SWEN_344_Bookstore.Models;
 using System.Threading.Tasks;
+using SWEN_344_Bookstore.Models;
 
 namespace SWEN_344_Bookstore.Database
 {
@@ -18,7 +19,6 @@ namespace SWEN_344_Bookstore.Database
 
 
         private const String URL = "http://vm344e.se.rit.edu/api/";
-        private String urlParameters;
         private HttpClient client;
 
         private RestAccess()
@@ -26,6 +26,47 @@ namespace SWEN_344_Bookstore.Database
             client = new HttpClient();
             client.BaseAddress = new Uri(URL);
             client.DefaultRequestHeaders.Accept.Clear();
+        }
+
+        public User GetUserByEmail(String email)
+        {
+            User toReturn = null;
+            try
+            {
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email).Result).ToArray();
+                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
+            }
+            catch (Exception ex)
+            {
+            }
+            return toReturn;
+        }
+
+        public User GetUserByID(int userId)
+        {
+            User toReturn = null;
+            try
+            {
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_id&id=" + userId).Result).ToArray();
+                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
+            }
+            catch (Exception ex)
+            {
+            }
+            return toReturn;
+        }
+
+        public Boolean AuthenticateUser(String email, String authtoken)
+        {
+            try
+            {
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email).Result).ToArray();
+                return authtoken.Equals(fields[5]);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /* Gets a string from the api and attempts to parse it for a book.
@@ -45,14 +86,14 @@ namespace SWEN_344_Bookstore.Database
         /* Tries to create a book with the information given. If it succeeds, it returns a task with a result of true.
          * If it fails, it returns a task with a result of false.
          */ 
-        public async Task<Boolean> CreateBook(String auth, float price, String name)
+        public async Task<int> CreateBook(String auth, float price, String name)
         {
             HttpResponseMessage response = await client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name, null);
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return Convert.ToInt32(GetFieldsFromJSON((await response.Content.ReadAsStringAsync())).ToArray()[0]);
             }
-            return false;
+            return -1;
         }
 
         /* Tries to update a book with an ID of bookID with the information given. If it succeeds, it returns a task with a result of true.
@@ -106,18 +147,33 @@ namespace SWEN_344_Bookstore.Database
             {
                 Book b = new Book();
                 System.Diagnostics.Debug.WriteLine(s);
-                b.BookId = Convert.ToInt32(s.Substring(s.IndexOf(":") + 1, (s.IndexOf(",") - s.IndexOf(":") - 1)));
-                s = s.Substring(s.IndexOf(",") + 1);
-                b.Author = s.Substring(s.IndexOf(":") + 2, (s.IndexOf(",") - s.IndexOf(":") - 3));
-                s = s.Substring(s.IndexOf(",") + 1);
-                b.Price = (float) Convert.ToDouble(s.Substring(s.IndexOf(":") + 1, (s.IndexOf(",") - s.IndexOf(":") - 1)));
-                s = s.Substring(s.IndexOf(",") + 1);
-                b.Name = s.Substring(s.IndexOf(":") + 2, s.IndexOf("}") - 3 - s.IndexOf(":"));
+                String[] fields = GetFieldsFromJSON(s).ToArray();
+                b.BookId = Convert.ToInt32(fields[0]);
+                b.Author = fields[1];
+                b.Price = (float) Convert.ToDouble(fields[2]);
+                b.Name = fields[3];
                 return b;
             }catch(Exception ex)
             {
                 return null;
             }
+        }
+
+        private List<String> GetFieldsFromJSON(String s)
+        {
+            String jString = s;
+            List<String> toReturn = new List<String>();
+            String field;
+            while(jString.IndexOf(",") >= 0)
+            {
+                field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":") - 1));
+                field.Trim('\"');
+                toReturn.Add(field);
+                jString = jString.Substring(jString.IndexOf(",") + 1);
+            }
+            field = jString.Substring(jString.IndexOf(":") + 1, jString.IndexOf("}") - 2 - jString.IndexOf(":"));
+            field.Trim('\"');
+            return toReturn;
         }
 
     }

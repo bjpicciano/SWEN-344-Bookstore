@@ -8,6 +8,7 @@ using System.Data.SQLite;
 namespace SWEN_344_Bookstore.Models {
 
     public class Book {
+        private static SWEN_344_Bookstore.Database.RestAccess restAPI = SWEN_344_Bookstore.Database.RestAccess.GetInstance();
         public int BookId { get; set; }
         public string Author { get; set; }
         public float Price { get; set; }
@@ -18,6 +19,25 @@ namespace SWEN_344_Bookstore.Models {
          * the fields are set up/how we use the database
         */
 
+        public static Book GetBook(int bookID)
+        {
+            return restAPI.GetBook(bookID);
+        }
+
+        public static List<Book> GetBooks()
+        {
+            return restAPI.GetBooks();
+        }
+        
+        public static Boolean UpdateBook(int bookId, String author, float price, String name)
+        {
+            return restAPI.UpdateBook(bookId, author, price, name).Result;
+        }
+
+        public static int CreateBook(String author, float price, String name)
+        {
+            return restAPI.CreateBook(author, price, name).Result;
+        }
 
         public class ClassBook
         {
