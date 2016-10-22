@@ -33,7 +33,7 @@ namespace SWEN_344_Bookstore.Database
             User toReturn = null;
             try
             {
-                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email).Result).ToArray();
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email)).ToArray();
                 toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace SWEN_344_Bookstore.Database
             User toReturn = null;
             try
             {
-                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_id&id=" + userId).Result).ToArray();
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_id&id=" + userId)).ToArray();
                 toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace SWEN_344_Bookstore.Database
         {
             try
             {
-                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email).Result).ToArray();
+                String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email)).ToArray();
                 return authtoken.Equals(fields[5]);
             }
             catch (Exception ex)
@@ -76,7 +76,8 @@ namespace SWEN_344_Bookstore.Database
         {
             try
             {
-                return ParseForBook(GetString("Book.php?action=get_book_by_id&id=" + bookId).Result);
+                String s = GetString("Book.php?action=get_book_by_id&id=" + bookId);
+                return ParseForBook(s);
             }catch(Exception ex)
             {
                 return null;
@@ -86,12 +87,12 @@ namespace SWEN_344_Bookstore.Database
         /* Tries to create a book with the information given. If it succeeds, it returns a task with a result of true.
          * If it fails, it returns a task with a result of false.
          */ 
-        public async Task<int> CreateBook(String auth, float price, String name, String desc)
+        public int CreateBook(String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = await client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
+            HttpResponseMessage response = client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
             if (response.IsSuccessStatusCode)
             {
-                return Convert.ToInt32(GetFieldsFromJSON((await response.Content.ReadAsStringAsync())).ToArray()[0]);
+                return Convert.ToInt32(GetFieldsFromJSON((response.Content.ReadAsStringAsync().Result)).ToArray()[0]);
             }
             return -1;
         }
@@ -99,9 +100,9 @@ namespace SWEN_344_Bookstore.Database
         /* Tries to update a book with an ID of bookID with the information given. If it succeeds, it returns a task with a result of true.
          * If it fails, it returns a task with a result of false.
          */ 
-        public async Task<Boolean> UpdateBook(int bookID, String auth, float price, String name, String desc)
+        public Boolean UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = await client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
+            HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
             if (response.IsSuccessStatusCode)
             {
                 return true;
@@ -121,7 +122,7 @@ namespace SWEN_344_Bookstore.Database
         public List<Book> GetBooks()
         {
             List<Book> books = new List<Book>();
-            String toChop = GetString("Book.php?action=get_all_books").Result;
+            String toChop = GetString("Book.php?action=get_all_books");
             while (toChop.IndexOf("}") >= 0)
             {
                 books.Add(ParseForBook(toChop.Substring(toChop.IndexOf("{"), toChop.IndexOf("}") - toChop.IndexOf("{") + 1)));
@@ -132,10 +133,10 @@ namespace SWEN_344_Bookstore.Database
 
         /*This method gets the response string from the api. To actually access the string returned, call GetString(param).Result
          */
-        public async Task<String> GetString(String paramater)
+        public String GetString(String paramater)
         {
             
-            HttpResponseMessage response = await client.GetAsync(paramater);
+            HttpResponseMessage response = client.GetAsync(paramater).Result;
             System.Diagnostics.Debug.WriteLine(response.StatusCode);
             if (response.IsSuccessStatusCode)
             {
@@ -152,12 +153,8 @@ namespace SWEN_344_Bookstore.Database
             try
             {
                 Book b = new Book();
-                System.Diagnostics.Debug.WriteLine(s);
+                //System.Diagnostics.Debug.WriteLine(s);
                 String[] fields = GetFieldsFromJSON(s).ToArray();
-                for(int i = 0; i < fields.Length; i++)
-                {
-                    System.Diagnostics.Debug.WriteLine(fields[i]);
-                }
                 b.BookId = Convert.ToInt32(fields[0]);
                 b.Author = fields[1];
                 b.Price = (float) Convert.ToDouble(fields[2]);
@@ -178,16 +175,12 @@ namespace SWEN_344_Bookstore.Database
             while(jString.IndexOf(",") >= 0)
             {
                 field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":") - 1));
-                System.Diagnostics.Debug.WriteLine("Pre trim " + field);
                 field = field.Trim('"');
-                System.Diagnostics.Debug.WriteLine("Pst trim " + field);
                 toReturn.Add(field);
                 jString = jString.Substring(jString.IndexOf(",") + 1);
             }
             field = jString.Substring(jString.IndexOf(":") + 1, jString.IndexOf("}") - 2 - jString.IndexOf(":"));
-            System.Diagnostics.Debug.WriteLine("Pre trim " + field);
             field = field.Trim('"');
-            System.Diagnostics.Debug.WriteLine("Pst trim " + field);
             toReturn.Add(field);
             return toReturn;
         }

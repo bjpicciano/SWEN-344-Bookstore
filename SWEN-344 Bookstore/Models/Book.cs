@@ -15,6 +15,11 @@ namespace SWEN_344_Bookstore.Models {
         public string Name { get; set; }
         public string desc { get; set; }
 
+        public override string ToString()
+        {
+            return "Name: " + Name + " Author:" + Author + " Price:" + Price + " Desc:" + desc + " ID:" + BookId;
+        }
+
         /*
          * We may not need constructors because of how
          * the fields are set up/how we use the database

@@ -2,6 +2,7 @@
 using Owin;
 using SWEN_344_Bookstore.Models;
 using SWEN_344_Bookstore.Database;
+using System.Collections.Generic;
 
 [assembly: OwinStartupAttribute(typeof(SWEN_344_Bookstore.Startup))]
 namespace SWEN_344_Bookstore
