@@ -19,7 +19,7 @@ namespace SWEN_344_Bookstore.Models
 
         public void AddToInventory(Book book)
         {
-            var inventoryBook = new InventoryBook(book);
+            var inventoryBook = new InventoryBook();
 
             // if Inventory contains inventoryBook, increment its stock by 1
             Boolean exists = false;

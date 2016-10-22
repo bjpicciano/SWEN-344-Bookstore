@@ -58,10 +58,16 @@ namespace SWEN_344_Bookstore.Models {
         private Book Book { get; set; }
         private int Quantity { get; set; }
         public bool IsEnabled { get; set; }
+        public List<String> reviews;
 
         public InventoryBook () {
             this.Quantity = 0;
             this.IsEnabled = false;
+        }
+
+        public void AddReview(String review)
+        {
+            reviews.Add(review);
         }
 
         public int GetStock (/*SQLiteConnection db*/) {

@@ -36,26 +36,40 @@ namespace Database_Test
         private void OpenDatabase()
         {
             Console.WriteLine("SQLite Database");
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-
-
-            dbConnection = new SQLiteConnection(@"Data Source=|DataDirectory|\\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
-            dbConnection.ConnectionString = "Data Source=|DataDirectory|\\Swen344BookStore.sqlite";
+            dbConnection = new SQLiteConnection(@"Data Source=C:\\database\\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
             dbConnection.Open();
         }
 
-        public void InsertInventoryBook(int quantity, Boolean enabled, int reviewid)
+        public Boolean CreateInventoryBook(int bookid, int quantity, Boolean enabled)
         {
-            SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(Quantity, Enabled, ReviewID) values (" + quantity + ", \"" + enabled + "\", " + reviewid + ")", dbConnection);
-            insert.ExecuteNonQuery();
+            try
+            {
+                SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(BookID, Quantity, Enabled) values (" + bookid + ", " + quantity + ", \"" + enabled + "\")", dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            }catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                return false;
+            }
         }
-        
-        public void InsertReview(int InvBookID, int userid, String review)
+
+        public Boolean CreateReview(int InvBookID, int userid, String review)
         {
-            SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, Date, Review) values (" + InvBookID + ", " + userid + ", " + DateTimeSQLite(DateTime.Now) + ", " + review + ")", dbConnection);
-            insert.ExecuteNonQuery();
+            Exception except;
+            try
+            {
+                SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, Date, Review) values (" + InvBookID + ", " + userid + ", \"" + DateTimeSQLite(DateTime.Now) + "\", \"" + review + "\")", dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            }catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                except = ex;
+                return false;
+            }
+            //throw except;
+            //return false;
         }
 
         private string DateTimeSQLite(DateTime datetime)
@@ -69,22 +83,21 @@ namespace Database_Test
             string query = "SELECT * FROM InventoryBook where InventoryBookID == " + InventoryBookID;
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
-            Book readBook = new Book();
-            InventoryBook toReturn = new InventoryBook(readBook);
-            try
+            InventoryBook toReturn = new InventoryBook();
+            //try
+            rdr.Read();
             {
-                readBook.BookId = InventoryBookID;
                 toReturn.AddToStock(rdr.GetInt32(1));
                 toReturn.SetEnabled(rdr.GetBoolean(2));
                 List<String> reviews = GetReviews(rdr.GetInt32(1));
                 for(int i = 0; i < reviews.Count; i++)
                 {
-                    readBook.AddReview((String) reviews[i]);
+                    toReturn.AddReview((String) reviews[i]);
                 }
             }
-            catch (Exception ex)
+            //catch (Exception ex)
             {
-                return null;
+                //System.Diagnostics.Debug.WriteLine(ex.StackTrace);
             }
             rdr.Close();
             return toReturn;
@@ -92,12 +105,13 @@ namespace Database_Test
 
         public List<String> GetReviews(int InvBookID)
         {
-            string query = "SELECT * FROM Reviews where InventoryBookID == " + InvBookID;
+            string query = "SELECT * FROM Review where InventoryBookID == " + InvBookID;
             List<String> reviews = new List<String>();
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             try
             {
+                rdr.Read();
                 reviews.Add(rdr.GetString(4));
                 while (rdr.Read())
                 {
