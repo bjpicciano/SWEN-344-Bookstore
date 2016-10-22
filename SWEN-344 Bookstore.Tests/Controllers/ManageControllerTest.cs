@@ -13,6 +13,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
     [TestClass]
     public class ManageControllerTest
     {
+        /*
+         * Test page for changing password
+         */ 
         [TestMethod]
         public void ChangePassword()
         {
@@ -24,6 +27,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        /*
+         * Test page for setting password
+         */
         [TestMethod]
         public void SetPassword()
         {

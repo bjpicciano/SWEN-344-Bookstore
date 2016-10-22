@@ -15,6 +15,9 @@ namespace SWEN_344_Bookstore.Tests.Models
     [TestClass]
     public class BookStoreTest
     {
+        /*
+         * Test adding to book store's inventory
+         */ 
         [TestMethod]
         public void AddToInventory()
         {

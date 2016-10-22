@@ -16,6 +16,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
     [TestClass]
     public class BooksControllerTest
     {
+        /*
+         * Test for getting books using controller
+         */ 
         [TestMethod]
         public void GetBooks()
         {

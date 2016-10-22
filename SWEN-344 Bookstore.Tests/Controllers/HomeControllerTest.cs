@@ -10,6 +10,10 @@ using SWEN_344_Bookstore.Controllers;
 namespace SWEN_344_Bookstore.Tests.Controllers {
     [TestClass]
     public class HomeControllerTest {
+
+        /*
+         * Test for displaying index page
+         */
         [TestMethod]
         public void Index() {
             // Arrange
@@ -22,6 +26,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers {
             Assert.IsNotNull(result);
         }
 
+        /*
+         * Test for displaying 'about us' page
+         */
         [TestMethod]
         public void About() {
             // Arrange
@@ -34,6 +41,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers {
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
+        /*
+         * Test for displaying contact page
+         */
         [TestMethod]
         public void Contact() {
             // Arrange

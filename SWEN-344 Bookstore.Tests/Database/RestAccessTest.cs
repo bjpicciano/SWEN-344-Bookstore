@@ -10,13 +10,17 @@ using SWEN_344_Bookstore.Controllers;
 using SWEN_344_Bookstore.Models;
 using SWEN_344_Bookstore.Database;
 using System.Threading.Tasks;
-
+using System.Net.Http;
 
 namespace SWEN_344_Bookstore.Tests.Database
 {
     [TestClass]
     public class RestAccessTest
     {
+        /*
+         * Test for creating a book
+         * Newly made book will be deleted after test
+         */ 
         [TestMethod]
         public void CreateBook()
         {
@@ -33,6 +37,10 @@ namespace SWEN_344_Bookstore.Tests.Database
             Assert.AreEqual(book.Author,"name");
         }
 
+        /*
+         * Test for updating a book
+         * Updated book will revert back after test
+         */ 
         [TestMethod]
         public void UpdateBook()
         {
@@ -46,9 +54,44 @@ namespace SWEN_344_Bookstore.Tests.Database
 
             db.UpdateBook(id, "name", 11037, "44","desc");
             
-            Book book = list.First();
-           // db.UpdateBook(id, auth, price, name, desc);
+            Book book = db.GetBook(id);
+            db.UpdateBook(id, auth, price, name, desc);
             Assert.AreEqual(book.Author, "name");
+
+        }
+
+        /*
+         * You cannot update a book that doesn't exist
+         */
+        [TestMethod]
+        public void updateNonExistent()
+        {
+            RestAccess db = RestAccess.GetInstance();
+            Boolean b = db.UpdateBook(999999999, "", 3, "", "");
+            Assert.AreEqual(b, false);
+        }
+
+        /*
+         * Test meant to show that no book will be returned
+         * if you attempt to get one that doesn't exist
+         */ 
+        [TestMethod]
+        public void getNonExistent()
+        {
+            RestAccess db = RestAccess.GetInstance();
+            Book b = db.GetBook(999999999);
+            Assert.AreEqual(b, null);
+        }
+
+        [TestMethod]
+        public void GetUserByEmail()
+        {
+
+        }
+
+        [TestMethod]
+        public void GetUserByID()
+        {
 
         }
     }

@@ -14,6 +14,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
     [TestClass]
     public class AccountControllerTest
     {
+        /*
+         * Test for displaying login page
+         */ 
         [TestMethod]
         public void Login()
         {
@@ -25,6 +28,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.AreEqual("hi", result.ViewBag.returnUrl);
         }
 
+        /*
+         * Test for displaying register page
+         */
         [TestMethod]
         public void RegisterPage()
         {
@@ -36,6 +42,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        /*
+         * Test for displaying confirm email page
+         */
         [TestMethod]
         public void ConfirmEmail()
         {
@@ -44,6 +53,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             
         }
 
+        /*
+         * Test for displaying forgot password page
+         */
         [TestMethod]
         public void ForgotPassword()
         {
@@ -55,6 +67,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        /*
+         * Test for displaying confirmation for forgot password page
+         */
         [TestMethod]
         public void ForgotPasswordConfirmation()
         {
@@ -66,6 +81,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        /*
+         * Test for displaying reset password page
+         */
         [TestMethod]
         public void ResetPassword()
         {
@@ -77,6 +95,9 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);  
         }
 
+        /*
+         * Test for displaying confirmation for reset password page
+         */
         [TestMethod]
         public void ResetPasswordConfirmation()
         {
@@ -102,6 +123,10 @@ namespace SWEN_344_Bookstore.Tests.Controllers
         //    Assert.AreEqual("Home", result.RouteValues["controller"]);
 
         //}
+
+        /*
+         * Test for displaying login failure page
+         */
         [TestMethod]
         public void ExternalLoginFailure()
         {
