@@ -178,12 +178,16 @@ namespace SWEN_344_Bookstore.Database
             while(jString.IndexOf(",") >= 0)
             {
                 field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":") - 1));
-                field.Trim('"');
+                System.Diagnostics.Debug.WriteLine("Pre trim " + field);
+                field = field.Trim('"');
+                System.Diagnostics.Debug.WriteLine("Pst trim " + field);
                 toReturn.Add(field);
                 jString = jString.Substring(jString.IndexOf(",") + 1);
             }
             field = jString.Substring(jString.IndexOf(":") + 1, jString.IndexOf("}") - 2 - jString.IndexOf(":"));
-            field.Trim('"');
+            System.Diagnostics.Debug.WriteLine("Pre trim " + field);
+            field = field.Trim('"');
+            System.Diagnostics.Debug.WriteLine("Pst trim " + field);
             toReturn.Add(field);
             return toReturn;
         }
