@@ -86,9 +86,9 @@ namespace SWEN_344_Bookstore.Database
         /* Tries to create a book with the information given. If it succeeds, it returns a task with a result of true.
          * If it fails, it returns a task with a result of false.
          */ 
-        public async Task<int> CreateBook(String auth, float price, String name)
+        public async Task<int> CreateBook(String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = await client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name, null);
+            HttpResponseMessage response = await client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
             if (response.IsSuccessStatusCode)
             {
                 return Convert.ToInt32(GetFieldsFromJSON((await response.Content.ReadAsStringAsync())).ToArray()[0]);
@@ -99,14 +99,20 @@ namespace SWEN_344_Bookstore.Database
         /* Tries to update a book with an ID of bookID with the information given. If it succeeds, it returns a task with a result of true.
          * If it fails, it returns a task with a result of false.
          */ 
-        public async Task<Boolean> UpdateBook(int bookID, String auth, float price, String name)
+        public async Task<Boolean> UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = await client.PutAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name, null);
+            HttpResponseMessage response = await client.PutAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
             if (response.IsSuccessStatusCode)
             {
                 return true;
             }
             return false;
+        }
+
+        public async Task<int> DeleteLastBook()
+        {
+            HttpResponseMessage response = await client.DeleteAsync("Book.php?action=delete_last_book");
+            return Convert.ToInt32(await response.Content.ReadAsStringAsync());
         }
 
         /*Gets a string that includes all book info, then cuts that string up into individual book infos and parses each seperatly
@@ -152,6 +158,7 @@ namespace SWEN_344_Bookstore.Database
                 b.Author = fields[1];
                 b.Price = (float) Convert.ToDouble(fields[2]);
                 b.Name = fields[3];
+                b.desc = fields[4];
                 return b;
             }catch(Exception ex)
             {

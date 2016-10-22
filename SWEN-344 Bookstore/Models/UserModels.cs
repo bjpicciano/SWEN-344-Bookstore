@@ -17,9 +17,13 @@ namespace SWEN_344_Bookstore.Models {
         public int GetUid () {
             return this.Uid;
         }
+
         public User(int id, String el, String fn, String ln)
         {
-            Uid = id; email = el; fname = fn; lname = ln;
+            Uid = id;
+            email = el;
+            fname = fn;
+            lname = ln;
         }
     }
 
@@ -79,6 +83,6 @@ namespace SWEN_344_Bookstore.Models {
         }
     }
 
-    public class Admin : User {
-    }
+    //public class Admin : User {
+    //}
 }

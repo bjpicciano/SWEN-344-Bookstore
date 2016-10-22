@@ -15,7 +15,7 @@ namespace Database_Test
     {
         private static SQLite_Database singletonInstance;
 
-        public static SQLite_Database getInstance()
+        public static SQLite_Database GetInstance()
         {
             if(singletonInstance == null)
             {
@@ -36,7 +36,7 @@ namespace Database_Test
         private void OpenDatabase()
         {
             Console.WriteLine("SQLite Database");
-            dbConnection = new SQLiteConnection(@"Data Source=C:\testDBFolder\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
+            dbConnection = new SQLiteConnection(@"Data Source=Database/Swen344BookStore.sqlite; Version=3; Integrated Security=True");
             dbConnection.Open();
         }
 
@@ -46,9 +46,9 @@ namespace Database_Test
             insert.ExecuteNonQuery();
         }
         
-        public void InsertReview(int reviewid, int userid, String review)
+        public void InsertReview(int InvBookID, int userid, String review)
         {
-            SQLiteCommand insert = new SQLiteCommand("insert into Review(ReviewID, UserID, Date, Review) values (" + reviewid + ", " + userid + ", " + DateTimeSQLite(DateTime.Now) + ", " + review + ")", dbConnection);
+            SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, Date, Review) values (" + InvBookID + ", " + userid + ", " + DateTimeSQLite(DateTime.Now) + ", " + review + ")", dbConnection);
             insert.ExecuteNonQuery();
         }
 
@@ -70,7 +70,7 @@ namespace Database_Test
                 readBook.BookId = InventoryBookID;
                 toReturn.AddToStock(rdr.GetInt32(1));
                 toReturn.SetEnabled(rdr.GetBoolean(2));
-                ArrayList reviews = GetReviews(rdr.GetInt32(3));
+                List<String> reviews = GetReviews(rdr.GetInt32(1));
                 for(int i = 0; i < reviews.Count; i++)
                 {
                     readBook.AddReview((String) reviews[i]);
@@ -84,18 +84,18 @@ namespace Database_Test
             return toReturn;
         }
 
-        public ArrayList GetReviews(int ReviewID)
+        public List<String> GetReviews(int InvBookID)
         {
-            string query = "SELECT * FROM Reviews where ReviewID == " + ReviewID;
-            ArrayList reviews = new ArrayList();
+            string query = "SELECT * FROM Reviews where InventoryBookID == " + InvBookID;
+            List<String> reviews = new List<String>();
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             try
             {
-                reviews.Add(rdr.GetString(3));
+                reviews.Add(rdr.GetString(4));
                 while (rdr.Read())
                 {
-                    reviews.Add(rdr.GetString(3));
+                    reviews.Add(rdr.GetString(4));
                 }
             }catch(Exception ex)
             {

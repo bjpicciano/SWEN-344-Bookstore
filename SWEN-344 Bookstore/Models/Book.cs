@@ -13,6 +13,7 @@ namespace SWEN_344_Bookstore.Models {
         public string Author { get; set; }
         public float Price { get; set; }
         public string Name { get; set; }
+        public string desc { get; set; }
 
         /*
          * We may not need constructors because of how
@@ -29,14 +30,14 @@ namespace SWEN_344_Bookstore.Models {
             return restAPI.GetBooks();
         }
         
-        public static Boolean UpdateBook(int bookId, String author, float price, String name)
+        public static Boolean UpdateBook(int bookId, String author, float price, String name, String description)
         {
-            return restAPI.UpdateBook(bookId, author, price, name).Result;
+            return restAPI.UpdateBook(bookId, author, price, name, description).Result;
         }
 
-        public static int CreateBook(String author, float price, String name)
+        public static int CreateBook(String author, float price, String name, String description)
         {
-            return restAPI.CreateBook(author, price, name).Result;
+            return restAPI.CreateBook(author, price, name, description).Result;
         }
 
         public class ClassBook
