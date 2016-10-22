@@ -23,8 +23,8 @@ namespace SWEN_344_Bookstore.Tests.Database
             RestAccess db = RestAccess.GetInstance();
             
             db.CreateBook("name", 999, "name","desc");
-            var list = db.GetBooks();
-            var book = list[list.Count - 1];
+            List<Book> list = db.GetBooks();
+            Book book = list.Last();
             db.DeleteLastBook();
 
             Assert.AreEqual(book.Author,"name");
@@ -34,19 +34,20 @@ namespace SWEN_344_Bookstore.Tests.Database
         public void UpdateBook()
         {
             RestAccess db = RestAccess.GetInstance();
-            var list = db.GetBooks();
-            var id = list[0].BookId;
-            var auth = list[0].Author;
-            var price = list[0].Price;
-            var name = list[0].Name;
-            var desc = list[0].desc;
+            List<Book> list = db.GetBooks();
+            int id = list.First().BookId;
+            String auth = list.First().Author;
+            float price = list.First().Price;
+            String name = list.First().Name;
+            String desc = list.First().desc;
 
             db.UpdateBook(id, "rr", 11037, "44","desc");
             
-            var book = db.GetBook(id);
+            Book book = db.GetBook(id);
+            Assert.AreEqual(book.Author, "rr");
             db.UpdateBook(id, auth, price, name, desc);
 
-            Assert.AreEqual(book.Author, "rr");
+            
         }
     }
 }
