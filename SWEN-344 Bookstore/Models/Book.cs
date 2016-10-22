@@ -37,12 +37,12 @@ namespace SWEN_344_Bookstore.Models {
         
         public static Boolean UpdateBook(int bookId, String author, float price, String name, String description)
         {
-            return restAPI.UpdateBook(bookId, author, price, name, description).Result;
+            return restAPI.UpdateBook(bookId, author, price, name, description);
         }
 
         public static int CreateBook(String author, float price, String name, String description)
         {
-            return restAPI.CreateBook(author, price, name, description).Result;
+            return restAPI.CreateBook(author, price, name, description);
         }
 
         public class ClassBook
