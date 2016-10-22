@@ -89,12 +89,26 @@ namespace SWEN_344_Bookstore.Database
          */ 
         public int CreateBook(String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = client.PostAsync("Book.php?action=create_book&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
+            HttpResponseMessage response = client.PostAsync("Book.php?action=create_book&author=" + FormatSpaces(auth) + "&price=" + price + "&name=" + FormatSpaces(name) + "&description=" + FormatSpaces(desc), null).Result;
             if (response.IsSuccessStatusCode)
             {
                 return Convert.ToInt32(GetFieldsFromJSON((response.Content.ReadAsStringAsync().Result)).ToArray()[0]);
             }
             return -1;
+        }
+
+        public String FormatSpaces(String str)
+        {
+            String s = str;
+            String newStr = "";
+            while(s.IndexOf(" ") >= 0)
+            {
+                newStr += s.Substring(0, s.IndexOf(" "));
+                newStr += "%20";
+                s = s.Substring(s.IndexOf(" ") + 1);
+            }
+            newStr += s;
+            return newStr;
         }
 
         /* Tries to update a book with an ID of bookID with the information given. If it succeeds, it returns a task with a result of true.
@@ -115,7 +129,7 @@ namespace SWEN_344_Bookstore.Database
             {
                 return false;
             }
-            HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
+            HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + FormatSpaces(auth) + "&price=" + price + "&name=" + FormatSpaces(name) + "&description=" + FormatSpaces(desc), null).Result;
             return true;
         }
 
