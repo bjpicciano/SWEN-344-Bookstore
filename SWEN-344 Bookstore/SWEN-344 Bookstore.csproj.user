@@ -10,6 +10,9 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>SWEN_344_Bookstore.Models.ApplicationDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <NameOfLastUsedPublishProfile>swen</NameOfLastUsedPublishProfile>
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

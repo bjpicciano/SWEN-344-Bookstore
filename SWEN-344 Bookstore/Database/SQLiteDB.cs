@@ -64,7 +64,7 @@ namespace Database_Test
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             Book readBook = new Book();
-            InventoryBook toReturn = new InventoryBook(readBook);
+            InventoryBook toReturn = new InventoryBook();
             try
             {
                 readBook.BookId = InventoryBookID;
