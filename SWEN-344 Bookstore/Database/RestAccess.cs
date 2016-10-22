@@ -101,7 +101,7 @@ namespace SWEN_344_Bookstore.Database
          */ 
         public async Task<Boolean> UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = await client.PutAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
+            HttpResponseMessage response = await client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null);
             if (response.IsSuccessStatusCode)
             {
                 return true;
@@ -111,7 +111,7 @@ namespace SWEN_344_Bookstore.Database
 
         public async Task<int> DeleteLastBook()
         {
-            HttpResponseMessage response = await client.DeleteAsync("Book.php?action=delete_last_book");
+            HttpResponseMessage response = await client.PostAsync("Book.php?action=delete_last_book", null);
             return Convert.ToInt32(await response.Content.ReadAsStringAsync());
         }
 
