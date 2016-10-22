@@ -180,7 +180,7 @@ namespace SWEN_344_Bookstore.Database
             String field;
             while(jString.IndexOf(",") >= 0)
             {
-                field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":") - 1));
+                field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":")));
                 field = field.Trim('"');
                 toReturn.Add(field);
                 jString = jString.Substring(jString.IndexOf(",") + 1);
