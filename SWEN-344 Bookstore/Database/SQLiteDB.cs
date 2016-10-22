@@ -36,7 +36,13 @@ namespace Database_Test
         private void OpenDatabase()
         {
             Console.WriteLine("SQLite Database");
-            dbConnection = new SQLiteConnection(@"Data Source=Database/Swen344BookStore.sqlite; Version=3; Integrated Security=True");
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
+
+
+            dbConnection = new SQLiteConnection(@"Data Source=|DataDirectory|\\Swen344BookStore.sqlite; Version=3; Integrated Security=True");
+            dbConnection.ConnectionString = "Data Source=|DataDirectory|\\Swen344BookStore.sqlite";
             dbConnection.Open();
         }
 
