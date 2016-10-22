@@ -88,20 +88,20 @@ namespace SWEN_344_Bookstore.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void LogOff()
-        {
-            AccountController controller = new AccountController();
-            controller.Login("");
-            var result = (RedirectToRouteResult)controller.LogOff();
+        //[TestMethod]
+        //public void LogOff()
+        //{
+        //    AccountController controller = new AccountController();
+        //    controller.Login("");
+        //    var result = (RedirectToRouteResult)controller.LogOff();
 
-            result.RouteValues["action"].Equals("Index");
-            result.RouteValues["controller"].Equals("Home");
+        //    result.RouteValues["action"].Equals("Index");
+        //    result.RouteValues["controller"].Equals("Home");
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
+        //    Assert.AreEqual("Index", result.RouteValues["action"]);
+        //    Assert.AreEqual("Home", result.RouteValues["controller"]);
 
-        }
+        //}
         [TestMethod]
         public void ExternalLoginFailure()
         {
