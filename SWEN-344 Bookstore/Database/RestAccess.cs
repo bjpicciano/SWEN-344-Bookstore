@@ -110,10 +110,16 @@ namespace SWEN_344_Bookstore.Database
             return false;
         }
 
-        public async Task<int> DeleteLastBook()
+        public int DeleteLastBook()
         {
-            HttpResponseMessage response = await client.PostAsync("Book.php?action=delete_last_book", null);
-            return Convert.ToInt32(await response.Content.ReadAsStringAsync());
+            HttpResponseMessage response = client.PostAsync("Book.php?action=delete_last_book", null).Result;
+            return Convert.ToInt32(response.Content.ReadAsStringAsync().Result);
+        }
+
+        public int DeleteAllBooks()
+        {
+            HttpResponseMessage response = client.PostAsync("Book.php?action=delete_all_books", null).Result;
+            return Convert.ToInt32(response.Content.ReadAsStringAsync().Result);
         }
 
         /*Gets a string that includes all book info, then cuts that string up into individual book infos and parses each seperatly
