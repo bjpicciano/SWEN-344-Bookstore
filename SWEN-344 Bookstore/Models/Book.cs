@@ -55,24 +55,23 @@ namespace SWEN_344_Bookstore.Models {
     }
 
     public class InventoryBook {
-        private Book Book { get; }
-        private int Stock { get; set; }
+        private Book Book { get; set; }
+        private int Quantity { get; set; }
         public bool IsEnabled { get; set; }
 
-        public InventoryBook (Book book) {
-            this.Book = book;
-            this.Stock = 0;
+        public InventoryBook () {
+            this.Quantity = 0;
             this.IsEnabled = false;
         }
 
         public int GetStock (/*SQLiteConnection db*/) {
            // db.Update;
-            return this.Stock;
+            return this.Quantity;
         }
 
         public void AddToStock (int quantity)
         {
-            Stock += quantity;
+            Quantity += quantity;
         }
 
         public void SetEnabled(Boolean enabled)
@@ -82,7 +81,7 @@ namespace SWEN_344_Bookstore.Models {
 
         public void RemoveFromStockStock(int val)
         {
-            this.Stock -= val;
+            this.Quantity -= val;
         }
 
         public void Enable () {

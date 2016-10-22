@@ -21,21 +21,32 @@ namespace SWEN_344_Bookstore.Tests.Database
         public void CreateBook()
         {
             RestAccess db = RestAccess.GetInstance();
-           
-            //db.CreateBook("name", 999, "name");
+            
+            db.CreateBook("name", 999, "name","desc");
             var list = db.GetBooks();
+            var book = list[list.Count - 1];
+            db.DeleteLastBook();
 
-            //Assert.AreEqual(list[list.Count-1].Author,"name");
+            Assert.AreEqual(book.Author,"name");
         }
 
         [TestMethod]
         public void UpdateBook()
         {
             RestAccess db = RestAccess.GetInstance();
-
-            db.UpdateBook(42, "rr", 11037, "44");
             var list = db.GetBooks();
-            Assert.AreEqual(list[41].Author, "rr");
+            var id = list[0].BookId;
+            var auth = list[0].Author;
+            var price = list[0].Price;
+            var name = list[0].Name;
+            var desc = list[0].desc;
+
+            db.UpdateBook(id, "rr", 11037, "44","desc");
+            
+            var book = db.GetBook(id);
+            db.UpdateBook(id, auth, price, name, desc);
+
+            Assert.AreEqual(book.Author, "rr");
         }
     }
 }
