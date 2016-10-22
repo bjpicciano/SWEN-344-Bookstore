@@ -82,17 +82,5 @@ namespace SWEN_344_Bookstore.Tests.Database
             Book b = db.GetBook(999999999);
             Assert.AreEqual(b, null);
         }
-
-        [TestMethod]
-        public void GetUserByEmail()
-        {
-
-        }
-
-        [TestMethod]
-        public void GetUserByID()
-        {
-
-        }
     }
 }
