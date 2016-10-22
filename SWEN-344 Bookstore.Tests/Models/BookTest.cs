@@ -15,6 +15,9 @@ namespace SWEN_344_Bookstore.Tests.Models
     [TestClass]
     public class BookTest
     {
+        /*
+         * Test adding to a book's stock
+         */ 
         [TestMethod]
         public void AddToStock()
         {
@@ -25,6 +28,9 @@ namespace SWEN_344_Bookstore.Tests.Models
             Assert.AreEqual(5, ib.GetStock());
         }
 
+        /*
+         * Test removing from a book's stock
+         */ 
         [TestMethod]
         public void RemoveFromStockStockToStock()
         {

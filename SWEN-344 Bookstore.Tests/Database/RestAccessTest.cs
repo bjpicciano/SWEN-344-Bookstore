@@ -17,6 +17,10 @@ namespace SWEN_344_Bookstore.Tests.Database
     [TestClass]
     public class RestAccessTest
     {
+        /*
+         * Test for creating a book
+         * Newly made book will be deleted after test
+         */ 
         [TestMethod]
         public void CreateBook()
         {
@@ -33,6 +37,10 @@ namespace SWEN_344_Bookstore.Tests.Database
             Assert.AreEqual(book.Author,"name");
         }
 
+        /*
+         * Test for updating a book
+         * Updated book will revert back after test
+         */ 
         [TestMethod]
         public void UpdateBook()
         {
@@ -52,6 +60,9 @@ namespace SWEN_344_Bookstore.Tests.Database
 
         }
 
+        /*
+         * You cannot update a book that doesn't exist
+         */
         [TestMethod]
         public void updateNonExistent()
         {
@@ -60,12 +71,28 @@ namespace SWEN_344_Bookstore.Tests.Database
             Assert.AreEqual(b, false);
         }
 
+        /*
+         * Test meant to show that no book will be returned
+         * if you attempt to get one that doesn't exist
+         */ 
         [TestMethod]
         public void getNonExistent()
         {
             RestAccess db = RestAccess.GetInstance();
             Book b = db.GetBook(999999999);
             Assert.AreEqual(b, null);
+        }
+
+        [TestMethod]
+        public void GetUserByEmail()
+        {
+
+        }
+
+        [TestMethod]
+        public void GetUserByID()
+        {
+
         }
     }
 }
