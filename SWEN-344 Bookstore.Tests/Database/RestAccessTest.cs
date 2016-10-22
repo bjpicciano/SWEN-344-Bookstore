@@ -10,7 +10,7 @@ using SWEN_344_Bookstore.Controllers;
 using SWEN_344_Bookstore.Models;
 using SWEN_344_Bookstore.Database;
 using System.Threading.Tasks;
-
+using System.Net.Http;
 
 namespace SWEN_344_Bookstore.Tests.Database
 {
@@ -46,10 +46,26 @@ namespace SWEN_344_Bookstore.Tests.Database
 
             db.UpdateBook(id, "name", 11037, "44","desc");
             
-            Book book = list.First();
-           // db.UpdateBook(id, auth, price, name, desc);
+            Book book = db.GetBook(id);
+            db.UpdateBook(id, auth, price, name, desc);
             Assert.AreEqual(book.Author, "name");
 
+        }
+
+        [TestMethod]
+        public void updateNonExistent()
+        {
+            RestAccess db = RestAccess.GetInstance();
+            Boolean b = db.UpdateBook(999999999, "", 3, "", "");
+            Assert.AreEqual(b, false);
+        }
+
+        [TestMethod]
+        public void getNonExistent()
+        {
+            RestAccess db = RestAccess.GetInstance();
+            Book b = db.GetBook(999999999);
+            Assert.AreEqual(b, null);
         }
     }
 }
