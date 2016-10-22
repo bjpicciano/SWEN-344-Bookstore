@@ -18,6 +18,11 @@ namespace SWEN_344_Bookstore.Models {
             return this.Uid;
         }
 
+        public override string ToString()
+        {
+            return "First name: " + fname + " Last name:" + lname + " eMail:" + email + " ID:" + Uid;
+        }
+
         public User(int id, String el, String fn, String ln)
         {
             Uid = id;
