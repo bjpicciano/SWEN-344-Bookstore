@@ -154,6 +154,10 @@ namespace SWEN_344_Bookstore.Database
                 Book b = new Book();
                 System.Diagnostics.Debug.WriteLine(s);
                 String[] fields = GetFieldsFromJSON(s).ToArray();
+                for(int i = 0; i < fields.Length; i++)
+                {
+                    System.Diagnostics.Debug.WriteLine(fields[i]);
+                }
                 b.BookId = Convert.ToInt32(fields[0]);
                 b.Author = fields[1];
                 b.Price = (float) Convert.ToDouble(fields[2]);
@@ -166,7 +170,7 @@ namespace SWEN_344_Bookstore.Database
             }
         }
 
-        private List<String> GetFieldsFromJSON(String s)
+        public List<String> GetFieldsFromJSON(String s)
         {
             String jString = s;
             List<String> toReturn = new List<String>();
@@ -174,12 +178,13 @@ namespace SWEN_344_Bookstore.Database
             while(jString.IndexOf(",") >= 0)
             {
                 field = jString.Substring(jString.IndexOf(":") + 1, (jString.IndexOf(",") - jString.IndexOf(":") - 1));
-                field.Trim('\"');
+                field.Trim('"');
                 toReturn.Add(field);
                 jString = jString.Substring(jString.IndexOf(",") + 1);
             }
             field = jString.Substring(jString.IndexOf(":") + 1, jString.IndexOf("}") - 2 - jString.IndexOf(":"));
-            field.Trim('\"');
+            field.Trim('"');
+            toReturn.Add(field);
             return toReturn;
         }
 
