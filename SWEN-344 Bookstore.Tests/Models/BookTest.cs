@@ -19,7 +19,7 @@ namespace SWEN_344_Bookstore.Tests.Models
         public void AddToStock()
         {
             Book book = new Book();
-            InventoryBook ib = new InventoryBook(book);
+            InventoryBook ib = new InventoryBook();
 
             ib.AddToStock(5);
             Assert.AreEqual(5, ib.GetStock());
@@ -29,7 +29,7 @@ namespace SWEN_344_Bookstore.Tests.Models
         public void RemoveFromStockStockToStock()
         {
             Book book = new Book();
-            InventoryBook ib = new InventoryBook(book);
+            InventoryBook ib = new InventoryBook();
 
             ib.AddToStock(5);
             ib.RemoveFromStockStock(2);
