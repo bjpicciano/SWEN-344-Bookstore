@@ -102,12 +102,21 @@ namespace SWEN_344_Bookstore.Database
          */ 
         public Boolean UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
-            if (response.IsSuccessStatusCode)
+            Book[] books = GetBooks().ToArray();
+            Boolean isThere = false;
+            for(int i = 0; i < books.Length; i++)
             {
-                return true;
+                if (books[i].BookId == bookID)
+                {
+                    isThere = true;
+                }
             }
-            return false;
+            if (!isThere)
+            {
+                return false;
+            }
+            HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + auth + "&price=" + price + "&name=" + name + "&description=" + desc, null).Result;
+            return true;
         }
 
         public void DeleteLastBook()

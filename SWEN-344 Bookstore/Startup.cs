@@ -14,6 +14,7 @@ namespace SWEN_344_Bookstore
             ConfigureAuth(app);
             RestAccess ra = RestAccess.GetInstance();
             Database_Test.SQLite_Database db = Database_Test.SQLite_Database.GetInstance();
+            System.Diagnostics.Debug.WriteLine("FUG " + ra.UpdateBook(1, "",2,"",""));
         }
     }
 }
