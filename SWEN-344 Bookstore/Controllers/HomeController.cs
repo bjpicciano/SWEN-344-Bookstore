@@ -21,5 +21,10 @@ namespace SWEN_344_Bookstore.Controllers {
 
             return View();
         }
+
+        public ActionResult Messages()
+        {
+            return View();
+        }
     }
 }
