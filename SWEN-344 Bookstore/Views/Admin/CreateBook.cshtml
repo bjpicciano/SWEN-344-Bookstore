@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "CreateBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Book</h2><br />
+<form class="form-inline col-xs-12">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Title:</div>
+            <input type="text" class="form-control" id="bookTitle" placeholder="Enter Title">
+        </div>
+    </div>
+</form>
+
+<form class="form-inline col-xs-12">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Author:</div>
+            <input type="text" class="form-control" id="bookAuthor" placeholder="Enter Author">
+        </div>
+    </div>
+</form>
+
+<form class="form-inline col-xs-12">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Description:</div>
+            <textarea class="form-control" rows="4" placeholder="Book Description"></textarea>
+        </div>
+    </div>
+</form>
+
+<form class="form-inline col-xs-8">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Image:</div>
+            <button type="submit" class="btn btn-info col-xs-8">Upload Image</button>
+        </div>
+    </div>
+</form>
+
+<form class="form-inline col-xs-8">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Price:</div>
+            <input type="number" class="form-control" id="bookPrice" placeholder="$0.00">
+        </div>
+    </div>
+</form>
+
+<input type="checkbox" id="isEnabled"> Is Enabled?
+<button type="submit" class="btn btn-primary col-xs-2">Create</button><br /><br /><br />
