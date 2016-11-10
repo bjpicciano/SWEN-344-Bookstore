@@ -13,6 +13,7 @@
     <NameOfLastUsedPublishProfile>swen</NameOfLastUsedPublishProfile>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
