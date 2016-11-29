@@ -1,0 +1,83 @@
+﻿
+@{
+        ViewBag.Title = "Messages";
+    }@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="jumbotron">
+        <h2>
+            Messaging
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="float:right">Compose New</button>
+        </h2>
+            
+        <br />
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="subject-name" class="form-control-label">Subject:</label>
+                                <input type="text" class="form-control" id="subject-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="form-control-label">To:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="form-control-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Send</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+            function deleteRow(btn) {
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            }
+        </script>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Delete All</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td><input type="button" onclick="deleteRow(this)" value="X"></td>
+
+                </tr>
+                <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                    <td><input type="button" onclick="deleteRow(this)" value="X"></td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td><input type="button" onclick="deleteRow(this)" value="X"></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
