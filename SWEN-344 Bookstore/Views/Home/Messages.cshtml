@@ -38,19 +38,35 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Send</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addRow(recipient-name.val(),subject-name.val())">Send</button>
                     </div>
                 </div>
 
             </div>
         </div>
+
         <script>
             function deleteRow(btn) {
                 var row = btn.parentNode.parentNode;
                 row.parentNode.removeChild(row);
             }
+            function addRow(name, subject) {
+                var table = document.getElementById("messages");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+
+                cell1.innerHTML = name;
+                cell2.innerHTML = subject;
+                var btn = document.createElement('input');
+                btn.type = "button";
+                btn.onclick = "deleteRow(this)";
+                btn.value = "X";
+                row.appendChild(btn);
+            }
         </script>
-        <table class="table table-bordered">
+
+        <table class="table table-bordered" id="messages">
             <thead>
                 <tr>
                     <th>From</th>
