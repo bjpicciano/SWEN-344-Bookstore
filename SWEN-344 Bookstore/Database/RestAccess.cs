@@ -56,6 +56,7 @@ namespace SWEN_344_Bookstore.Database
             return toReturn;
         }
 
+
         public Boolean AuthenticateUser(String email, String authtoken)
         {
             try
