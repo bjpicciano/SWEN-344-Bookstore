@@ -2,25 +2,32 @@
 @{
     ViewBag.Title = "Catalog";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<List<SWEN_344_Bookstore.Models.Book>> bookTable = ViewData["books"] as List<List<SWEN_344_Bookstore.Models.Book>>;
+    List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
 }
 
 <h2>Catalog</h2>
 <table border="1">
-    @foreach (var row in bookTable)
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+    </tr>
+    @foreach (var line in info)
     {
         <tr>
-            @foreach (var book in row)
+            @foreach (var field in line)
             {
                 <td>
-                    <ul>
-                        <li>
-                            @book.Name
-                        </li>
-                        <li>
-                            @book.Author
-                        </li>
-                    </ul>
+                      @field
                 </td>
             }
         </tr>

@@ -28,22 +28,16 @@ namespace SWEN_344_Bookstore.Controllers {
         {
             RestAccess ra = RestAccess.GetInstance();
             IList<Book> books = ra.GetBooks();
-            List<List<Book>> bookTable = new List<List<Book>>();
-            for(int r = 0; r < 5; r++)
+            List<List<String>> bookInfo = new List<List<String>>();
+            for (int i = 0; i < books.Count; i++)
             {
-                bookTable.Add(new List<Book>());
-                if (books.Count > r * 5)
-                {
-                    for (int c = 0; c < 5; c++)
-                    {
-                        if(books.Count > (r * 5) + c)
-                        {
-                            bookTable[r].Add(books.ElementAt((r * 5) + c));
-                        }
-                    }
-                }
+                bookInfo.Add(new List<String>());
+                bookInfo[i].Add(books[i].Name);
+                bookInfo[i].Add(books[i].Author);
+                bookInfo[i].Add(books[i].desc);
+                bookInfo[i].Add("$" + books[i].Price.ToString());
             }
-            ViewData["books"] = bookTable;
+            ViewData["bookInfo"] = bookInfo;
             return View();
         }
 
