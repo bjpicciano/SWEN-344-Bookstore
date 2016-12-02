@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Catalog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
+}
+
+<h2>Catalog</h2>
+<table border="1">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+    </tr>
+    @foreach (var line in info)
+    {
+        <tr>
+            @foreach (var field in line)
+            {
+                <td>
+                      @field
+                </td>
+            }
+        </tr>
+    }
+</table>
+
