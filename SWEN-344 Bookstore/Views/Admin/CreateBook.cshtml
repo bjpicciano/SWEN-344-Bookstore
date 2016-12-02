@@ -7,42 +7,47 @@
 <div class="col-xs-12">
     <div class="col-sm-6 col-sm-offset-3">
         <h2>Create Book</h2><br />
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Title:</div>
-                <input type="text" class="form-control" id="bookTitle" placeholder="Enter Title">
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Author:</div>
-                <input type="text" class="form-control" id="bookAuthor" placeholder="Enter Author">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Title:</div>
+                    <input type="text" class="form-control" id="bookTitle" placeholder="Enter Title" required>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Description:</div>
-                <textarea class="form-control" rows="4" placeholder="Book Description"></textarea>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Author:</div>
+                    <input type="text" class="form-control" id="bookAuthor" placeholder="Enter Author" required>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Image:</div>
-                <button type="submit" class="btn btn-info col-xs-8">Upload Image</button>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Description:</div>
+                    <textarea class="form-control" rows="4" placeholder="Book Description" required></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Price:</div>
-                <input type="number" class="form-control" id="bookPrice" placeholder="$0.00">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Image:</div>
+                    <button type="submit" class="btn btn-info col-xs-8">Upload Image</button>
+                </div>
             </div>
-        </div>
 
-        <label><input type="checkbox" class="" id="isEnabled">Is Enabled?</label><br/>
-        <button type="submit" class="btn btn-primary col-xs-3 col-xs-offset-9">Create</button>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Price:</div>
+                    <input type="number" class="form-control" id="bookPrice" placeholder="$0.00" required>
+                </div>
+            </div>
+
+            <label><input type="checkbox" class="" id="isEnabled"> Is Enabled?</label><br/>
+            <button type="submit" class="btn btn-primary col-xs-3 col-xs-offset-9">Create</button>
+@*            <input value="Create" class="btn btn-primary col-xs-3 col-xs-offset-9" type="Submit" />*@
+
+        </form>
     </div>
 </div>
