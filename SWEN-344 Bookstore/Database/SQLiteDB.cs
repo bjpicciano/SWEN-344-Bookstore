@@ -105,10 +105,6 @@ namespace Database_Test
                 book.SetEnabled(rdr.GetBoolean(4));
                 book.SetBook(rdr.GetInt32(1));
                 List<Review> reviews = GetReviews(rdr.GetInt32(1));
-                for (int i = 0; i < reviews.Count; i++)
-                {
-                    book.AddReview(reviews[i]);
-                }
                 toReturn.Add(book);
             }
 
@@ -121,22 +117,11 @@ namespace Database_Test
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             InventoryBook toReturn = new InventoryBook();
-            //try
             rdr.Read();
-            {
                 toReturn.AddToStock(rdr.GetInt32(3));
                 toReturn.SetEnabled(rdr.GetBoolean(4));
                 toReturn.SetBook(rdr.GetInt32(1));
                 List<Review> reviews = GetReviews(rdr.GetInt32(0));
-                for(int i = 0; i < reviews.Count; i++)
-                {
-                    toReturn.AddReview(reviews[i]);
-                }
-            }
-            //catch (Exception ex)
-            {
-                //System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-            }
             rdr.Close();
             return toReturn;
         }

@@ -14,11 +14,6 @@ namespace SWEN_344_Bookstore
             ConfigureAuth(app);
             RestAccess ra = RestAccess.GetInstance();
             Database_Test.SQLite_Database db = Database_Test.SQLite_Database.GetInstance();
-            if (!db.CreateInventoryBook(831, 70, true))
-            {
-                System.Diagnostics.Debug.WriteLine("FUG FUG FUG FUG FUG");
-            }
-
         }
     }
 }
