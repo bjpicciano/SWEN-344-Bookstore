@@ -25,7 +25,7 @@ namespace SWEN_344_Bookstore.Models
             Boolean exists = false;
             foreach (InventoryBook ib in Inventory)
             {
-                if (ib.GetBook() == book)
+                if (ib.GetBook() == book.BookId)
                 {
                     ib.incStock();
                     exists = true;

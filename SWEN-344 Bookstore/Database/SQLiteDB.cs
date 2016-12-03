@@ -44,7 +44,7 @@ namespace Database_Test
         {
             try
             {
-                SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(BookID, Quantity, Enabled) values (" + bookid + ", " + quantity + ", \"" + enabled + "\")", dbConnection);
+                SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(BookID, BookStoreID, Quantity, Enabled) values (" + bookid + ", " + ", 1," + quantity + ", \"" + enabled + "\")", dbConnection);
                 insert.ExecuteNonQuery();
                 return true;
             }catch(Exception ex)
@@ -54,11 +54,11 @@ namespace Database_Test
             }
         }
 
-        public Boolean UpdateInventoryBook(int bookid, int quantity, Boolean enabled)
+        public Boolean UpdateInventoryBook(int IBookID, int bookid, int quantity, Boolean enabled)
         {
             try
             {
-                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid  + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE InventoryBookID = " + bookid, dbConnection);
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid  + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE InventoryBookID = " + IBookID, dbConnection);
                 insert.ExecuteNonQuery();
                 return true;
             }
@@ -74,7 +74,7 @@ namespace Database_Test
             Exception except;
             try
             {
-                SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, Date, Review) values (" + InvBookID + ", " + userid + ", \"" + DateTimeSQLite(DateTime.Now) + "\", \"" + review + "\")", dbConnection);
+                SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, BookStoreID, Date, Review) values (" + InvBookID + ", " + userid + ", 1,\"" + DateTimeSQLite(DateTime.Now) + "\", \"" + review + "\")", dbConnection);
                 insert.ExecuteNonQuery();
                 return true;
             }catch(Exception ex)
@@ -102,12 +102,13 @@ namespace Database_Test
             while (rdr.Read())
             {
                 InventoryBook book = new InventoryBook();
-                book.AddToStock(rdr.GetInt32(1));
-                book.SetEnabled(rdr.GetBoolean(2));
-                List<String> reviews = GetReviews(rdr.GetInt32(1));
+                book.AddToStock(rdr.GetInt32(3));
+                book.SetEnabled(rdr.GetBoolean(4));
+                book.SetBook(rdr.GetInt32(1));
+                List<Review> reviews = GetReviews(rdr.GetInt32(1));
                 for (int i = 0; i < reviews.Count; i++)
                 {
-                    book.AddReview((String)reviews[i]);
+                    book.AddReview(reviews[i]);
                 }
                 toReturn.Add(book);
             }
@@ -123,12 +124,13 @@ namespace Database_Test
             //try
             rdr.Read();
             {
-                toReturn.AddToStock(rdr.GetInt32(1));
-                toReturn.SetEnabled(rdr.GetBoolean(2));
-                List<String> reviews = GetReviews(rdr.GetInt32(1));
+                toReturn.AddToStock(rdr.GetInt32(3));
+                toReturn.SetEnabled(rdr.GetBoolean(4));
+                toReturn.SetBook(rdr.GetInt32(1));
+                List<Review> reviews = GetReviews(rdr.GetInt32(0));
                 for(int i = 0; i < reviews.Count; i++)
                 {
-                    toReturn.AddReview((String) reviews[i]);
+                    toReturn.AddReview(reviews[i]);
                 }
             }
             //catch (Exception ex)
@@ -139,19 +141,25 @@ namespace Database_Test
             return toReturn;
         }
 
-        public List<String> GetReviews(int InvBookID)
+        public List<Review> GetReviews(int InvBookID)
         {
             string query = "SELECT * FROM Review where InventoryBookID == " + InvBookID;
-            List<String> reviews = new List<String>();
+            List<Review> reviews = new List<Review>();
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             try
             {
+                Review r = new Review();
                 rdr.Read();
-                reviews.Add(rdr.GetString(4));
+                r.review = rdr.GetString(5);
+                r.date = rdr.GetString(4);
+                reviews.Add(r);
                 while (rdr.Read())
                 {
-                    reviews.Add(rdr.GetString(4));
+                    r = new Review();
+                    r.review = rdr.GetString(5);
+                    r.date = rdr.GetString(4);
+                    reviews.Add(r);
                 }
             }catch(Exception ex)
             {

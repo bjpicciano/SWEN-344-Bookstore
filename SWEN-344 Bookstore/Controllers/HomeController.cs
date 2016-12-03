@@ -33,7 +33,7 @@ namespace SWEN_344_Bookstore.Controllers {
             List<Book> books = new List<Book>();
             for (int i = 0; i < IBooks.Count; i++)
             {
-//                books.Add(ra.GetBook(IBooks[i].GetBook()));
+                books.Add(ra.GetBook(IBooks[i].GetBook()));
             }
 
             List<List<String>> bookInfo = new List<List<String>>();
@@ -45,8 +45,13 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add(books[i].desc);
                 bookInfo[i].Add("$" + books[i].Price.ToString());
                 bookInfo[i].Add(books[i].BookId.ToString());
+                bookInfo[i].Add(IBooks[i].GetStock().ToString());
             }
             ViewData["bookInfo"] = bookInfo;
+            for(int i = 0; i < IBooks.Count; i++)
+            {
+                ViewData[IBooks[i].GetBook() + "reviews"] = IBooks[i].reviews;
+            }
             return View();
         }
             

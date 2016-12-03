@@ -71,8 +71,23 @@
                                         <br />
                                         <p>Put Inventory quantity here</p>
                                         <br />
+                                        <p>@line[5]</p>
+                                        <br />
                                         <h6>Reviews</h6>
                                         <p>Reviews Go Here</p>
+                                        <table border="1">
+                                            @foreach (var review in ViewData[line[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @review.review
+                                                    </td>
+                                                    <td>
+                                                        @review.date
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="/Home/ShoppingCart" class="btn btn-primary">Add to Shopping Cart</a>
