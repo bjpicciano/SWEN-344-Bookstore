@@ -42,16 +42,13 @@ namespace Database_Test
 
         public Boolean CreateInventoryBook(int bookid, int quantity, Boolean enabled)
         {
-            try
-            {
-                SQLiteCommand insert = new SQLiteCommand("insert into InventoryBook(BookID, BookStoreID, Quantity, Enabled) values (" + bookid + ", " + ", 1," + quantity + ", \"" + enabled + "\")", dbConnection);
-                insert.ExecuteNonQuery();
-                return true;
-            }catch(Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-                return false;
-            }
+            String command = "insert into InventoryBook(BookID, BookStoreID, Quantity, Enabled) values (@BOOKID, 1, @QUAN, @ENAB)";
+            SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
+            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
+            insert.Parameters.Add(new SQLiteParameter("@QUAN", quantity));
+            insert.Parameters.Add(new SQLiteParameter("@ENAB", enabled));
+            insert.ExecuteNonQuery();
+            return true;
         }
 
         public Boolean UpdateInventoryBook(int IBookID, int bookid, int quantity, Boolean enabled)
@@ -99,6 +96,7 @@ namespace Database_Test
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
             List<InventoryBook> toReturn = new List<InventoryBook>();
+
             while (rdr.Read())
             {
                 InventoryBook book = new InventoryBook();
@@ -112,6 +110,7 @@ namespace Database_Test
                 }
                 toReturn.Add(book);
             }
+
             return toReturn;
         }
 
@@ -150,10 +149,6 @@ namespace Database_Test
             try
             {
                 Review r = new Review();
-                rdr.Read();
-                r.review = rdr.GetString(5);
-                r.date = rdr.GetString(4);
-                reviews.Add(r);
                 while (rdr.Read())
                 {
                     r = new Review();
