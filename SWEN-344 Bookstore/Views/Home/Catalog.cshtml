@@ -1,36 +1,226 @@
-﻿
-@{
-    ViewBag.Title = "Catalog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
-}
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <meta name="google-signin-client_id" content="876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com"></meta>
+</head>
 
-<h2>Catalog</h2>
-<table border="1">
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Author
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Price
-        </th>
-    </tr>
-    @foreach (var line in info)
-    {
-        <tr>
-            @foreach (var field in line)
-            {
-                <td>
-                      @field
-                </td>
+<body>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script type="application/javascript">
+        var auth2 = {};
+        var helper = (function() {
+            return {
+                /**
+                 * Hides the sign in button and starts the post-authorization operations.
+                 *
+                 * {Object} authResult An Object which contains the access token and
+                 *   other authentication information.
+                 */
+                onSignInCallback: function(authResult) {
+                    if (authResult.isSignedIn.get()) {
+                        var access_token = authResult.currentUser.get().getAuthResponse().access_token;
+                        console.log("access_token: " + access_token);
+                        var id_token = authResult.currentUser.get().getAuthResponse().id_token;
+                        console.log("id_token: " + id_token);
+                        $('.logged').show();
+                        
+                        $('.login').hide();
+                        helper.profile(access_token);
+                    }
+                    else {
+                        if (authResult['error'] || authResult.currentUser.get().getAuthResponse() == null) {
+                            // There was an error, which means the user is not signed in.
+                            // As an example, you can handle by writing to the console:
+                            console.log('There was an error: ' + authResult['error']);
+                        }
+                        $('#authResult').append('Logged out');
+                        $('.logged').hide();
+                       
+                        $('.login').show();
+                    }
+                },
+                /**
+                 * Gets and renders the currently signed in user's profile data.
+                 */
+                profile: function(access_token){
+                    gapi.client.plus.people.get({
+                        'userId': 'me'
+                    }).then(function(res) {
+                        var profile = res.result;
+                        $('#profile').empty();
+                        $('#profile').append(
+                                $('<button onclick="getUserInfoFromToken(\''+access_token+'\')">GetToken</button>'));
+                        $('#profile').append(
+                                $('<p><img src=\"' + profile.image.url + '\"></p>'));
+                        $('#profile').append(
+                                $('<p><em>Name: </em>' + profile.displayName + '<br /><em>Tagline: </em>' +
+                                        profile.tagline + '</p>'));
+                        if (profile.emails) {
+                            $('#profile').append('Emails: ');
+                            for (var i=0; i < profile.emails.length; i++){
+                                $('#profile').append(profile.emails[i].value).append(' ');
+                            }
+                            $('#profile').append('<br/>');
+                        }
+                        if (profile.cover && profile.coverPhoto) {
+                            $('#profile').append(
+                                    $('<p><img src=\"' + profile.cover.coverPhoto.url + '\"></p>'));
+                        }
+                    }, function(err) {
+                        var error = err.result;
+                        $('#profile').empty();
+                        $('#profile').append(error.message);
+                    });
+                }
+            };
+        })();
+        /**
+         * jQuery initialization
+         */
+        $(document).ready(function() {
+            $('#loaderror').hide();
+            if ($('meta')[0].content == 'YOUR CLIENT ID HERE') {
+                alert('This sample requires your OAuth credentials (client ID) ' +
+                        'from the Google APIs console:\n' +
+                        '    https://code.google.com/apis/console/#:access\n\n' +
+                        'Find and replace YOUR_CLIENT_ID with your client ID.'
+                );
             }
-        </tr>
-    }
-</table>
+        });
+        /**
+         * Handler for when the sign-in state changes.
+         *
+         *{boolean} isSignedIn The new signed in state.
+         */
+        var updateSignIn = function() {
+            console.log('update sign in state');
+            if (auth2.isSignedIn.get()) {
+                helper.onSignInCallback(gapi.auth2.getAuthInstance());
+            }
+            else{
+                helper.onSignInCallback(gapi.auth2.getAuthInstance());
+            }
+        };
+        function getUserInfoFromToken(accessToken){
+            $.ajax({
+                url:'https://www.googleapis.com/oauth2/v3/tokeninfo',
+                type:'POST',
+                data:'access_token='+accessToken,
+                success: function(msg){
+                    var expireTime = msg['expires_in'];
+                    var scope = msg['scope'];
+                    console.log(msg);
+                    alert("Session expires in: " + expireTime
+                            //+"\nUser Id: " + userId       //only works if you have granted this session "profile" under scope
+                            +"\nGranted Scope: " + scope
+                    );
+                }
+            })
+        }
+        /**
+         * This method sets up the sign-in listener after the client library loads.
+         */
+        function startApp() {
+            gapi.load('auth2', function() {
+                gapi.client.load('plus','v1').then(function() {
+                    gapi.signin2.render('signin-button', {scope: 'profile', fetch_basic_profile: false });
+                    gapi.auth2.init({fetch_basic_profile: false, scope:'profile'})
+                            .then(function (){
+                                console.log('init');
+                                auth2 = gapi.auth2.getAuthInstance();
+                                auth2.isSignedIn.listen(updateSignIn);
+                                auth2.then(updateSignIn);
+                            });
+                });
+            });
+        }
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+    <div id="gConnect" class="login" style="display:none">
+        <h3>Oh no, you're not logged in!</h3>
+        <div id="signin-button"></div>
+    </div>
+    @{
+        ViewBag.Title = "Catalog";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
 
+    }
+    <div class="logged" style="display:none">
+        <h2>Catalog</h2>
+        <table border="1">
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var line in info)
+            {
+                <tr>
+                    @for (int i = 0; i < 4; i++)
+                {
+                        <td>
+                            @line[i]
+                        </td>
+
+                    }
+                    <td>
+                        <!--button-->
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">@line[0]</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Author:</h6>
+                                        <br />
+                                        <p>@line[1]</p>
+                                        <br />
+                                        <h6>Description</h6>
+                                        <br />
+                                        <p>@line[2]</p>
+                                        <br />
+                                        <h6>Price</h6>
+                                        <br />
+                                        <p>@line[3]</p>
+                                        <br />
+                                        <h6>Quantity</h6>
+                                        <br />
+                                        <p>Put Inventory quantity here</p>
+                                        <br />
+                                        <h6>Reviews</h6>
+                                        <p>Reviews Go Here</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/Home/ShoppingCart" class="btn btn-primary">Add to Shopping Cart</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

@@ -20,209 +20,201 @@
     <meta name="google-signin-client_id" content="876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com"></meta>
 </head>
 
-<div id="gConnect">
-    <h3>Oh no, you're not logged in!</h3>
-    <div id="signin-button"></div>
-</div>
-
-<div id="authOps" style="display:none">
-    <h3>Sign-in success</h3>
-
-    <button id="signOut" onclick="auth2.signOut()">Sign Out</button>
-    <div id="profile">
+<body>
+    <div id="gConnect" class="login" style="display:none">
+        <h3>Oh no, you're not logged in!</h3>
+        <div id="signin-button"></div>
     </div>
-</div>
 
-<script type="application/javascript">
-    var auth2 = {};
-    var helper = (function() {
-        return {
-            /**
-             * Hides the sign in button and starts the post-authorization operations.
-             *
-             * {Object} authResult An Object which contains the access token and
-             *   other authentication information.
-             */
-            onSignInCallback: function(authResult) {
-                if (authResult.isSignedIn.get()) {
-                    var access_token = authResult.currentUser.get().getAuthResponse().access_token;
-                    console.log("access_token: " + access_token);
-                    var id_token = authResult.currentUser.get().getAuthResponse().id_token;
-                    console.log("id_token: " + id_token);
-                    $('#home').show();
-                    $('#messages').show();
-                    $('#cart').show();
-                    $('#gConnect').hide();
-                    helper.profile(access_token);
-                }
-                else {
-                    if (authResult['error'] || authResult.currentUser.get().getAuthResponse() == null) {
-                        // There was an error, which means the user is not signed in.
-                        // As an example, you can handle by writing to the console:
-                        console.log('There was an error: ' + authResult['error']);
+    <script type="application/javascript">
+        var auth2 = {};
+        var helper = (function() {
+            return {
+                /**
+                 * Hides the sign in button and starts the post-authorization operations.
+                 *
+                 * {Object} authResult An Object which contains the access token and
+                 *   other authentication information.
+                 */
+                onSignInCallback: function(authResult) {
+                    if (authResult.isSignedIn.get()) {
+                        var access_token = authResult.currentUser.get().getAuthResponse().access_token;
+                        console.log("access_token: " + access_token);
+                        var id_token = authResult.currentUser.get().getAuthResponse().id_token;
+                        console.log("id_token: " + id_token);
+                        $('.logged').show();
+
+                        $('.login').hide();
+                        helper.profile(access_token);
                     }
-                    $('#authResult').append('Logged out');
-                    $('#authOps').hide();
-                    $('#home').hide();
-                    $('#messages').hide();
-                    $('#cart').hide();
-                    $('#gConnect').show();
-                }
-            },
-            /**
-             * Gets and renders the currently signed in user's profile data.
-             */
-            profile: function(access_token){
-                gapi.client.plus.people.get({
-                    'userId': 'me'
-                }).then(function(res) {
-                    var profile = res.result;
-                    $('#profile').empty();
-                    $('#profile').append(
-                            $('<button onclick="getUserInfoFromToken(\''+access_token+'\')">GetToken</button>'));
-                    $('#profile').append(
-                            $('<p><img src=\"' + profile.image.url + '\"></p>'));
-                    $('#profile').append(
-                            $('<p><em>Name: </em>' + profile.displayName + '<br /><em>Tagline: </em>' +
-                                    profile.tagline + '</p>'));
-                    if (profile.emails) {
-                        $('#profile').append('Emails: ');
-                        for (var i=0; i < profile.emails.length; i++){
-                            $('#profile').append(profile.emails[i].value).append(' ');
+                    else {
+                        if (authResult['error'] || authResult.currentUser.get().getAuthResponse() == null) {
+                            // There was an error, which means the user is not signed in.
+                            // As an example, you can handle by writing to the console:
+                            console.log('There was an error: ' + authResult['error']);
                         }
-                        $('#profile').append('<br/>');
+                        $('#authResult').append('Logged out');
+                        $('.logged').hide();
+
+                        $('.login').show();
                     }
-                    if (profile.cover && profile.coverPhoto) {
+                },
+                /**
+                 * Gets and renders the currently signed in user's profile data.
+                 */
+                profile: function(access_token){
+                    gapi.client.plus.people.get({
+                        'userId': 'me'
+                    }).then(function(res) {
+                        var profile = res.result;
+                        $('#profile').empty();
                         $('#profile').append(
-                                $('<p><img src=\"' + profile.cover.coverPhoto.url + '\"></p>'));
-                    }
-                }, function(err) {
-                    var error = err.result;
-                    $('#profile').empty();
-                    $('#profile').append(error.message);
-                });
-            }
-        };
-    })();
-    /**
-     * jQuery initialization
-     */
-    $(document).ready(function() {
-        $('#loaderror').hide();
-        if ($('meta')[0].content == 'YOUR CLIENT ID HERE') {
-            alert('This sample requires your OAuth credentials (client ID) ' +
-                    'from the Google APIs console:\n' +
-                    '    https://code.google.com/apis/console/#:access\n\n' +
-                    'Find and replace YOUR_CLIENT_ID with your client ID.'
-            );
-        }
-    });
-    /**
-     * Handler for when the sign-in state changes.
-     *
-     *{boolean} isSignedIn The new signed in state.
-     */
-    var updateSignIn = function() {
-        console.log('update sign in state');
-        if (auth2.isSignedIn.get()) {
-            helper.onSignInCallback(gapi.auth2.getAuthInstance());
-        }
-        else{
-            helper.onSignInCallback(gapi.auth2.getAuthInstance());
-        }
-    };
-    function getUserInfoFromToken(accessToken){
-        $.ajax({
-            url:'https://www.googleapis.com/oauth2/v3/tokeninfo',
-            type:'POST',
-            data:'access_token='+accessToken,
-            success: function(msg){
-                var expireTime = msg['expires_in'];
-                var scope = msg['scope'];
-                console.log(msg);
-                alert("Session expires in: " + expireTime
-                        //+"\nUser Id: " + userId       //only works if you have granted this session "profile" under scope
-                        +"\nGranted Scope: " + scope
+                                $('<button onclick="getUserInfoFromToken(\''+access_token+'\')">GetToken</button>'));
+                        $('#profile').append(
+                                $('<p><img src=\"' + profile.image.url + '\"></p>'));
+                        $('#profile').append(
+                                $('<p><em>Name: </em>' + profile.displayName + '<br /><em>Tagline: </em>' +
+                                        profile.tagline + '</p>'));
+                        if (profile.emails) {
+                            $('#profile').append('Emails: ');
+                            for (var i=0; i < profile.emails.length; i++){
+                                $('#profile').append(profile.emails[i].value).append(' ');
+                            }
+                            $('#profile').append('<br/>');
+                        }
+                        if (profile.cover && profile.coverPhoto) {
+                            $('#profile').append(
+                                    $('<p><img src=\"' + profile.cover.coverPhoto.url + '\"></p>'));
+                        }
+                    }, function(err) {
+                        var error = err.result;
+                        $('#profile').empty();
+                        $('#profile').append(error.message);
+                    });
+                }
+            };
+        })();
+        /**
+         * jQuery initialization
+         */
+        $(document).ready(function() {
+            $('#loaderror').hide();
+            if ($('meta')[0].content == 'YOUR CLIENT ID HERE') {
+                alert('This sample requires your OAuth credentials (client ID) ' +
+                        'from the Google APIs console:\n' +
+                        '    https://code.google.com/apis/console/#:access\n\n' +
+                        'Find and replace YOUR_CLIENT_ID with your client ID.'
                 );
             }
-        })
-    }
-    /**
-     * This method sets up the sign-in listener after the client library loads.
-     */
-    function startApp() {
-        gapi.load('auth2', function() {
-            gapi.client.load('plus','v1').then(function() {
-                gapi.signin2.render('signin-button', {scope: 'profile', fetch_basic_profile: false });
-                gapi.auth2.init({fetch_basic_profile: false, scope:'profile'})
-                        .then(function (){
-                            console.log('init');
-                            auth2 = gapi.auth2.getAuthInstance();
-                            auth2.isSignedIn.listen(updateSignIn);
-                            auth2.then(updateSignIn);
-                        });
-            });
         });
-    }
-</script>
-<script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
-<div class="jumbotron" id="home" style="display:none">
-    <h1>API Calls</h1>
-    <h2>List of API calls:</h2>
-    <h3>create_book</h3>
-        Here is the call to create a book in the central database:<br/>
-        Book.createBook(Title, Price, Author, Description)<br/>
+        /**
+         * Handler for when the sign-in state changes.
+         *
+         *{boolean} isSignedIn The new signed in state.
+         */
+        var updateSignIn = function() {
+            console.log('update sign in state');
+            if (auth2.isSignedIn.get()) {
+                helper.onSignInCallback(gapi.auth2.getAuthInstance());
+            }
+            else{
+                helper.onSignInCallback(gapi.auth2.getAuthInstance());
+            }
+        };
+        function getUserInfoFromToken(accessToken){
+            $.ajax({
+                url:'https://www.googleapis.com/oauth2/v3/tokeninfo',
+                type:'POST',
+                data:'access_token='+accessToken,
+                success: function(msg){
+                    var expireTime = msg['expires_in'];
+                    var scope = msg['scope'];
+                    console.log(msg);
+                    alert("Session expires in: " + expireTime
+                            //+"\nUser Id: " + userId       //only works if you have granted this session "profile" under scope
+                            +"\nGranted Scope: " + scope
+                    );
+                }
+            })
+        }
+        /**
+         * This method sets up the sign-in listener after the client library loads.
+         */
+        function startApp() {
+            gapi.load('auth2', function() {
+                gapi.client.load('plus','v1').then(function() {
+                    gapi.signin2.render('signin-button', {scope: 'profile', fetch_basic_profile: false });
+                    gapi.auth2.init({fetch_basic_profile: false, scope:'profile'})
+                            .then(function (){
+                                console.log('init');
+                                auth2 = gapi.auth2.getAuthInstance();
+                                auth2.isSignedIn.listen(updateSignIn);
+                                auth2.then(updateSignIn);
+                            });
+                });
+            });
+        }
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+    <div class="jumbotron logged" id="home" style="display:none">
+        <h1>API Calls</h1>
+        <h2>List of API calls:</h2>
+        <h3>create_book</h3>
+        Here is the call to create a book in the central database:<br />
+        Book.createBook(Title, Price, Author, Description)<br />
         it returns the created book's id: @createdBookID
-    <br/>
-    <br />
-    
+        <br />
+        <br />
 
-    <h3>get_book</h3>
-        Here we get the book we just created:<br/>
+
+        <h3>get_book</h3>
+        Here we get the book we just created:<br />
         Book.GetBook(createdBookID);<br />
         @Book.GetBook(createdBookID)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>get_books</h3>
-        Here we get all the books in the database:<br/>
+        <h3>get_books</h3>
+        Here we get all the books in the database:<br />
         for each book, restAccess.GetBooks();<br />
-        @foreach (Book t in ra.GetBooks()) {
+        @foreach (Book t in ra.GetBooks())
+        {
             @t
-            <br/>
+            <br />
         }
-    <br/>
-    
+        <br />
 
-    <h3>update_book</h3>
-        Lets update the book we created before by defining the author and name.<br/>
+
+        <h3>update_book</h3>
+        Lets update the book we created before by defining the author and name.<br />
         Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br />
-        it returns:<br/>
-        @Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br/>
-        and here is our new book: <br/>
+        it returns:<br />
+        @Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br />
+        and here is our new book: <br />
         Book.GetBook(createdBookID)<br />
         @Book.GetBook(createdBookID)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>delete_last_book</h3>
-        Now we will delete the last book that we created:<br/>
+        <h3>delete_last_book</h3>
+        Now we will delete the last book that we created:<br />
         restAccess.deleteLastBook();<br />
-    <br/>
+        <br />
 
-    <h3>get_user_by_id</h3>
-        lets get a user by id = 1:<br/>
-        restAccess.GetUserByID(1);<br/>
+        <h3>get_user_by_id</h3>
+        lets get a user by id = 1:<br />
+        restAccess.GetUserByID(1);<br />
         @ra.GetUserByID(1)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>get_user_by_email</h3>
-        lets get a user by email = user@example.com:<br/>
-        restAccess.GetUserByEmail("user@example.com");<br/>
+        <h3>get_user_by_email</h3>
+        lets get a user by email = user@example.com:<br />
+        restAccess.GetUserByEmail("user@example.com");<br />
         @ra.GetUserByEmail("user@example.com")
-    <br/>
-    <br/>
-    @*    <p><a href="." class="btn col-xs-12 btn-primary btn-lg">Book &raquo;</a>*@
-    @*    </p>*@
-</div>
+        <br />
+        <br />
+        @*    <p><a href="." class="btn col-xs-12 btn-primary btn-lg">Book &raquo;</a>*@
+        @*    </p>*@
+    </div>
+</body>
