@@ -32,13 +32,13 @@ namespace SWEN_344_Bookstore.Tests.Models
          * Test removing from a book's stock
          */ 
         [TestMethod]
-        public void RemoveFromStockStockToStock()
+        public void RemoveFromStock()
         {
             Book book = new Book();
             InventoryBook ib = new InventoryBook();
 
             ib.AddToStock(5);
-            ib.RemoveFromStockStock(2);
+            ib.RemoveFromStock(2);
             Assert.AreEqual(3, ib.GetStock());
         }
     }
