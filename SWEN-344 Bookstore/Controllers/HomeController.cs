@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SWEN_344_Bookstore.Database;
 using SWEN_344_Bookstore.Models;
+using Database_Test;
 
 namespace SWEN_344_Bookstore.Controllers {
     public class HomeController : Controller {
@@ -40,6 +41,13 @@ namespace SWEN_344_Bookstore.Controllers {
             ViewData["bookInfo"] = bookInfo;
             return View();
         }
+        public ActionResult BookView()
+        {
+            RestAccess ra = RestAccess.GetInstance();
+            SQLite_Database sq = SQLite_Database.GetInstance();
+
+            return View();
+        }
 
         public ActionResult Messages()
         {
@@ -47,6 +55,18 @@ namespace SWEN_344_Bookstore.Controllers {
         }
         public ActionResult ShoppingCart()
         {
+            RestAccess ra = RestAccess.GetInstance();
+            IList<Book> books = ra.GetBooks();
+            List<List<String>> bookInfo = new List<List<String>>();
+            for (int i = 0; i < books.Count; i++)
+            {
+                bookInfo.Add(new List<String>());
+                bookInfo[i].Add(books[i].Name);
+                bookInfo[i].Add(books[i].Author);
+                bookInfo[i].Add(books[i].desc);
+                bookInfo[i].Add("$" + books[i].Price.ToString());
+            }
+            ViewData["bookInfo"] = bookInfo;
             return View();
         }
     }
