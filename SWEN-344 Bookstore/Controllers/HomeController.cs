@@ -37,6 +37,7 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add(books[i].Author);
                 bookInfo[i].Add(books[i].desc);
                 bookInfo[i].Add("$" + books[i].Price.ToString());
+                bookInfo[i].Add(books[i].BookId.ToString());
             }
             ViewData["bookInfo"] = bookInfo;
             return View();
