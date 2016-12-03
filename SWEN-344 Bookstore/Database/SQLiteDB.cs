@@ -104,7 +104,7 @@ namespace Database_Test
                 book.AddToStock(rdr.GetInt32(3));
                 book.SetEnabled(rdr.GetBoolean(4));
                 book.SetBook(rdr.GetInt32(1));
-                List<Review> reviews = GetReviews(rdr.GetInt32(1));
+                book.reviews = GetReviews(rdr.GetInt32(1));
                 toReturn.Add(book);
             }
 
@@ -121,7 +121,7 @@ namespace Database_Test
                 toReturn.AddToStock(rdr.GetInt32(3));
                 toReturn.SetEnabled(rdr.GetBoolean(4));
                 toReturn.SetBook(rdr.GetInt32(1));
-                List<Review> reviews = GetReviews(rdr.GetInt32(0));
+                toReturn.reviews = GetReviews(rdr.GetInt32(0));
             rdr.Close();
             return toReturn;
         }
