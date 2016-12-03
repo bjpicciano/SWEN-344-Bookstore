@@ -60,9 +60,9 @@
                 var isEnabled = Request.Form["bookIsEnabled"];
 
                 if (title != null && author != null && description != null && priceString != null) {
-                    System.Diagnostics.Debug.WriteLine("!!!!+++!!!===1 HWERE");
-                    float price = float.Parse(priceString);
-                    restAccess.CreateBook(author, price, title, description);
+                    float price = float.Parse(priceString); //Convert string to float
+
+                    restAccess.CreateBook(author, price, title, description); //Create the book
 
                     if (isEnabled != null && isEnabled == "on") {
                         //Enable this book right away as an inventory book

@@ -33,6 +33,7 @@ namespace SWEN_344_Bookstore.Controllers {
             List<Book> books = new List<Book>();
             for (int i = 0; i < IBooks.Count; i++)
             {
+//                books.Add(ra.GetBook(IBooks[i].GetBook()));
             }
 
             List<List<String>> bookInfo = new List<List<String>>();
