@@ -1,10 +1,12 @@
-﻿@using SWEN_344_Bookstore.Database
+﻿@using Database_Test
+@using SWEN_344_Bookstore.Database
 
 @{
     ViewBag.Title = "CreateBook";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    RestAccess restAccess = RestAccess.GetInstance();
+    RestAccess remoteAccess = RestAccess.GetInstance();
+    SQLite_Database localAccess = SQLite_Database.GetInstance();
 }
 
 <div class="col-xs-12">
@@ -36,7 +38,8 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Image:</div>
-                    <button class="btn btn-info col-xs-8">Upload Image</button>
+@*                  Should provide a url*@
+@*                    <button class="btn btn-info col-xs-8">Upload Image</button>*@
                 </div>
             </div>
 
@@ -57,15 +60,20 @@
                 var author = Request.Form["bookAuthor"];
                 var description = Request.Form["bookDescription"];
                 var priceString = Request.Form["bookPrice"];
-                var isEnabled = Request.Form["bookIsEnabled"];
+                var isEnabledString = Request.Form["bookIsEnabled"];
 
                 if (title != null && author != null && description != null && priceString != null) {
                     float price = float.Parse(priceString); //Convert string to float
 
-                    restAccess.CreateBook(author, price, title, description); //Create the book
+                    var bookid = remoteAccess.CreateBook(author, price, title, description); //Create the book
 
-                    if (isEnabled != null && isEnabled == "on") {
-                        //Enable this book right away as an inventory book
+                    var isEnabled = false;
+                    if (isEnabledString != null && isEnabledString == "on") {
+                        isEnabled = true;
+                    }
+
+                    if (bookid != -1) {
+                        localAccess.CreateInventoryBook(bookid, 0, isEnabled);
                     }
                 }
             }
