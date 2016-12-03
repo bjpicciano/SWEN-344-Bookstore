@@ -42,14 +42,7 @@ namespace SWEN_344_Bookstore.Controllers {
             ViewData["bookInfo"] = bookInfo;
             return View();
         }
-        public ActionResult Catalog(int id)
-        {
-            ViewData["displayPopup"] = true;
-            RestAccess ra = RestAccess.GetInstance();
-            SQLite_Database sq = SQLite_Database.GetInstance();
             
-            return View(sq.GetReviews(id));
-        }
 
         public ActionResult Messages()
         {
