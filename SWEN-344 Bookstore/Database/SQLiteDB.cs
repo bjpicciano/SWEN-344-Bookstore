@@ -73,6 +73,7 @@ namespace Database_Test
             {
                 SQLiteCommand insert = new SQLiteCommand("insert into Review(InventoryBookID, UserID, BookStoreID, Date, Review) values (" + InvBookID + ", " + userid + ", 1,\"" + DateTimeSQLite(DateTime.Now) + "\", \"" + review + "\")", dbConnection);
                 insert.ExecuteNonQuery();
+
                 return true;
             }catch(Exception ex)
             {
