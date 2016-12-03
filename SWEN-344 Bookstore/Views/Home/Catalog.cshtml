@@ -36,7 +36,7 @@
     @foreach (var line in info)
     {
         <tr>
-            @for(int i = 0; i < 5; i++)
+            @for(int i = 0; i < 4; i++)
             {
                 <td>
                     @line[i]
@@ -45,21 +45,40 @@
             }
             <td>
                 <!--button-->
-                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">View Book</button>
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
                     <div class="modal-dialog">
 
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
+                                <h4 class="modal-title">@line[0]</h4>
                             </div>
                             <div class="modal-body">
-                                <p>Some text in the modal.</p>
+                                <h6>Author:</h6>
+                                <br />
+                                <p>@line[1]</p>
+                                <br />
+                                <h6>Description</h6>
+                                <br />
+                                <p>@line[2]</p>
+                                <br />
+                                <h6>Price</h6>
+                                <br />
+                                <p>@line[3]</p>
+                                <br />
+                                <h6>Quantity</h6>
+                                <br />
+                                <p>Put Inventory quantity here</p>
+                                <br />
+                                <h6>Reviews</h6>
+                                <p>Reviews Go Here</p>
+
                             </div>
                             <div class="modal-footer">
+                                <a href="~/Views/Home/ShoppingCart.cshtml" class="btn btn-primary">Add to Shopping Cart</a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
