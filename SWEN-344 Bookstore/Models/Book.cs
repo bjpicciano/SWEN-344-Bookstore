@@ -90,7 +90,7 @@ namespace SWEN_344_Bookstore.Models {
             IsEnabled = enabled;
         }
 
-        public void RemoveFromStockStock(int val)
+        public void RemoveFromStock(int val)
         {
             this.Quantity -= val;
         }

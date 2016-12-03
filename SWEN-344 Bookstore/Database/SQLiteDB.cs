@@ -54,6 +54,21 @@ namespace Database_Test
             }
         }
 
+        public Boolean UpdateInventoryBook(int bookid, int quantity, Boolean enabled)
+        {
+            try
+            {
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid  + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE InventoryBookID = " + bookid, dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
         public Boolean CreateReview(int InvBookID, int userid, String review)
         {
             Exception except;
@@ -76,6 +91,27 @@ namespace Database_Test
         {
             string dateTimeFormat = "{0}-{1}-{2} {3}:{4}:{5}.{6}";
             return string.Format(dateTimeFormat, datetime.Year, datetime.Month, datetime.Day, datetime.Hour, datetime.Minute, datetime.Second, datetime.Millisecond);
+        }
+
+        public List<InventoryBook> GetInventoryBooks()
+        {
+            string query = "SELECT * FROM InventoryBook";
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            List<InventoryBook> toReturn = new List<InventoryBook>();
+            while (rdr.Read())
+            {
+                InventoryBook book = new InventoryBook();
+                book.AddToStock(rdr.GetInt32(1));
+                book.SetEnabled(rdr.GetBoolean(2));
+                List<String> reviews = GetReviews(rdr.GetInt32(1));
+                for (int i = 0; i < reviews.Count; i++)
+                {
+                    book.AddReview((String)reviews[i]);
+                }
+                toReturn.Add(book);
+            }
+            return toReturn;
         }
 
         public InventoryBook GetInventoryBook(int InventoryBookID)
@@ -119,7 +155,7 @@ namespace Database_Test
                 }
             }catch(Exception ex)
             {
-                
+                throw ex;
             }
 
             return reviews;
