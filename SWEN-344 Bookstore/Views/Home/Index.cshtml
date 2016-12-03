@@ -20,20 +20,21 @@
     <meta name="google-signin-client_id" content="876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com"></meta>
 </head>
 
-<div id="gConnect">
-    <h3>Oh no, you're not logged in!</h3>
-    <div id="signin-button"></div>
-</div>
-
-<div id="authOps" style="display:none">
-    <h3>Sign-in success</h3>
-
-    <button id="signOut" onclick="auth2.signOut()">Sign Out</button>
-    <div id="profile">
+<body>
+    <div id="gConnect" style="display:none">
+        <h3>Oh no, you're not logged in!</h3>
+        <div id="signin-button"></div>
     </div>
-</div>
 
-<script type="application/javascript">
+    <div id="authOps" style="display:none">
+        <h3>Sign-in success</h3>
+
+        <button id="signOut" onclick="auth2.signOut()">Sign Out</button>
+        <div id="profile">
+        </div>
+    </div>
+
+    <script type="application/javascript">
     var auth2 = {};
     var helper = (function() {
         return {
@@ -109,7 +110,7 @@
      */
     $(document).ready(function() {
         $('#loaderror').hide();
-        if ($('meta')[0].content == 'YOUR CLIENT ID HERE') {
+        if ($('meta')[0].content == '876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com') {
             alert('This sample requires your OAuth credentials (client ID) ' +
                     'from the Google APIs console:\n' +
                     '    https://code.google.com/apis/console/#:access\n\n' +
@@ -164,65 +165,67 @@
             });
         });
     }
-</script>
-<script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
-<div class="jumbotron" id="home" style="display:none">
-    <h1>API Calls</h1>
-    <h2>List of API calls:</h2>
-    <h3>create_book</h3>
-        Here is the call to create a book in the central database:<br/>
-        Book.createBook(Title, Price, Author, Description)<br/>
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+    <div class="jumbotron" id="home" style="display:none">
+        <h1>API Calls</h1>
+        <h2>List of API calls:</h2>
+        <h3>create_book</h3>
+        Here is the call to create a book in the central database:<br />
+        Book.createBook(Title, Price, Author, Description)<br />
         it returns the created book's id: @createdBookID
-    <br/>
-    <br />
-    
+        <br />
+        <br />
 
-    <h3>get_book</h3>
-        Here we get the book we just created:<br/>
+
+        <h3>get_book</h3>
+        Here we get the book we just created:<br />
         Book.GetBook(createdBookID);<br />
         @Book.GetBook(createdBookID)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>get_books</h3>
-        Here we get all the books in the database:<br/>
+        <h3>get_books</h3>
+        Here we get all the books in the database:<br />
         for each book, restAccess.GetBooks();<br />
-        @foreach (Book t in ra.GetBooks()) {
+        @foreach (Book t in ra.GetBooks())
+        {
             @t
-            <br/>
+            <br />
         }
-    <br/>
-    
+        <br />
 
-    <h3>update_book</h3>
-        Lets update the book we created before by defining the author and name.<br/>
+
+        <h3>update_book</h3>
+        Lets update the book we created before by defining the author and name.<br />
         Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br />
-        it returns:<br/>
-        @Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br/>
-        and here is our new book: <br/>
+        it returns:<br />
+        @Book.UpdateBook(createdBookID, "Knowledge", 35, "BOOKSTITLE", "description")<br />
+        and here is our new book: <br />
         Book.GetBook(createdBookID)<br />
         @Book.GetBook(createdBookID)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>delete_last_book</h3>
-        Now we will delete the last book that we created:<br/>
+        <h3>delete_last_book</h3>
+        Now we will delete the last book that we created:<br />
         restAccess.deleteLastBook();<br />
-    <br/>
+        <br />
 
-    <h3>get_user_by_id</h3>
-        lets get a user by id = 1:<br/>
-        restAccess.GetUserByID(1);<br/>
+        <h3>get_user_by_id</h3>
+        lets get a user by id = 1:<br />
+        restAccess.GetUserByID(1);<br />
         @ra.GetUserByID(1)
-    <br/>
-    <br/>
+        <br />
+        <br />
 
-    <h3>get_user_by_email</h3>
-        lets get a user by email = user@example.com:<br/>
-        restAccess.GetUserByEmail("user@example.com");<br/>
+        <h3>get_user_by_email</h3>
+        lets get a user by email = user@example.com:<br />
+        restAccess.GetUserByEmail("user@example.com");<br />
         @ra.GetUserByEmail("user@example.com")
-    <br/>
-    <br/>
-    @*    <p><a href="." class="btn col-xs-12 btn-primary btn-lg">Book &raquo;</a>*@
-    @*    </p>*@
-</div>
+        <br />
+        <br />
+        @*    <p><a href="." class="btn col-xs-12 btn-primary btn-lg">Book &raquo;</a>*@
+        @*    </p>*@
+    </div>
+</body>
