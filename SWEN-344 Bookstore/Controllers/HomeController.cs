@@ -28,7 +28,14 @@ namespace SWEN_344_Bookstore.Controllers {
         public ActionResult Catalog()
         {
             RestAccess ra = RestAccess.GetInstance();
-            IList<Book> books = ra.GetBooks();
+            SQLite_Database sd = SQLite_Database.GetInstance();
+            List<InventoryBook> IBooks = sd.GetInventoryBooks();
+            List<Book> books = new List<Book>();
+            for (int i = 0; i < IBooks.Count; i++)
+            {
+                books.Add(ra.GetBook(IBooks[i].GetBook()));
+            }
+
             List<List<String>> bookInfo = new List<List<String>>();
             for (int i = 0; i < books.Count; i++)
             {
