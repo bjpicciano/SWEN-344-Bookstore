@@ -12,7 +12,7 @@
     List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
 }
     <div class="logged" style="display:none">
-        <h2>Shopping Cart</h2>
+        <h2>Catalog</h2>
         <table border="1">
             <tr>
                 <th>
@@ -28,36 +28,67 @@
                     Price
                 </th>
                 <th>
-                    Purchase Date
-                </th>
-                <th>
                 </th>
             </tr>
             @foreach (var line in info)
             {
                 <tr>
-                    @foreach (var field in line)
+                    @for (int i = 0; i < 4; i++)
                 {
                         <td>
-                            @field
+                            @line[i]
                         </td>
 
                     }
                     <td>
-                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">View Book</button>
+                        <!--button-->
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Modal Header</h4>
+                                        <h4 class="modal-title">@line[0]</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Some text in the modal.</p>
+                                        <h6>Author:</h6>
+                                        <br />
+                                        <p>@line[1]</p>
+                                        <br />
+                                        <h6>Description</h6>
+                                        <br />
+                                        <p>@line[2]</p>
+                                        <br />
+                                        <h6>Price</h6>
+                                        <br />
+                                        <p>@line[3]</p>
+                                        <br />
+                                        <h6>Quantity</h6>
+                                        <br />
+                                        <p>Put Inventory quantity here</p>
+                                        <br />
+                                        <p>@line[5]</p>
+                                        <br />
+                                        <h6>Reviews</h6>
+                                        <p>Reviews Go Here</p>
+                                        <table border="1">
+                                            @foreach (var review in ViewData[line[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @review.review
+                                                    </td>
+                                                    <td>
+                                                        @review.date
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
                                     </div>
                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger">Remove From Shopping Cart</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -68,5 +99,6 @@
             }
         </table>
     </div>
+    <button type="button" class="btn btn-primary btn-lg">Buy Items</button>
 </body>
 </html>

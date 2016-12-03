@@ -63,7 +63,14 @@ namespace SWEN_344_Bookstore.Controllers {
         public ActionResult ShoppingCart()
         {
             RestAccess ra = RestAccess.GetInstance();
-            IList<Book> books = ra.GetBooks();
+            SQLite_Database sd = SQLite_Database.GetInstance();
+            List<InventoryBook> IBooks = sd.GetInventoryBooks();
+            List<Book> books = new List<Book>();
+            for (int i = 0; i < IBooks.Count; i++)
+            {
+                books.Add(ra.GetBook(IBooks[i].GetBook()));
+            }
+
             List<List<String>> bookInfo = new List<List<String>>();
             for (int i = 0; i < books.Count; i++)
             {
@@ -72,8 +79,14 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add(books[i].Author);
                 bookInfo[i].Add(books[i].desc);
                 bookInfo[i].Add("$" + books[i].Price.ToString());
+                bookInfo[i].Add(books[i].BookId.ToString());
+                bookInfo[i].Add(IBooks[i].GetStock().ToString());
             }
             ViewData["bookInfo"] = bookInfo;
+            for (int i = 0; i < IBooks.Count; i++)
+            {
+                ViewData[IBooks[i].GetBook() + "reviews"] = IBooks[i].reviews;
+            }
             return View();
         }
         public ActionResult Reciepts()
