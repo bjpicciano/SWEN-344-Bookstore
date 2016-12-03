@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Windows.Markup;
 using SWEN_344_Bookstore.Models;
 using System.Threading.Tasks;
-using SWEN_344_Bookstore.Models;
 
 namespace SWEN_344_Bookstore.Database
 {
