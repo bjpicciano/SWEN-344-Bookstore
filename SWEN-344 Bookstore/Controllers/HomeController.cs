@@ -76,5 +76,32 @@ namespace SWEN_344_Bookstore.Controllers {
             ViewData["bookInfo"] = bookInfo;
             return View();
         }
+        public ActionResult Reciepts()
+        {
+            {
+                RestAccess ra = RestAccess.GetInstance();
+                SQLite_Database sd = SQLite_Database.GetInstance();
+                List<InventoryBook> IBooks = sd.GetInventoryBooks();
+                List<Book> books = new List<Book>();
+                for (int i = 0; i < IBooks.Count; i++)
+                {
+                    //                books.Add(ra.GetBook(IBooks[i].GetBook()));
+                }
+
+                List<List<String>> bookInfo = new List<List<String>>();
+                for (int i = 0; i < books.Count; i++)
+                {
+                    bookInfo.Add(new List<String>());
+                    bookInfo[i].Add(books[i].Name);
+                    bookInfo[i].Add(books[i].Author);
+                    bookInfo[i].Add(books[i].desc);
+                    bookInfo[i].Add("$" + books[i].Price.ToString());
+                    bookInfo[i].Add(books[i].BookId.ToString());
+                }
+                ViewData["bookInfo"] = bookInfo;
+                return View();
+            }
+        }
+
     }
 }
