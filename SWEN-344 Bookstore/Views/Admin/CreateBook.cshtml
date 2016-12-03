@@ -1,52 +1,74 @@
-﻿
+﻿@using SWEN_344_Bookstore.Database
+
 @{
     ViewBag.Title = "CreateBook";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    RestAccess restAccess = RestAccess.GetInstance();
 }
 
 <div class="col-xs-12">
     <div class="col-sm-6 col-sm-offset-3">
         <h2>Create Book</h2><br />
 
-        <form>
+        <form method="post">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Title:</div>
-                    <input type="text" class="form-control" id="bookTitle" placeholder="Enter Title" required>
+                    <input type="text" name="bookTitle" class="form-control" placeholder="Enter Title" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Author:</div>
-                    <input type="text" class="form-control" id="bookAuthor" placeholder="Enter Author" required>
+                    <input type="text" name="bookAuthor" class="form-control" placeholder="Enter Author" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Description:</div>
-                    <textarea class="form-control" rows="4" placeholder="Book Description" required></textarea>
+                    <textarea type="text" name="bookDescription" class="form-control" rows="4" placeholder="Book Description" required></textarea>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Image:</div>
-                    <button type="submit" class="btn btn-info col-xs-8">Upload Image</button>
+                    <button class="btn btn-info col-xs-8">Upload Image</button>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Price:</div>
-                    <input type="number" class="form-control" id="bookPrice" placeholder="$0.00" required>
+                    <input type="number" name="bookPrice" class="form-control" placeholder="$0.00" required>
                 </div>
             </div>
 
-            <label><input type="checkbox" class="" id="isEnabled"> Is Enabled?</label><br/>
-            <button type="submit" class="btn btn-primary col-xs-3 col-xs-offset-9">Create</button>
-@*            <input value="Create" class="btn btn-primary col-xs-3 col-xs-offset-9" type="Submit" />*@
+            <label><input type="checkbox" name="bookIsEnabled"> Is Enabled?</label><br/>
+            <input type="submit" value="Create" class="btn btn-primary col-xs-3 col-xs-offset-9"/>
+            
+            <br/>
+            
+            @{
+                var title = Request.Form["bookTitle"];
+                var author = Request.Form["bookAuthor"];
+                var description = Request.Form["bookDescription"];
+                var priceString = Request.Form["bookPrice"];
+                var isEnabled = Request.Form["bookIsEnabled"];
+
+                if (title != null && author != null && description != null && priceString != null) {
+                    System.Diagnostics.Debug.WriteLine("!!!!+++!!!===1 HWERE");
+                    float price = float.Parse(priceString);
+                    restAccess.CreateBook(author, price, title, description);
+
+                    if (isEnabled != null && isEnabled == "on") {
+                        //Enable this book right away as an inventory book
+                    }
+                }
+            }
 
         </form>
     </div>
