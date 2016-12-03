@@ -59,18 +59,24 @@ namespace SWEN_344_Bookstore.Models {
         }
     }
 
+    public class Review
+    {
+        public String review;
+        public String date;
+    }
+
     public class InventoryBook {
-        private Book Book { get; set; }
+        private int Book { get; set; }
         private int Quantity { get; set; }
         public bool IsEnabled { get; set; }
-        public List<String> reviews;
+        public List<Review> reviews;
 
         public InventoryBook () {
             this.Quantity = 0;
             this.IsEnabled = false;
         }
 
-        public void AddReview(String review)
+        public void AddReview(Review review)
         {
             reviews.Add(review);
         }
@@ -103,9 +109,14 @@ namespace SWEN_344_Bookstore.Models {
             this.IsEnabled = false;
         }
 
-        internal Book GetBook()
+        public int GetBook()
         {
-            throw new NotImplementedException();
+            return Book;
+        }
+
+        public void SetBook(int i)
+        {
+            Book = i;
         }
 
         internal void incStock()
