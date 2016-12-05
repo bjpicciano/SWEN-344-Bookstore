@@ -1,23 +1,9 @@
-﻿@using SWEN_344_Bookstore.Database
-@using SWEN_344_Bookstore.Models
-@{
+﻿@{
     ViewBag.Title = "Home Page";
-
-    RestAccess ra = RestAccess.GetInstance();
-
-    ra.DeleteAllBooks();
-
-    List<Book> books = Book.GetBooks();
-
 }
-
-<br />
-
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <meta name="google-signin-client_id" content="876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com">
+    <meta http-equiv="refresh" content="0; url=Catalog" />
 </head>
-
 <body>
-<h1>Home</h1>
+    <p><a href="http://example.com/">Redirect</a></p>
 </body>
