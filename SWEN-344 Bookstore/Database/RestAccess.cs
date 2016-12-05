@@ -84,7 +84,7 @@ namespace SWEN_344_Bookstore.Database
             }
         }
 
-        /* Tries to create a book with the information given. If it succeeds, it returns a task with a result of true.
+        /* Tries to create a book with the information given. If it succeeds, it returns the id of the new book.
          * If it fails, it returns a task with a result of false.
          */ 
         public int CreateBook(String auth, float price, String name, String desc)
@@ -92,6 +92,15 @@ namespace SWEN_344_Bookstore.Database
             HttpResponseMessage response = client.PostAsync("Book.php?action=create_book&author=" + FormatSpaces(auth) + "&price=" + price + "&name=" + FormatSpaces(name) + "&description=" + FormatSpaces(desc), null).Result;
             if (response.IsSuccessStatusCode)
             {
+                return Convert.ToInt32(GetFieldsFromJSON((response.Content.ReadAsStringAsync().Result)).ToArray()[0]);
+            }
+            return -1;
+        }
+
+        public int CreateMessage (int senderID, int recipientID, string body)
+        {
+            HttpResponseMessage response = client.PostAsync("Message.php?action=create_message&senderid=" + senderID + "&recipientID=" + recipientID + "&body=" + FormatSpaces(body), null).Result;
+            if (response.IsSuccessStatusCode) {
                 return Convert.ToInt32(GetFieldsFromJSON((response.Content.ReadAsStringAsync().Result)).ToArray()[0]);
             }
             return -1;
