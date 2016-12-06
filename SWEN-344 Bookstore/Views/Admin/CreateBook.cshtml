@@ -49,21 +49,29 @@
                     <input type="number" name="bookPrice" class="form-control" placeholder="$0.00" step="any" min="0" required>
                 </div>
             </div>
-
-            <label><input type="checkbox" name="bookIsEnabled"> Is Enabled?</label><br/>
-            <input type="submit" value="Create" class="btn btn-primary col-xs-3 col-xs-offset-9"/>
             
-            <br/>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Quantity:</div>
+                    <input type="number" name="bookQuantity" class="form-control col-xs-4" value="1" min="0"><br />
+                </div>
+            </div><br/>
+
+            <label><input type="checkbox" name="bookIsEnabled"> Is Enabled?</label><br />
+            <input type="submit" value="Create" class="btn btn-primary col-xs-3 col-xs-offset-9"/>
             
             @{
                 var title = Request.Form["bookTitle"];
                 var author = Request.Form["bookAuthor"];
                 var description = Request.Form["bookDescription"];
                 var priceString = Request.Form["bookPrice"];
+                var quantityString = Request.Form["bookQuantity"];
                 var isEnabledString = Request.Form["bookIsEnabled"];
 
-                if (title != null && author != null && description != null && priceString != null) {
+                if (title != null && author != null && description != null && priceString != null && quantityString != null) {
                     float price = float.Parse(priceString); //Convert string to float
+                    int quantity = int.Parse(quantityString); //Convert string to float
+
 
                     var bookid = remoteAccess.CreateBook(author, price, title, description); //Create the book
 
@@ -73,7 +81,7 @@
                     }
 
                     if (bookid != -1) {
-                        localAccess.CreateInventoryBook(bookid, 0, isEnabled);
+                        localAccess.CreateInventoryBook(bookid, quantity, isEnabled);
                     }
                 }
             }
