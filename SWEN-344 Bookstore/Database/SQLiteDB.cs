@@ -132,10 +132,10 @@ namespace Database_Test
             SQLiteDataReader rdr = command.ExecuteReader();
             InventoryBook toReturn = new InventoryBook();
             rdr.Read();
-            toReturn.AddToStock(rdr.GetInt32(3));
-            toReturn.SetEnabled(rdr.GetBoolean(4));
-            toReturn.SetBook(rdr.GetInt32(1));
-            toReturn.reviews = GetReviews(rdr.GetInt32(0));
+                toReturn.AddToStock(rdr.GetInt32(3));
+                toReturn.SetEnabled(rdr.GetBoolean(4));
+                toReturn.SetBook(rdr.GetInt32(1));
+                toReturn.reviews = GetReviews(rdr.GetInt32(0));
             rdr.Close();
             return toReturn;
         }
