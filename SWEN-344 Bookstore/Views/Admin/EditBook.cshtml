@@ -10,30 +10,34 @@
 }
 
 @{
-@*    var invBook = ;*@
-@*    var book = ;*@
-@**@
-@*    var title = Request.Form["bookTitle"];*@
-@*    var author = Request.Form["bookAuthor"];*@
-@*    var description = Request.Form["bookDescription"];*@
-@*    var priceString = Request.Form["bookPrice"];*@
-@*    var isEnabledString = Request.Form["bookIsEnabled"];*@
-@**@
-@*    if (title != null && author != null && description != null && priceString != null) {*@
-@*        float price = float.Parse(priceString); //Convert string to float*@
-@**@
-@*        var bookid = remoteAccess.CreateBook(author, price, title, description); //Create the book*@
-@**@
-@*        var isEnabled = false;*@
-@*        if (isEnabledString != null && isEnabledString == "on") {*@
-@*            isEnabled = true;*@
-@*        }*@
-@**@
-@*        if (bookid != -1) {*@
-@*            localAccess.CreateInventoryBook(bookid, 0, isEnabled);*@
-@*        }*@
-@*    }*@
-@*}*@
+    var id = 935;
+    var invBook = localAccess.GetInventoryBookByRemoteBookID(id);
+    var book = remoteAccess.GetBook(id);
+
+    System.Diagnostics.Debug.Print(invBook.ToString());
+    System.Diagnostics.Debug.Print(book.ToString());
+
+    var title = Request.Form["bookTitle"];
+    var author = Request.Form["bookAuthor"];
+    var description = Request.Form["bookDescription"];
+    var priceString = Request.Form["bookPrice"];
+    var isEnabledString = Request.Form["bookIsEnabled"];
+
+    if (title != null && author != null && description != null && priceString != null) {
+        float price = float.Parse(priceString); //Convert string to float
+
+        var bookid = remoteAccess.CreateBook(author, price, title, description); //Create the book
+
+        var isEnabled = false;
+        if (isEnabledString != null && isEnabledString == "on") {
+            isEnabled = true;
+        }
+
+        if (bookid != -1) {
+            localAccess.CreateInventoryBook(bookid, 0, isEnabled);
+        }
+    }
+}
 
 <div class="col-xs-12">
     <div class="col-sm-6 col-sm-offset-3">
