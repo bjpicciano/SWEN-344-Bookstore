@@ -1,0 +1,13 @@
+﻿@using Database_Test
+@using SWEN_344_Bookstore.Database
+
+@{
+    ViewBag.Title = "EditBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    RestAccess remoteAccess = RestAccess.GetInstance();
+    SQLite_Database localAccess = SQLite_Database.GetInstance();
+}
+
+<h2>EditBook</h2>
+
