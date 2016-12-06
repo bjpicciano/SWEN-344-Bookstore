@@ -11,11 +11,15 @@
         ViewBag.Title = "Catalog";
         Layout = "~/Views/Shared/_Layout.cshtml";
         List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
-
+        List<String> selectedBook = ViewData["showline"] as List<String>;
+        if(selectedBook == null)
+        {
+            selectedBook = new List<String>(){"dummy","dummy","dummy","dummy","dummy","dummy"};
+        }
     }
     <div class="logged" style="display:none">
         <h2>Catalog</h2>
-        <table class="table table-bordered">
+        <table border="1">
             <tr>
                 <th>
                     Title
@@ -30,14 +34,13 @@
                     Price
                 </th>
                 <th>
-                    More Info
                 </th>
             </tr>
             @foreach (var line in info)
             {
                 <tr>
                     @for (int i = 0; i < 4; i++)
-                {
+                    {
                         <td>
                             @line[i]
                         </td>
@@ -45,55 +48,64 @@
                     }
                     <td>
                         <!--button-->
-                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h1 class="modal-title">@line[0]</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4>Author:</h4>
-                                        <br />
-                                        <p>@line[1]</p>
-                                        <br />
-                                        <h4>Description:</h4>
-                                        <br />
-                                        <p>@line[2]</p>
-                                        <br />
-                                        <h4>Price:</h4>
-                                        <br />
-                                        <p>@line[3]</p>
-                                        <br />
-                                        <h4>Quantity:</h4>
-                                        <br />
-                                        <p>@line[5]</p>
-                                        <br />
-                                        <h4>Reviews:</h4>
-                                        <table border="1"> 
-                                            @foreach (var review in ViewData[line[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
-                                            {
-                                                <tr> 
-                                                    <td> @review.review </td> 
-                                                    <td> @review.date </td> 
-                                                </tr> 
-                                            } 
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="/Home/ShoppingCart" class="btn btn-primary">Add to Shopping Cart</a>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("Catalog", "Home", new { showid = line[4] })'">View Book</button>
+
                     </td>
                 </tr>
             }
         </table>
     </div>
-</body>
+
+
+    <!-- Modal -->
+    @if (Convert.ToBoolean(ViewData["showmodal"]))
+    {
+        
+        <div class="modal show" id=@("popup") role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="location.href='@Url.Action("Catalog", "Home")'">&times;</button>
+                        <h4 class="modal-title">@selectedBook[0]</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Author:</h6>
+                        <br />
+                        <p>@selectedBook[1]</p>
+                        <br />
+                        <h6>Description</h6>
+                        <br />
+                        <p>@selectedBook[2]</p>
+                        <br />
+                        <h6>Price</h6>
+                        <br />
+                        <p>@selectedBook[3]</p>
+                        <br />
+                        <h6>Quantity</h6>
+                        <br />
+                        <p>Put Inventory quantity here</p>
+                        <br />
+                        <p>@selectedBook[5]</p>
+                        <br />
+                        <h6>Reviews</h6>
+                        <table border="1">
+                            @foreach (var review in ViewData[selectedBook[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
+                            {
+                                <tr>
+                                    <td> @review.review </td>
+                                    <td> @review.date </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/Home/ShoppingCart" class="btn btn-primary">Add to Shopping Cart</a>
+                        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </body>
 </html>
