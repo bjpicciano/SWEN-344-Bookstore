@@ -42,6 +42,7 @@ namespace SWEN_344_Bookstore.Controllers {
             List<List<String>> bookInfo = new List<List<String>>();
             for (int i = 0; i < IBooks.Count; i++)
             {
+                //System.Diagnostics.Debug.Print(IBooks[i].GetBook().ToString());
                 Book b = ra.GetBook(IBooks[i].GetBook());
                 bookInfo.Add(new List<String>());
                 bookInfo[i].Add(b.Name);
@@ -103,6 +104,8 @@ namespace SWEN_344_Bookstore.Controllers {
             }
             return View();
         }
+
+
         public ActionResult Reciepts()
         {
             {
