@@ -204,6 +204,25 @@ namespace Database_Test
 
         public List<Transaction> GetTransactionByUserID(int UserID)
         {
+            string query = "SELECT * FROM Transaction where UserId == " + UserID;
+            List<Transaction> trans = new List<Transaction>();
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            try
+            {
+                Transaction t = new Transaction(UserID);
+                while (rdr.Read())
+                {
+                    t = new Transaction(UserID);
+                    t.bookID = rdr.GetInt32(1);
+                    trans.Add(t);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return trans;
 
         }
     }
