@@ -17,7 +17,7 @@ namespace SWEN_344_Bookstore.Models {
 
         public override string ToString()
         {
-            return "Name: " + Name + " Author:" + Author + " Price:" + Price + " Desc:" + desc + " ID:" + BookId;
+            return "Book! Name: " + Name + ", Author: " + Author + ", Price: " + Price + ", Desc: " + desc + ", ID: " + BookId;
         }
 
         /*
@@ -74,6 +74,10 @@ namespace SWEN_344_Bookstore.Models {
         public InventoryBook () {
             this.Quantity = 0;
             this.IsEnabled = false;
+        }
+
+        public override string ToString() {
+            return "InventoryBook! BookID: " + Book + ", Quantity: " + Quantity + ", IsEnabled: " + IsEnabled;
         }
 
         public void AddReview(Review review)

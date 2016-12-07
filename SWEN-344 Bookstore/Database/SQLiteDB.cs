@@ -66,6 +66,17 @@ namespace Database_Test
             }
         }
 
+        public Boolean UpdateInventoryBookFromBookID(int bookid, int quantity, Boolean enabled) {
+            try {
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE BookID = " + bookid, dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
         public Boolean CreateReview(int InvBookID, int userid, String review)
         {
             Exception except;
@@ -123,6 +134,20 @@ namespace Database_Test
             toReturn.SetEnabled(rdr.GetBoolean(4));
             toReturn.SetBook(rdr.GetInt32(1));
             toReturn.reviews = GetReviews(rdr.GetInt32(0));
+            rdr.Close();
+            return toReturn;
+        }
+
+        public InventoryBook GetInventoryBookByRemoteBookID(int RemoteBookID) {
+            string query = "SELECT * FROM InventoryBook where BookID == " + RemoteBookID;
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            InventoryBook toReturn = new InventoryBook();
+            rdr.Read();
+                toReturn.AddToStock(rdr.GetInt32(3));
+                toReturn.SetEnabled(rdr.GetBoolean(4));
+                toReturn.SetBook(rdr.GetInt32(1));
+                toReturn.reviews = GetReviews(rdr.GetInt32(0));
             rdr.Close();
             return toReturn;
         }

@@ -18,14 +18,34 @@ namespace SWEN_344_Bookstore.Database
 
 
         private const String URL = "http://vm344e.se.rit.edu/api/";
+        private const String currencyURL = "http://api.fixer.io/latest?base=USD";
+        public Dictionary<String,int> CurrRates = new Dictionary<string, int>();
         private HttpClient client;
 
         private RestAccess()
         {
             client = new HttpClient();
+            client.BaseAddress = new Uri(currencyURL);
+            client.DefaultRequestHeaders.Accept.Clear();
+            //populateCurrRates();
+            client = new HttpClient();
             client.BaseAddress = new Uri(URL);
             client.DefaultRequestHeaders.Accept.Clear();
         }
+
+        private void populateCurrRates()
+        {
+            
+            //dynamic json = System.Web.Helpers.Json.Decode(@"{ ""Name"": ""Jon Smith"", ""Address"": { ""City"": ""New York"", ""State"": ""NY"" }, ""Age"": 42 }");
+            dynamic json = System.Web.Helpers.Json.Decode(GetString(""));
+            CurrRates["CAN"] = json.rates.CAN;
+            CurrRates["AUD"] = json.rates.AUD;
+            CurrRates["GBP"] = json.rates.GBP;
+            CurrRates["JPY"] = json.rates.JPY;
+            CurrRates["EUR"] = json.rates.EUR;
+            CurrRates["NZD"] = json.rates.NZD;
+            CurrRates["RUB"] = json.rates.RUB;
+        } 
 
         public User GetUserByEmail(String email)
         {
@@ -125,19 +145,19 @@ namespace SWEN_344_Bookstore.Database
          */ 
         public Boolean UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            Book[] books = GetBooks().ToArray();
-            Boolean isThere = false;
-            for(int i = 0; i < books.Length; i++)
-            {
-                if (books[i].BookId == bookID)
-                {
-                    isThere = true;
-                }
-            }
-            if (!isThere)
-            {
-                return false;
-            }
+//            Book[] books = GetBooks().ToArray();
+//            Boolean isThere = false;
+//            for(int i = 0; i < books.Length; i++)
+//            {
+//                if (books[i].BookId == bookID)
+//                {
+//                    isThere = true;
+//                }
+//            }
+//            if (!isThere)
+//            {
+//                return false;
+//            }
             HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + FormatSpaces(auth) + "&price=" + price + "&name=" + FormatSpaces(name) + "&description=" + FormatSpaces(desc), null).Result;
             return true;
         }
@@ -169,7 +189,7 @@ namespace SWEN_344_Bookstore.Database
             return books;
         }
 
-        /*This method gets the response string from the api. To actually access the string returned, call GetString(param).Result
+        /*This method gets the response string from the api.
          */
         public String GetString(String paramater)
         {

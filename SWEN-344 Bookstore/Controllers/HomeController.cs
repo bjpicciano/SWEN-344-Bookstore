@@ -25,11 +25,19 @@ namespace SWEN_344_Bookstore.Controllers {
             return View();
         }
 
-        public ActionResult Catalog()
+        public ActionResult Catalog(String showid = null)
         {
             RestAccess ra = RestAccess.GetInstance();
             SQLite_Database sd = SQLite_Database.GetInstance();
             List<InventoryBook> IBooks = sd.GetInventoryBooks();
+            List<String> showline = null;
+            int sbid = -99;
+            ViewData["showmodal"] = false;
+            if (showid != null)
+            {
+                sbid = Convert.ToInt32(showid);
+                ViewData["showmodal"] = true;
+            }
 
             List<List<String>> bookInfo = new List<List<String>>();
             for (int i = 0; i < IBooks.Count; i++)
@@ -44,8 +52,21 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add(b.BookId.ToString());
                 bookInfo[i].Add(IBooks[i].GetStock().ToString());
                 ViewData[(b.BookId + "reviews")] = IBooks[i].reviews;
+                if(b.BookId == sbid)
+                {
+                    showline = bookInfo[i];
+                }
             }
             ViewData["bookInfo"] = bookInfo;
+            ViewData["showline"] = null;
+            if(showid != null)
+            {
+                ViewData["showline"] = showline;
+                System.Diagnostics.Debug.Print(showline + " showid");
+            }
+
+            ViewData["convert"] = RestAccess.GetInstance().CurrRates;
+
             return View();
         }
             

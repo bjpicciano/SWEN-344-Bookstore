@@ -13,8 +13,18 @@ namespace SWEN_344_Bookstore.Controllers
         {
             return View();
         }
+
         public ActionResult CreateBook()
         {
+
+            return View();
+        }
+
+        public ActionResult EditBook(string id = null) {
+
+            if (id != null) {
+                ViewData["bookID"] = int.Parse(id);
+            }
 
             return View();
         }
