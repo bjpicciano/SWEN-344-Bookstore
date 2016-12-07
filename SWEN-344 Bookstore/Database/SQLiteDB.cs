@@ -190,7 +190,7 @@ namespace Database_Test
                 {
                     s = new ShoppingCartBook(UserID);
                     s.bookID = rdr.GetInt32(2);
-                    s.Date = rdr.GetString(4);
+                    //s.Date = rdr.GetString(4);
                     shoppingcart.Add(s);
                 }
             }

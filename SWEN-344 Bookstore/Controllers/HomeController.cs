@@ -75,12 +75,9 @@ namespace SWEN_344_Bookstore.Controllers {
         {
             return View();
         }
-        public ActionResult ShoppingCart(int UserId)
+        public ActionResult ShoppingCart()
         {
-            UserId = 54;
-            SQLite_Database sd = SQLite_Database.GetInstance();
-            List<ShoppingCartBook> SBooks = sd.GetUsersShoppingCart(UserId);
-          
+            return View();
         }
 
 
