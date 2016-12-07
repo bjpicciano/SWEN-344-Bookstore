@@ -201,6 +201,11 @@ namespace Database_Test
 
             return shoppingcart;
         }
+
+        public List<Transaction> GetTransactionByUserID(int UserID)
+        {
+
+        }
     }
 
 }

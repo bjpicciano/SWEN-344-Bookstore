@@ -34,7 +34,7 @@ namespace SWEN_344_Bookstore.Models {
         {
             return restAPI.GetBooks();
         }
-        
+
         public static Boolean UpdateBook(int bookId, String author, float price, String name, String description)
         {
             return restAPI.UpdateBook(bookId, author, price, name, description);
@@ -55,7 +55,7 @@ namespace SWEN_344_Bookstore.Models {
 
 
         // Database call
-        public void AddReview (string review) {
+        public void AddReview(string review) {
         }
     }
 
@@ -71,7 +71,7 @@ namespace SWEN_344_Bookstore.Models {
         public bool IsEnabled { get; set; }
         public List<Review> reviews;
 
-        public InventoryBook () {
+        public InventoryBook() {
             this.Quantity = 0;
             this.IsEnabled = false;
         }
@@ -85,12 +85,12 @@ namespace SWEN_344_Bookstore.Models {
             reviews.Add(review);
         }
 
-        public int GetStock (/*SQLiteConnection db*/) {
-           // db.Update;
+        public int GetStock(/*SQLiteConnection db*/) {
+            // db.Update;
             return this.Quantity;
         }
 
-        public void AddToStock (int quantity)
+        public void AddToStock(int quantity)
         {
             Quantity += quantity;
         }
@@ -105,11 +105,11 @@ namespace SWEN_344_Bookstore.Models {
             this.Quantity -= val;
         }
 
-        public void Enable () {
+        public void Enable() {
             this.IsEnabled = true;
         }
 
-        public void Disable () {
+        public void Disable() {
             this.IsEnabled = false;
         }
 
@@ -138,7 +138,7 @@ namespace SWEN_344_Bookstore.Models {
         {
             this.bookID = bookID;
         }
-        
+
 
     }
 
@@ -146,11 +146,16 @@ namespace SWEN_344_Bookstore.Models {
     {
         public int PurchaseDate { get; set; }
         public int UserID { get; set; }
-        public int BookID { get; set; }
+        public int bookID { get; set; }
         public int BookStoreID { get; set; }
         public string Date { get; set; }
         public int Price { get; set; }
-        
-    }
 
+
+
+        public Transaction(int bookID)
+        {
+            this.bookID = bookID;
+        }
+    }
 }
