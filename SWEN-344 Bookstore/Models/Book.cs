@@ -158,15 +158,14 @@ namespace SWEN_344_Bookstore.Models {
             this.bookID = bookID;
         }
 
-        public static bool PurchaseShoppingCart(List<ShoppingCartBook> sBooks, int userID, int bookstoreID) {
+        public static bool PurchaseShoppingCart(List<ShoppingCartBook> sBooks) {
             SQLite_Database localAccess = SQLite_Database.GetInstance();
             RestAccess remoteAccess = RestAccess.GetInstance();
 
-
+            //Loop through each book and create a transaction
             foreach (var sBook in sBooks) {
-                var book = 
-                localAccess.createTransaction(bookstoreID, sBook.UserID, sBook.bookID);
-                
+                var price = remoteAccess.GetBook(sBook.bookID).Price; //Get book's price
+                localAccess.CreateTransaction(sBook.UserID, sBook.bookID, sBook.Date, price);
             }
 
             return false;

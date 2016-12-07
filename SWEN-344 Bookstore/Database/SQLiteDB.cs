@@ -225,6 +225,21 @@ namespace Database_Test
             return trans;
 
         }
+
+        public Boolean CreateTransaction(int userID, int bookID, string date, float price) {
+            String command = "insert into Transaction(" +
+                             "UserID, BookStoreID, Date, Price, BookID) values (" +
+                             "@UserID, 1, '@Date', @Price, @BookID)";
+            SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
+            insert.Parameters.Add(new SQLiteParameter("@UserID", userID));
+            //insert.Parameters.Add(new SQLiteParameter("@Date", date));
+            insert.Parameters.Add(new SQLiteParameter("@Price", price));
+            insert.Parameters.Add(new SQLiteParameter("@BookID", bookID));
+            insert.ExecuteNonQuery();
+
+            //HANDLE MONEY FROM BOOKSTORE
+            return true;
+        }
     }
 
 }
