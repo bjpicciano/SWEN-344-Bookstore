@@ -66,6 +66,17 @@ namespace Database_Test
             }
         }
 
+        public Boolean UpdateInventoryBookFromBookID(int bookid, int quantity, Boolean enabled) {
+            try {
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE BookID = " + bookid, dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
         public Boolean CreateReview(int InvBookID, int userid, String review)
         {
             Exception except;

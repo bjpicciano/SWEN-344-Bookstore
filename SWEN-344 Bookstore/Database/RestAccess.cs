@@ -145,19 +145,19 @@ namespace SWEN_344_Bookstore.Database
          */ 
         public Boolean UpdateBook(int bookID, String auth, float price, String name, String desc)
         {
-            Book[] books = GetBooks().ToArray();
-            Boolean isThere = false;
-            for(int i = 0; i < books.Length; i++)
-            {
-                if (books[i].BookId == bookID)
-                {
-                    isThere = true;
-                }
-            }
-            if (!isThere)
-            {
-                return false;
-            }
+//            Book[] books = GetBooks().ToArray();
+//            Boolean isThere = false;
+//            for(int i = 0; i < books.Length; i++)
+//            {
+//                if (books[i].BookId == bookID)
+//                {
+//                    isThere = true;
+//                }
+//            }
+//            if (!isThere)
+//            {
+//                return false;
+//            }
             HttpResponseMessage response = client.PostAsync("Book.php?action=update_book&id=" + bookID + "&author=" + FormatSpaces(auth) + "&price=" + price + "&name=" + FormatSpaces(name) + "&description=" + FormatSpaces(desc), null).Result;
             return true;
         }
