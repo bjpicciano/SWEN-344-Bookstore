@@ -142,4 +142,15 @@ namespace SWEN_344_Bookstore.Models {
 
     }
 
+    public class Transaction
+    {
+        public int PurchaseDate { get; set; }
+        public int UserID { get; set; }
+        public int BookID { get; set; }
+        public int BookStoreID { get; set; }
+        public string Date { get; set; }
+        public int Price { get; set; }
+        
+    }
+
 }
