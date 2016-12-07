@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+﻿@using Database_Test
+@using SWEN_344_Bookstore.Database
+@using SWEN_344_Bookstore.Models
 
-</head>
-
-<body>
-   
 @{
     ViewBag.Title = "ShoppingCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
+    SQLite_Database sd = SQLite_Database.GetInstance();
+    RestAccess remoteAccess = RestAccess.GetInstance();
+    var UserId = 54;
+    List<ShoppingCartBook> SBooks = sd.GetUsersShoppingCart(UserId);
 }
     <div class="logged" style="display:none">
         <h2>Shopping Cart</h2>
@@ -30,62 +30,53 @@
                 <th>
                 </th>
             </tr>
-            @foreach (var line in info)
+            @foreach (var sbook in SBooks)
             {
+                   @ var book = remoteAccess.GetBook(sbook.bookID);
                 <tr>
-                    @for (int i = 0; i < 4; i++)
-                {
-                        <td>
-                            @line[i]
-                        </td>
-
-                    }
+                    <td>
+                        @book.Author
+                    </td>
+                    <td>
+                        @book.Price
+                    </td>
+                    <td>
+                        @book.Name
+                    </td>
+                    <td>
+                        @book.desc
+                    </td>
                     <td>
                         <!--button-->
-                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + @book.BookId)>View Book</button>
                         <!-- Modal -->
-                        <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
+                        <div class="modal fade" id=@("popup_" + @book.BookId) role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">@line[0]</h4>
+                                        <h4 class="modal-title">book.Title</h4>
                                     </div>
                                     <div class="modal-body">
                                         <h6>Author:</h6>
                                         <br />
-                                        <p>@line[1]</p>
+                                        <p>@book.Author</p>
                                         <br />
                                         <h6>Description</h6>
                                         <br />
-                                        <p>@line[2]</p>
+                                        <p>@book.desc</p>
                                         <br />
                                         <h6>Price</h6>
                                         <br />
-                                        <p>@line[3]</p>
+                                        <p>@book.Price</p>
                                         <br />
                                         <h6>Quantity</h6>
                                         <br />
-                                        <p>Put Inventory quantity here</p>
-                                        <br />
-                                        <p>@line[5]</p>
+                                        <p></p>
                                         <br />
                                         <h6>Reviews</h6>
                                         <p>Reviews Go Here</p>
-                                        <table border="1">
-                                            @foreach (var review in ViewData[line[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @review.review
-                                                    </td>
-                                                    <td>
-                                                        @review.date
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </table>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger">Remove From Shopping Cart</button>

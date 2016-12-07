@@ -128,4 +128,18 @@ namespace SWEN_344_Bookstore.Models {
             throw new NotImplementedException();
         }
     }
+    public class ShoppingCartBook
+    {
+        public int bookID { get; set; }
+        public string Date { get; set; }
+        public int UserID { get; set; }
+
+        public ShoppingCartBook(int bookID)
+        {
+            this.bookID = bookID;
+        }
+        
+
+    }
+
 }
