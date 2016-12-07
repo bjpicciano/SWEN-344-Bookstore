@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SQLite;
+using Database_Test;
+using SWEN_344_Bookstore.Database;
 
 
 namespace SWEN_344_Bookstore.Models {
@@ -151,11 +153,23 @@ namespace SWEN_344_Bookstore.Models {
         public string Date { get; set; }
         public int Price { get; set; }
 
-
-
         public Transaction(int bookID)
         {
             this.bookID = bookID;
+        }
+
+        public static bool PurchaseShoppingCart(List<ShoppingCartBook> sBooks, int userID, int bookstoreID) {
+            SQLite_Database localAccess = SQLite_Database.GetInstance();
+            RestAccess remoteAccess = RestAccess.GetInstance();
+
+
+            foreach (var sBook in sBooks) {
+                var book = 
+                localAccess.createTransaction(bookstoreID, sBook.UserID, sBook.bookID);
+                
+            }
+
+            return false;
         }
     }
 }

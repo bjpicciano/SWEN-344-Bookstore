@@ -5,9 +5,10 @@
 @{
     ViewBag.Title = "ShoppingCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
+
     SQLite_Database sd = SQLite_Database.GetInstance();
     RestAccess remoteAccess = RestAccess.GetInstance();
+
     var UserId = 54;
     List<ShoppingCartBook> SBooks = sd.GetUsersShoppingCart(UserId);
 }
@@ -90,8 +91,5 @@
             }
         </table>
         <br/>
-        <button type="button" class="btn btn-primary btn-lg">Buy Items</button>
+        <button type="button" onclick="@Transaction.PurchaseShoppingCart(PARAMS)" class="btn btn-primary btn-lg">Buy Items</button>
     </div>
-    
-</body>
-</html>
