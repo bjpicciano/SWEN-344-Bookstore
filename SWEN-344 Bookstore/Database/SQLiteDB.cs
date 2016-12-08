@@ -17,7 +17,7 @@ namespace Database_Test
 
         public static SQLite_Database GetInstance()
         {
-            if(singletonInstance == null)
+            if (singletonInstance == null)
             {
                 singletonInstance = new SQLite_Database();
             }
@@ -55,12 +55,23 @@ namespace Database_Test
         {
             try
             {
-                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid  + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE InventoryBookID = " + IBookID, dbConnection);
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE InventoryBookID = " + IBookID, dbConnection);
                 insert.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
+        public Boolean UpdateInventoryBookFromBookID(int bookid, int quantity, Boolean enabled) {
+            try {
+                SQLiteCommand insert = new SQLiteCommand("UPDATE InventoryBook SET BookID = " + bookid + ", Quantity = " + quantity + ", Enabled = " + enabled + " WHERE BookID = " + bookid, dbConnection);
+                insert.ExecuteNonQuery();
+                return true;
+            } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
                 return false;
             }
@@ -75,7 +86,8 @@ namespace Database_Test
                 insert.ExecuteNonQuery();
 
                 return true;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
                 except = ex;
@@ -118,10 +130,10 @@ namespace Database_Test
             SQLiteDataReader rdr = command.ExecuteReader();
             InventoryBook toReturn = new InventoryBook();
             rdr.Read();
-                toReturn.AddToStock(rdr.GetInt32(3));
-                toReturn.SetEnabled(rdr.GetBoolean(4));
-                toReturn.SetBook(rdr.GetInt32(1));
-                toReturn.reviews = GetReviews(rdr.GetInt32(0));
+            toReturn.AddToStock(rdr.GetInt32(3));
+            toReturn.SetEnabled(rdr.GetBoolean(4));
+            toReturn.SetBook(rdr.GetInt32(1));
+            toReturn.reviews = GetReviews(rdr.GetInt32(0));
             rdr.Close();
             return toReturn;
         }
@@ -132,10 +144,10 @@ namespace Database_Test
             SQLiteDataReader rdr = command.ExecuteReader();
             InventoryBook toReturn = new InventoryBook();
             rdr.Read();
-            toReturn.AddToStock(rdr.GetInt32(3));
-            toReturn.SetEnabled(rdr.GetBoolean(4));
-            toReturn.SetBook(rdr.GetInt32(1));
-            toReturn.reviews = GetReviews(rdr.GetInt32(0));
+                toReturn.AddToStock(rdr.GetInt32(3));
+                toReturn.SetEnabled(rdr.GetBoolean(4));
+                toReturn.SetBook(rdr.GetInt32(1));
+                toReturn.reviews = GetReviews(rdr.GetInt32(0));
             rdr.Close();
             return toReturn;
         }
@@ -156,12 +168,80 @@ namespace Database_Test
                     r.date = rdr.GetString(4);
                     reviews.Add(r);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
 
             return reviews;
         }
+
+        public List<ShoppingCartBook> GetUsersShoppingCart(int UserID)
+        {
+            string query = "SELECT * FROM ShoppingCartBook where UserId == " + UserID;
+            List<ShoppingCartBook> shoppingcart = new List<ShoppingCartBook>();
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            try
+            {
+                ShoppingCartBook s = new ShoppingCartBook(UserID);
+                while (rdr.Read())
+                {
+                    s = new ShoppingCartBook(UserID);
+                    s.bookID = rdr.GetInt32(2);
+                    //s.Date = rdr.GetString(4);
+                    shoppingcart.Add(s);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return shoppingcart;
+        }
+
+        public List<Transaction> GetTransactionByUserID(int UserID)
+        {
+            string query = "SELECT * FROM Transaction where UserId == " + UserID;
+            List<Transaction> trans = new List<Transaction>();
+            SQLiteCommand command = new SQLiteCommand(query, dbConnection);
+            SQLiteDataReader rdr = command.ExecuteReader();
+            try
+            {
+                Transaction t = new Transaction(UserID);
+                while (rdr.Read())
+                {
+                    t = new Transaction(UserID);
+                    t.bookID = rdr.GetInt32(1);
+                    trans.Add(t);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return trans;
+
+        }
+
+        public Boolean CreateTransaction(int userID, int bookID, string date, float price) {
+            String command = "insert into Transaction(" +
+                             "UserID, BookStoreID, Date, Price, BookID) values (" +
+                             "@UserID, 1, '@Date', @Price, @BookID)";
+            SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
+            insert.Parameters.Add(new SQLiteParameter("@UserID", userID));
+            //insert.Parameters.Add(new SQLiteParameter("@Date", date));
+            insert.Parameters.Add(new SQLiteParameter("@Price", price));
+            insert.Parameters.Add(new SQLiteParameter("@BookID", bookID));
+            insert.ExecuteNonQuery();
+
+            //HANDLE MONEY FROM BOOKSTORE
+            return true;
+        }
     }
+
 }
+
+

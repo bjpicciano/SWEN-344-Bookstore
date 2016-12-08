@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SQLite;
+using Database_Test;
+using SWEN_344_Bookstore.Database;
 
 
 namespace SWEN_344_Bookstore.Models {
@@ -34,7 +36,7 @@ namespace SWEN_344_Bookstore.Models {
         {
             return restAPI.GetBooks();
         }
-        
+
         public static Boolean UpdateBook(int bookId, String author, float price, String name, String description)
         {
             return restAPI.UpdateBook(bookId, author, price, name, description);
@@ -55,7 +57,7 @@ namespace SWEN_344_Bookstore.Models {
 
 
         // Database call
-        public void AddReview (string review) {
+        public void AddReview(string review) {
         }
     }
 
@@ -71,7 +73,7 @@ namespace SWEN_344_Bookstore.Models {
         public bool IsEnabled { get; set; }
         public List<Review> reviews;
 
-        public InventoryBook () {
+        public InventoryBook() {
             this.Quantity = 0;
             this.IsEnabled = false;
         }
@@ -85,12 +87,12 @@ namespace SWEN_344_Bookstore.Models {
             reviews.Add(review);
         }
 
-        public int GetStock (/*SQLiteConnection db*/) {
-           // db.Update;
+        public int GetStock(/*SQLiteConnection db*/) {
+            // db.Update;
             return this.Quantity;
         }
 
-        public void AddToStock (int quantity)
+        public void AddToStock(int quantity)
         {
             Quantity += quantity;
         }
@@ -105,11 +107,11 @@ namespace SWEN_344_Bookstore.Models {
             this.Quantity -= val;
         }
 
-        public void Enable () {
+        public void Enable() {
             this.IsEnabled = true;
         }
 
-        public void Disable () {
+        public void Disable() {
             this.IsEnabled = false;
         }
 
@@ -126,6 +128,47 @@ namespace SWEN_344_Bookstore.Models {
         internal void incStock()
         {
             throw new NotImplementedException();
+        }
+    }
+    public class ShoppingCartBook
+    {
+        public int bookID { get; set; }
+        public string Date { get; set; }
+        public int UserID { get; set; }
+
+        public ShoppingCartBook(int bookID)
+        {
+            this.bookID = bookID;
+        }
+
+
+    }
+
+    public class Transaction
+    {
+        public int PurchaseDate { get; set; }
+        public int UserID { get; set; }
+        public int bookID { get; set; }
+        public int BookStoreID { get; set; }
+        public string Date { get; set; }
+        public int Price { get; set; }
+
+        public Transaction(int bookID)
+        {
+            this.bookID = bookID;
+        }
+
+        public static bool PurchaseShoppingCart(List<ShoppingCartBook> sBooks) {
+            SQLite_Database localAccess = SQLite_Database.GetInstance();
+            RestAccess remoteAccess = RestAccess.GetInstance();
+
+            //Loop through each book and create a transaction
+            foreach (var sBook in sBooks) {
+                var price = remoteAccess.GetBook(sBook.bookID).Price; //Get book's price
+                localAccess.CreateTransaction(sBook.UserID, sBook.bookID, sBook.Date, price);
+            }
+
+            return false;
         }
     }
 }

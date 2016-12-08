@@ -1,4 +1,5 @@
-﻿@using Database_Test
+﻿@using System.Activities.Statements
+@using Database_Test
 @using SWEN_344_Bookstore.Database
 
 @{
@@ -7,73 +8,98 @@
 
     RestAccess remoteAccess = RestAccess.GetInstance();
     SQLite_Database localAccess = SQLite_Database.GetInstance();
-}
 
-@{
-    var id = 935;
+    var id = -1;
+    try {
+        id = (int) ViewData["bookID"];
+    } catch (Exception err) {
+        throw(err);
+    }
+
     var invBook = localAccess.GetInventoryBookByRemoteBookID(id);
     var book = remoteAccess.GetBook(id);
-
-    System.Diagnostics.Debug.Print(invBook.ToString());
-    System.Diagnostics.Debug.Print(book.ToString());
-
-//    var title = Request.Form["bookTitle"];
-//    var author = Request.Form["bookAuthor"];
-//    var description = Request.Form["bookDescription"];
-//    var priceString = Request.Form["bookPrice"];
-//    var isEnabledString = Request.Form["bookIsEnabled"];
-//
-//    if (title != null && author != null && description != null && priceString != null) {
-//        float price = float.Parse(priceString); //Convert string to float
-//
-//        var bookid = remoteAccess.CreateBook(author, price, title, description); //Create the book
-//
-//        var isEnabled = false;
-//        if (isEnabledString != null && isEnabledString == "on") {
-//            isEnabled = true;
-//        }
-//
-//        if (bookid != -1) {
-//            localAccess.CreateInventoryBook(bookid, 0, isEnabled);
-//        }
-//    }
 }
 
-<div class="col-xs-12">
-    <div class="col-sm-6 col-sm-offset-3">
-        <h2>Edit Book</h2><br />
+<body onload="checkit()">
+    <div class="col-xs-12">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h2>Edit Book</h2><br />
 
-        <form method="post">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Title:</div>
-                    <input type="text" name="bookTitle" class="form-control" placeholder="Enter Title" required>
+            <form method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Title:</div>
+                        <input type="text" name="bookTitle" class="form-control" value="@book.Name" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Author:</div>
-                    <input type="text" name="bookAuthor" class="form-control" placeholder="Enter Author" required>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Author:</div>
+                        <input type="text" name="bookAuthor" class="form-control" value="@book.Author" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Description:</div>
-                    <textarea type="text" name="bookDescription" class="form-control" rows="4" placeholder="Book Description" required></textarea>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Description:</div>
+                        <textarea type="text" name="bookDescription" class="form-control" rows="4" required>@book.desc</textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Price:</div>
-                    <input type="number" name="bookPrice" class="form-control" placeholder="$0.00" step="any" min="0" required>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Price:</div>
+                        <input type="number" name="bookPrice" class="form-control" value="@book.Price" step="any" min="0" required>
+                    </div>
                 </div>
-            </div>
 
-            <label><input type="checkbox" name="bookIsEnabled"> Is Enabled?</label><br />
-            <input type="submit" value="Save" class="btn btn-primary col-xs-3 col-xs-offset-9" />
-        </form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Quantity:</div>
+                        <input type="number" name="bookQuantity" class="form-control col-xs-4" value="@invBook.GetStock()" min="0"><br />
+                    </div>
+                </div><br />
+
+                <label><input type="checkbox" name="bookIsEnabled"> Is Enabled?</label><br />
+
+                <input type="submit" value="Update" class="btn btn-primary col-xs-3 col-xs-offset-9" />
+
+                @{
+                    var title = Request.Form["bookTitle"];
+                    var author = Request.Form["bookAuthor"];
+                    var description = Request.Form["bookDescription"];
+                    var priceString = Request.Form["bookPrice"];
+                    var quantityString = Request.Form["bookQuantity"];
+                    var isEnabledString = Request.Form["bookIsEnabled"];
+
+                    if (title != null && author != null && description != null && priceString != null && quantityString != null) {
+                        float price = float.Parse(priceString); //Convert string to float
+                        int quantity = int.Parse(quantityString); //Convert string to float
+
+
+                        var bookid = remoteAccess.UpdateBook(id, author, price, title, description); //Create the book
+
+                        //Convert to bool
+                        var isEnabled = false;
+                        if (isEnabledString != null && isEnabledString == "on") {
+                            isEnabled = true;
+                        }
+
+                        localAccess.UpdateInventoryBookFromBookID(id, quantity, isEnabled);
+                    }
+                }
+
+                @*TODO: find another solution*@
+                <script>
+                    function checkit() {
+                        if (@invBook.IsEnabled == true) {
+                            document.getElementsByName("bookIsEnabled").checked = true;
+                        }
+                    }
+                </script>
+
+            </form>
+        </div>
     </div>
-</div>
+</body>
