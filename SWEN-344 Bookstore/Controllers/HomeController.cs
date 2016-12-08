@@ -65,6 +65,7 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add("$" + b.Price.ToString());
                 bookInfo[i].Add(b.BookId.ToString());
                 bookInfo[i].Add(IBooks[i].GetStock().ToString());
+                bookInfo[i].Add(IBooks[i].IsEnabled.ToString());
                 if(b.BookId == sbid)
                 {
                     showline = bookInfo[i];
