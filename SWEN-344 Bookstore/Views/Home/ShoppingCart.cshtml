@@ -35,6 +35,101 @@
         {
             var book = remoteAccess.GetBook(sbook.bookID);
             <tr>
+<<<<<<< HEAD
+                <th>
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var sbook in SBooks)
+            {
+                   var book = remoteAccess.GetBook(sbook.bookID);
+                System.Diagnostics.Debug.Print(sbook.UserID.ToString());
+                <tr>
+                    <td>
+                        @book.Author
+                    </td>
+                    <td>
+                        @book.Price
+                    </td>
+                    <td>
+                        @book.Name
+                    </td>
+                    <td>
+                        @book.desc
+                    </td>
+                    <td>
+                        <!--button-->
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + @book.BookId)>View Book</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id=@("popup_" + @book.BookId) role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">book.Title</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Author:</h6>
+                                        <br />
+                                        <p>@book.Author</p>
+                                        <br />
+                                        <h6>Description</h6>
+                                        <br />
+                                        <p>@book.desc</p>
+                                        <br />
+                                        <h6>Price</h6>
+                                        <br />
+                                        <p>@book.Price</p>
+                                        <br />
+                                        <h6>Quantity</h6>
+                                        <br />
+                                        <p></p>
+                                        <br />
+                                        <h6>Reviews</h6>
+                                        <p>Reviews Go Here</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger">Remove From Shopping Cart</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br/>
+
+        <form method="post">
+            <input type="number" name="purchase" value="1" hidden><br />
+            <input type="submit" value="Buy Items" class="btn btn-primary col-xs-3 col-xs-offset-9"/>
+        </form> <br/>
+        
+
+        @{
+            var purchase = Request.Form["purchase"];
+            System.Diagnostics.Debug.Print(purchase);
+            if (purchase != null) {
+                Transaction.PurchaseShoppingCart(SBooks);
+            }
+        }
+        
+@*                <button type="button" runat="server" onclick="@Transaction.PurchaseShoppingCart(SBooks)" id="btns" class="btn btn-primary btn-lg">Buy Items</button>*@
+</div>
+=======
                 <td>
                     @book.Author
                 </td>
@@ -98,3 +193,4 @@
                 <h1>Your Books Have Been Purchased</h1>
             </div>
         </div>
+>>>>>>> origin/master
