@@ -34,6 +34,7 @@
             @foreach (var sbook in SBooks)
             {
                    var book = remoteAccess.GetBook(sbook.bookID);
+                System.Diagnostics.Debug.Print(sbook.UserID.ToString());
                 <tr>
                     <td>
                         @book.Author
@@ -91,5 +92,19 @@
             }
         </table>
         <br/>
-        <button type="button" onclick="@Transaction.PurchaseShoppingCart(PARAMS)" class="btn btn-primary btn-lg">Buy Items</button>
-    </div>
+
+        <form method="post">
+            <input type="number" name="purchase" value="1" hidden><br />
+            <input type="submit" value="Buy Items" class="btn btn-primary col-xs-3 col-xs-offset-9"/>
+        </form> <br/>
+        
+        @{
+            var purchase = Request.Form["purchase"];
+            System.Diagnostics.Debug.Print(purchase);
+            if (purchase != null) {
+                Transaction.PurchaseShoppingCart(SBooks);
+            }
+        }
+        
+@*                <button type="button" runat="server" onclick="@Transaction.PurchaseShoppingCart(SBooks)" id="btns" class="btn btn-primary btn-lg">Buy Items</button>*@
+</div>
