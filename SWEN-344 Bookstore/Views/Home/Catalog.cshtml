@@ -12,10 +12,6 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
         List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
         List<String> selectedBook = ViewData["showline"] as List<String>;
-        if(selectedBook == null)
-        {
-            selectedBook = new List<String>(){"dummy","dummy","dummy","dummy","dummy","dummy"};
-        }
     }
     <div class="logged" style="display:none">
         <h2>Catalog</h2>
@@ -90,7 +86,7 @@
                         <br />
                         <h6>Reviews</h6>
                         <table border="1">
-                            @foreach (var review in ViewData[selectedBook[4] + "reviews"] as List<SWEN_344_Bookstore.Models.Review>)
+                            @foreach (var review in ViewData["reviews"] as List<SWEN_344_Bookstore.Models.Review>)
                             {
                                 <tr>
                                     <td> @review.review </td>

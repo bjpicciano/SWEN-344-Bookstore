@@ -9,17 +9,30 @@ using Database_Test;
 
 namespace SWEN_344_Bookstore.Controllers {
     public class HomeController : Controller {
+        private User getCurrentUser()
+        {
+            if (Request.Cookies["LoginEmail"] != null)
+            {
+                String value = Request.Cookies["LoginEmail"].Value;
+                return RestAccess.GetInstance().GetUserByEmail(value);
+            }
+            return new User(-99,"dummy","dummy","dummy", "dummy");
+        }
+        
         public ActionResult Index() {
+            ViewData["lgnusr"] = getCurrentUser();
             return View();
         }
 
         public ActionResult About() {
+            ViewData["lgnusr"] = getCurrentUser();
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact() {
+            ViewData["lgnusr"] = getCurrentUser();
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -27,6 +40,7 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult Catalog(String showid = null)
         {
+            ViewData["lgnusr"] = getCurrentUser();
             RestAccess ra = RestAccess.GetInstance();
             SQLite_Database sd = SQLite_Database.GetInstance();
             List<InventoryBook> IBooks = sd.GetInventoryBooks();
@@ -51,18 +65,26 @@ namespace SWEN_344_Bookstore.Controllers {
                 bookInfo[i].Add("$" + b.Price.ToString());
                 bookInfo[i].Add(b.BookId.ToString());
                 bookInfo[i].Add(IBooks[i].GetStock().ToString());
-                ViewData[(b.BookId + "reviews")] = IBooks[i].reviews;
                 if(b.BookId == sbid)
                 {
                     showline = bookInfo[i];
+                    ViewData["reviews"] = IBooks[i].reviews;
                 }
             }
             ViewData["bookInfo"] = bookInfo;
             ViewData["showline"] = null;
             if(showid != null)
-            {
-                ViewData["showline"] = showline;
-                System.Diagnostics.Debug.Print(showline + " showid");
+            {   
+                if(showline == null)
+                {
+                    ViewData["showline"] = new List<String>() { "dummy", "dummy", "dummy", "dummy", "dummy", "dummy" };
+                    ViewData["reviews"] = new List<Review>();
+                }
+                else
+                {
+                    ViewData["showline"] = showline;
+                }
+                
             }
 
             ViewData["convert"] = RestAccess.GetInstance().CurrRates;
@@ -73,10 +95,12 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult Messages()
         {
+            ViewData["lgnusr"] = getCurrentUser();
             return View();
         }
         public ActionResult ShoppingCart()
         {
+            ViewData["lgnusr"] = getCurrentUser();
             RestAccess ra = RestAccess.GetInstance();
             SQLite_Database sd = SQLite_Database.GetInstance();
             List<InventoryBook> IBooks = sd.GetInventoryBooks();
@@ -109,6 +133,7 @@ namespace SWEN_344_Bookstore.Controllers {
         public ActionResult Reciepts()
         {
             {
+                ViewData["lgnusr"] = getCurrentUser();
                 RestAccess ra = RestAccess.GetInstance();
                 SQLite_Database sd = SQLite_Database.GetInstance();
                 List<InventoryBook> IBooks = sd.GetInventoryBooks();
