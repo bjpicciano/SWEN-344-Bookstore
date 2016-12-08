@@ -141,7 +141,6 @@ namespace SWEN_344_Bookstore.Models {
             this.bookID = bookID;
         }
 
-
     }
 
     public class Transaction
