@@ -51,6 +51,7 @@ namespace Database_Test
             return true;
         }
 
+        
         public Boolean UpdateInventoryBook(int IBookID, int bookid, int quantity, Boolean enabled)
         {
             try
@@ -227,17 +228,34 @@ namespace Database_Test
         }
 
         public Boolean CreateTransaction(int userID, int bookID, string date, float price) {
-            String command = "insert into Transaction(" +
-                             "UserID, BookStoreID, Date, Price, BookID) values (" +
-                             "@UserID, 1, '@Date', @Price, @BookID)";
+            String command = "insert into Transaction(UserID, BookID, BookStoreID, Date, Price) values (@USERID, @BOOKID, 1, '@DATE', @PRICE)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
-            insert.Parameters.Add(new SQLiteParameter("@UserID", userID));
-            //insert.Parameters.Add(new SQLiteParameter("@Date", date));
-            insert.Parameters.Add(new SQLiteParameter("@Price", price));
-            insert.Parameters.Add(new SQLiteParameter("@BookID", bookID));
+            insert.Parameters.Add(new SQLiteParameter("@USERID", userID));
+            insert.Parameters.Add(new SQLiteParameter("@DATE", date));
+            insert.Parameters.Add(new SQLiteParameter("@PRICE", price));
+            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookID));
             insert.ExecuteNonQuery();
 
             //HANDLE MONEY FROM BOOKSTORE
+            return true;
+        }
+
+        public Boolean AddToShoppingCart(int bookid)
+        {
+            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, 'March', 54)";
+            SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
+            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
+
+            insert.ExecuteNonQuery();
+            return true;
+        }
+
+        public Boolean RemoveFromShoppingCartBook(int bookid)
+        {
+            String command = "DELETE FROM ShoppingCartBook WHERE bookid == " + bookid;
+            SQLiteCommand delete = new SQLiteCommand(command, dbConnection);
+            delete.ExecuteNonQuery();
+
             return true;
         }
     }

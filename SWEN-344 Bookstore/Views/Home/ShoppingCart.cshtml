@@ -8,6 +8,7 @@
 
     SQLite_Database sd = SQLite_Database.GetInstance();
     RestAccess remoteAccess = RestAccess.GetInstance();
+    
 
     var UserId = 54;
     List<ShoppingCartBook> SBooks = sd.GetUsersShoppingCart(UserId);
@@ -80,9 +81,18 @@
                                         <p>Reviews Go Here</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger">Remove From Shopping Cart</button>
+                                        <a onclick="deleteBook()" href="/Home/ShoppingCart" class="btn btn-danger">Remove From Shopping Cart</a>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
+                                    <script>
+                                        function deleteBook(){
+                                            @{ 
+                                                var bookid = Convert.ToInt32(book.BookId);
+                                                sd.RemoveFromShoppingCartBook(bookid);
+                                            }
+                                        }
+                                    </script>
+
                                 </div>
                             </div>
                         </div>
@@ -91,5 +101,5 @@
             }
         </table>
         <br/>
-        <button type="button" onclick="@Transaction.PurchaseShoppingCart(PARAMS)" class="btn btn-primary btn-lg">Buy Items</button>
+        <button class="btn btn-primary">Buy Items</button>
     </div>
