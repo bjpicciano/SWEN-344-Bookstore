@@ -58,11 +58,11 @@ namespace SWEN_344_Bookstore
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "226764713996-q4qhfqve03s39ekcuab96u51o8qcqsbo.apps.googleusercontent.com",
+                ClientSecret = "iIohUKARwQhU7E7HlZSQddaN"
+            });
         }
     }
 }
