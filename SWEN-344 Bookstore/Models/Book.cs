@@ -136,9 +136,9 @@ namespace SWEN_344_Bookstore.Models {
         public string Date { get; set; }
         public int UserID { get; set; }
 
-        public ShoppingCartBook(int bookID)
+        public ShoppingCartBook(int userID)
         {
-            this.bookID = bookID;
+            this.UserID = userID;
         }
 
     }
@@ -164,7 +164,7 @@ namespace SWEN_344_Bookstore.Models {
             //Loop through each book and create a transaction
             foreach (var sBook in sBooks) {
                 var price = remoteAccess.GetBook(sBook.bookID).Price; //Get book's price
-                localAccess.CreateTransaction(sBook.UserID, sBook.bookID, sBook.Date, price);
+                localAccess.CreateTransaction(sBook.UserID, sBook.bookID, price);
             }
 
             return false;

@@ -252,14 +252,16 @@ namespace Database_Test
 
         }
 
-        public Boolean CreateTransaction(int userID, int bookID, string date, float price) {
-            String command = "insert into Transaction(UserID, BookID, BookStoreID, Date, Price) values (@USERID, @BOOKID, 1, '@DATE', @PRICE)";
+        public Boolean CreateTransaction(int userID, int bookID, float price) {
+            String command = "INSERT INTO Transaction(UserID, BookStoreID, Date, Price, BookID) VALUES (@uID, @bsID, @d, @p, @bID)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
-            insert.Parameters.Add(new SQLiteParameter("@USERID", userID));
-            insert.Parameters.Add(new SQLiteParameter("@DATE", date));
-            insert.Parameters.Add(new SQLiteParameter("@PRICE", price));
-            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookID));
+            insert.Parameters.Add(new SQLiteParameter("@uID", (int)userID));
+            insert.Parameters.Add(new SQLiteParameter("@bsid", (int)1));
+            insert.Parameters.Add(new SQLiteParameter("@d", "\"" + DateTimeSQLite(DateTime.Now) + "\""));
+            insert.Parameters.Add(new SQLiteParameter("@p", (float)price));
+            insert.Parameters.Add(new SQLiteParameter("@bID", (int)bookID));
             insert.ExecuteNonQuery();
+            System.Diagnostics.Debug.Print("WORKS BITCH");
 
             //HANDLE MONEY FROM BOOKSTORE
             return true;

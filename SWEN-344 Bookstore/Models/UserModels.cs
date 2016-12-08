@@ -29,6 +29,11 @@ namespace SWEN_344_Bookstore.Models {
             return "First name: " + fname + " Last name:" + lname + " eMail:" + email + " ID:" + Uid;
         }
 
+        public String getUserType()
+        {
+            return type;
+        }
+
         public User(int id, String el, String fn, String ln, String tp)
         {
             Uid = id;
