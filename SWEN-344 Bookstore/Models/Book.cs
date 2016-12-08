@@ -150,7 +150,7 @@ namespace SWEN_344_Bookstore.Models {
         public int bookID { get; set; }
         public int BookStoreID { get; set; }
         public string Date { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
 
         public Transaction(int bookID)
         {

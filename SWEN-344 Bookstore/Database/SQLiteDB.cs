@@ -51,6 +51,7 @@ namespace Database_Test
             return true;
         }
 
+        
         public Boolean UpdateInventoryBook(int IBookID, int bookid, int quantity, Boolean enabled)
         {
             try
@@ -263,6 +264,25 @@ namespace Database_Test
             System.Diagnostics.Debug.Print("WORKS BITCH");
 
             //HANDLE MONEY FROM BOOKSTORE
+            return true;
+        }
+
+        public Boolean AddToShoppingCart(int bookid)
+        {
+            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, 'March', 54)";
+            SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
+            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
+
+            insert.ExecuteNonQuery();
+            return true;
+        }
+
+        public Boolean RemoveFromShoppingCartBook(int bookid)
+        {
+            String command = "DELETE FROM ShoppingCartBook WHERE bookid == " + bookid;
+            SQLiteCommand delete = new SQLiteCommand(command, dbConnection);
+            delete.ExecuteNonQuery();
+
             return true;
         }
     }

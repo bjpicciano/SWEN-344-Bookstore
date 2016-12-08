@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+@using Database_Test
+@using SWEN_344_Bookstore.Database
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <meta name="google-signin-client_id" content="876131665863-pgdcfjbe1efijpq6g3ho8ggj5rqh35af.apps.googleusercontent.com">
@@ -12,10 +14,18 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
         List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
         List<String> selectedBook = ViewData["showline"] as List<String>;
+
+        RestAccess remoteAccess = RestAccess.GetInstance();
+        SQLite_Database localAccess = SQLite_Database.GetInstance();
+    
+        if(selectedBook == null)
+        {
+            selectedBook = new List<String>(){"dummy","dummy","dummy","dummy","dummy","dummy"};
+        }
     }
-    <div class="logged" style="display:none">
+    <div class="logged">
         <h2>Catalog</h2>
-        <table border="1">
+        <table class="table table-bordered">
             <tr>
                 <th>
                     Title
@@ -60,14 +70,13 @@
     <!-- Modal -->
     @if (Convert.ToBoolean(ViewData["showmodal"]))
     {
-        
+
         <div class="modal show" id=@("popup") role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" onclick="location.href='@Url.Action("Catalog", "Home")'">&times;</button>
-                        <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("EditBook", "Admin", new { id = selectedBook[4] })'">Edit Book</button>
                         <h4 class="modal-title">@selectedBook[0]</h4>
                     </div>
                     <div class="modal-body">
@@ -101,7 +110,17 @@
                         </table>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("EditBook", "Admin", new { id = selectedBook[4] })'">Edit Book</button>
+                        <a href="/Home/ShoppingCart" onclick="buy()" class="btn btn-primary">Add to Shopping Cart</a>
                         <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
+                        <script>
+                            function buy() {
+                                @{ 
+                                    var bookid = Convert.ToInt32(selectedBook[4]);
+                                    localAccess.AddToShoppingCart(bookid);
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

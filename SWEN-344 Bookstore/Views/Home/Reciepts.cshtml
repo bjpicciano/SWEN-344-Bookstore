@@ -1,12 +1,18 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-</head>
-<body>
+﻿
+@using Database_Test
+@using SWEN_344_Bookstore.Database
+@using SWEN_344_Bookstore.Models
+
     @{
         ViewBag.Title = "Reciepts";
         Layout = "~/Views/Shared/_Layout.cshtml";
         List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
+
+        SQLite_Database sd = SQLite_Database.GetInstance();
+        RestAccess remoteAccess = RestAccess.GetInstance();
+
+        var UserId = 54;
+        List<Transaction> TBooks = sd.GetTransactionByUserID(UserId);
 
     }
     <h2>Past Purchases</h2>
@@ -28,42 +34,48 @@
                 Price
             </th>
         </tr>
-        @foreach (var line in info)
+        @foreach (var line in TBooks)
         {
+            var book = remoteAccess.GetBook(line.bookID);
             <tr>
-                @for (int i = 0; i < 4; i++)
-                {
-                    <td>
-                        @line[i]
-                    </td>
-
-                }
+                <td>
+                    @book.Author
+                </td>
+                <td>
+                    @book.Price
+                </td>
+                <td>
+                    @book.Name
+                </td>
+                <td>
+                    @book.desc
+                </td>
                 <td>
                     <!--button-->
-                    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + line[4])>View Book</button>
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target=@("#popup_" + book.BookId)>View Book</button>
                     <!-- Modal -->
-                    <div class="modal fade" id=@("popup_" + line[4]) role="dialog">
+                    <div class="modal fade" id=@("popup_" + book.BookId) role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">@line[0]</h4>
+                                    <h4 class="modal-title">book.Title</h4>
                                 </div>
                                 <div class="modal-body">
                                     <h6>Author:</h6>
                                     <br />
-                                    <p>@line[1]</p>
+                                    <p>@book.Author</p>
                                     <br />
                                     <h6>Description</h6>
                                     <br />
-                                    <p>@line[2]</p>
+                                    <p>@book.desc</p>
                                     <br />
                                     <h6>Price</h6>
                                     <br />
-                                    <p>@line[3]</p>
+                                    <p>@book.Price</p>
                                     <br />
-                                    <h6>Review/h6>
+                                    <h6>Review</h6>
                                     <p>Reviews Go Here</p>
                                 </div>
                                 <div class="modal-footer">
@@ -72,7 +84,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">@("Write a Review for" + line[0])</h4>
+                                            <h4 class="modal-title">@("Write a Review for" + book.Name)</h4>
                                         </div>
                                         <div class="modal-body">
                                             <form>
@@ -86,9 +98,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
     </table>
-</body>
-</html>
