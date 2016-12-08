@@ -53,7 +53,7 @@ namespace SWEN_344_Bookstore.Database
             try
             {
                 String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_email&email=" + email)).ToArray();
-                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
+                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4], fields[2]);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace SWEN_344_Bookstore.Database
             try
             {
                 String[] fields = GetFieldsFromJSON(GetString("User.php?action=get_user_by_id&id=" + userId)).ToArray();
-                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4]);
+                toReturn = new Models.User(Convert.ToInt32(fields[0]), fields[1], fields[3], fields[4], fields[2]);
             }
             catch (Exception ex)
             {
