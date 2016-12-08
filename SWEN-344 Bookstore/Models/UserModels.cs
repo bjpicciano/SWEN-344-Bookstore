@@ -13,9 +13,15 @@ namespace SWEN_344_Bookstore.Models {
         private String email;
         private String fname;
         private String lname;
+        private String type;
 
         public int GetUid () {
             return this.Uid;
+        }
+
+        public String getName()
+        {
+            return fname + " " + lname;
         }
 
         public override string ToString()
@@ -23,12 +29,13 @@ namespace SWEN_344_Bookstore.Models {
             return "First name: " + fname + " Last name:" + lname + " eMail:" + email + " ID:" + Uid;
         }
 
-        public User(int id, String el, String fn, String ln)
+        public User(int id, String el, String fn, String ln, String tp)
         {
             Uid = id;
             email = el;
             fname = fn;
             lname = ln;
+            type = tp;
         }
     }
 

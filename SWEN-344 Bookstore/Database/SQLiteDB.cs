@@ -202,6 +202,31 @@ namespace Database_Test
             return shoppingcart;
         }
 
+
+        // Zane staarted this but may not need it from daniels additions
+       /* public ShoppingCartBook AddToShoppingCart(int UserID)
+        {
+            var addBook = new ShoppingCartBook(UserID);
+
+            // if Inventory contains inventoryBook, increment its stock by 1
+            Boolean exists = false;
+            foreach (InventoryBook ib in Inventory)
+            {
+                if (ib.GetBook() == book.BookId)
+                {
+                    ib.incStock();
+                    exists = true;
+                }
+            }
+            // else add it to Inventory
+            if (exists == false)
+            {
+                this.AddToShoppingCart.Add();
+            }
+        }
+        */
+
+
         public List<Transaction> GetTransactionByUserID(int UserID)
         {
             string query = "SELECT * FROM Transaction where UserId == " + UserID;
