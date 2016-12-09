@@ -13,7 +13,7 @@
     var UserId = 54;
     List<ShoppingCartBook> SBooks = sd.GetUsersShoppingCart(UserId);
 }
-    <div class="logged" style="display:none">
+    <div class="logged">
         <h2>Shopping Cart</h2>
         <table class="table table-bordered">
             <tr>
@@ -81,14 +81,14 @@
                                         <p>Reviews Go Here</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a onclick="deleteBook()" href="/Home/ShoppingCart" class="btn btn-danger">Remove From Shopping Cart</a>
+@*                                        <a onclick="deleteBook()" href="/Home/ShoppingCart" class="btn btn-danger">Remove From Shopping Cart</a>*@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                     <script>
                                         function deleteBook(){
                                             @{ 
-                                                var bookid = Convert.ToInt32(book.BookId);
-                                                sd.RemoveFromShoppingCartBook(bookid);
+//                                                var bookid = Convert.ToInt32(book.BookId);
+//                                                sd.RemoveFromShoppingCartBook(bookid);
                                             }
                                         }
                                     </script>
@@ -101,5 +101,21 @@
             }
         </table>
         <br/>
-        <button class="btn btn-primary">Buy Items</button>
+        
+        <form method="post">
+            <input type="number" name="purchase" value="1" hidden><br />
+            <input type="submit" value="Buy Items" class="btn btn-primary col-xs-3 col-xs-offset-9" />
+        </form> <br/>
+        
+        @{
+            var purchase = Request.Form["purchase"];
+
+            if (purchase != null) {
+                Transaction.PurchaseShoppingCart(SBooks);
+
+                foreach (var sBook in SBooks) {
+                    sd.RemoveFromShoppingCartBook(sBook.bookID);
+                }
+            }
+        }
     </div>

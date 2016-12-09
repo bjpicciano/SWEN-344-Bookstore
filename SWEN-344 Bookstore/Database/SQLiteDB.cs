@@ -230,7 +230,7 @@ namespace Database_Test
 
         public List<Transaction> GetTransactionByUserID(int UserID)
         {
-            string query = "SELECT * FROM Transaction where UserId == " + UserID;
+            string query = "SELECT * FROM TransactionBook where UserId == " + UserID;
             List<Transaction> trans = new List<Transaction>();
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
@@ -253,17 +253,13 @@ namespace Database_Test
         }
 
         public Boolean CreateTransaction(int userID, int bookID, float price) {
-            String command = "INSERT INTO Transaction(UserID, BookStoreID, Date, Price, BookID) VALUES (@uID, @bsID, @d, @p, @bID)";
+            String command = "INSERT INTO TransactionBook(BookStoreID, UserID, BookID, Date, Price) VALUES (1, @USERID, @BOOKID, 'March', @PRICE)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
-            insert.Parameters.Add(new SQLiteParameter("@uID", (int)userID));
-            insert.Parameters.Add(new SQLiteParameter("@bsid", (int)1));
-            insert.Parameters.Add(new SQLiteParameter("@d", "\"" + DateTimeSQLite(DateTime.Now) + "\""));
-            insert.Parameters.Add(new SQLiteParameter("@p", (float)price));
-            insert.Parameters.Add(new SQLiteParameter("@bID", (int)bookID));
-            insert.ExecuteNonQuery();
-            System.Diagnostics.Debug.Print("WORKS BITCH");
+            insert.Parameters.Add(new SQLiteParameter("@USERID", userID));
+            insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookID));
+            insert.Parameters.Add(new SQLiteParameter("@PRICE", price));
 
-            //HANDLE MONEY FROM BOOKSTORE
+            insert.ExecuteNonQuery();
             return true;
         }
 
