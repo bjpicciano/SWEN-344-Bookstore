@@ -25,6 +25,7 @@
     }
     <div class="logged">
         <h2>Catalog</h2>
+
         <table class="table table-bordered">
             <tr>
                 <th>
@@ -40,6 +41,9 @@
                     Price
                 </th>
                 <th>
+                    @if ((ViewData["usertype"] as String).Equals("admin")) {
+                        <button type="button" class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("CreateBook", "Admin")'">Create Book</button><br />
+                    }
                 </th>
             </tr>
             @foreach (var line in info)
