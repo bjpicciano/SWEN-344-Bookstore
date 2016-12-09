@@ -5,10 +5,11 @@
 @{
     ViewBag.Title = "ShoppingCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    User user = ViewData["lgnusr"] as User;
+    int UserID = user.GetUid();
     SQLite_Database localAccess = SQLite_Database.GetInstance();
     RestAccess remoteAccess = RestAccess.GetInstance();
-    
+
 
     var UserId = 54;
     List<ShoppingCartBook> SBooks = localAccess.GetUsersShoppingCart(UserId);

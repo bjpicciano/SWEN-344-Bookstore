@@ -10,9 +10,9 @@
 
         SQLite_Database localAccess = SQLite_Database.GetInstance();
         RestAccess remoteAccess = RestAccess.GetInstance();
-
-        var UserId = 54;
-        List<Transaction> TBooks = localAccess.GetTransactionsByUserID(UserId);
+        User user = ViewData["lgnusr"] as User;
+        int UserID = user.GetUid();
+        List<Transaction> TBooks = localAccess.GetTransactionsByUserID(UserID);
 
     }
     <h2>Past Purchases</h2>
