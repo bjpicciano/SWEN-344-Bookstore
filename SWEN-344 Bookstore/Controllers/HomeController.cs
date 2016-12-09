@@ -56,7 +56,7 @@ namespace SWEN_344_Bookstore.Controllers {
             {
                 SQLite_Database.GetInstance().AddToShoppingCart(addid);
             }
-            return Catalog();
+            return RedirectToAction("Catalog", "Home");
         }
 
         public ActionResult Catalog(String showid = null)
