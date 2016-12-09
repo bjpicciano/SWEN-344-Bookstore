@@ -240,7 +240,7 @@ namespace Database_Test
                 while (rdr.Read())
                 {
                     t = new Transaction(UserID);
-                    t.bookID = rdr.GetInt32(2);
+                    t.bookID = rdr.GetInt32(3);
                     trans.Add(t);
                 }
             }

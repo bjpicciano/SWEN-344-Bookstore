@@ -34,8 +34,10 @@
                 Price
             </th>
         </tr>
+     
         @foreach (var line in TBooks)
         {
+            System.Diagnostics.Debug.Print("test" + line.bookID);
             var book = remoteAccess.GetBook(line.bookID);
             <tr>
                 <td>
@@ -77,29 +79,18 @@
                                     <br />
                                     <h6>Review</h6>
                                     <p>Reviews Go Here</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Write a Review</button>
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">@("Write a Review for" + book.Name)</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="review">Write Review</label>
-                                                    <input type="text" class="form-control" id="review" placeholder="Enter Review" />
-                                                </div>
-                                            </form>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
+                                    <br />
+                                    <br />
+                                    <h4>@("Write a Review for " + book.Name)</h4>
+                                    <input type="text" class="form-control" id="review" placeholder="Enter Review" row ="5" col="50"/>
+                                </div>            
+                                 <div class="modal-footer">
+                                     <button type="button" class="btn btn-primary">Post Review</button>
+                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                 </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 </td>
             </tr>
         }
