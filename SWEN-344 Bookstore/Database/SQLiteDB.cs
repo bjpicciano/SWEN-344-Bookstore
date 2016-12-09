@@ -278,7 +278,7 @@ namespace Database_Test
 
         public Boolean AddToShoppingCart(int bookid)
         {
-            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, 'March', 54)";
+            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, @DATE, @USERID)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
             insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
 
