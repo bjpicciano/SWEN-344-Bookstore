@@ -337,7 +337,7 @@ namespace SWEN_344_Bookstore.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Login");
+//                return RedirectToAction("Login");
             }
 
             HttpCookie MyCookie = new HttpCookie("LoginEmail");
@@ -349,17 +349,13 @@ namespace SWEN_344_Bookstore.Controllers
             User user = SWEN_344_Bookstore.Database.RestAccess.GetInstance().GetUserByEmail(email);
             if (user == null)
             {
-                return RedirectToLocal("CreateUserInDB");
+                return RedirectToAction("CreateUserInDB", "Home");
             }
             MyCookie = new HttpCookie("UserType");
             MyCookie.Value = user.getUserType();
             Response.Cookies.Add(MyCookie);
             return RedirectToLocal(returnUrl);
 
-        }
-
-        public ActionResult CreateUserInDB () {
-            return View();
         }
 
         //

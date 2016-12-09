@@ -9,6 +9,12 @@ using Database_Test;
 
 namespace SWEN_344_Bookstore.Controllers {
     public class HomeController : Controller {
+        public ActionResult CreateUserInDB() {
+            CommonData();
+
+            return View();
+        }
+
         private User getCurrentUser()
         {
             if (Request.Cookies["LoginEmail"] != null)
