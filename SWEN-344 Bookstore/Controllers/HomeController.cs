@@ -19,7 +19,7 @@ namespace SWEN_344_Bookstore.Controllers {
             return new User(-99,"dummy","dummy","dummy", "dummy");
         }
 
-        private void CommonData()
+        private Boolean CommonData()
         {
             User user = getCurrentUser();
             ViewData["lgnusr"] = user;
@@ -29,10 +29,15 @@ namespace SWEN_344_Bookstore.Controllers {
                 usertype = Request.Cookies["UserType"].Value;
             }
             ViewData["usertype"] = usertype;
+            
+            return (usertype.Equals("unknown"));
         }
         
         public ActionResult Index() {
-            CommonData();
+            if (CommonData())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 
@@ -44,7 +49,10 @@ namespace SWEN_344_Bookstore.Controllers {
         }
 
         public ActionResult Contact() {
-            CommonData();
+            if (CommonData())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -52,6 +60,10 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult AddToCart(int addid = -1)
         {
+            if (CommonData())
+            {
+                return RedirectToAction("Login","Account");
+            }
             if (addid != -1)
             {
                 SQLite_Database.GetInstance().AddToShoppingCart(addid);
@@ -117,11 +129,19 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult Messages()
         {
-            CommonData();
+            if (CommonData())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
+
         public ActionResult ShoppingCart()
         {
+            if (CommonData())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewData["lgnusr"] = getCurrentUser();
             RestAccess ra = RestAccess.GetInstance();
             SQLite_Database sd = SQLite_Database.GetInstance();
@@ -151,10 +171,27 @@ namespace SWEN_344_Bookstore.Controllers {
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["LoginEmail"] != null)
+            {
+                Response.Cookies["LoginEmail"].Expires = DateTime.Now.AddDays(-1);
+            }
+            if (Request.Cookies["UserType"] != null)
+            {
+                Response.Cookies["UserType"].Expires = DateTime.Now.AddDays(-1);
+            }
+            return RedirectToAction("Login", "Account");
+        }
+
 
         public ActionResult Reciepts()
         {
             {
+                if (CommonData())
+                {
+                    return RedirectToAction("Login", "Account");
+                }
                 ViewData["lgnusr"] = getCurrentUser();
                 RestAccess ra = RestAccess.GetInstance();
                 SQLite_Database sd = SQLite_Database.GetInstance();
