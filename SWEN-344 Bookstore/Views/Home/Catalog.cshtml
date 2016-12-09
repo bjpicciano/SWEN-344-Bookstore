@@ -44,7 +44,7 @@
             </tr>
             @foreach (var line in info)
             {
-                if (Convert.ToBoolean(line[6]))
+                if (Convert.ToBoolean(line[6]) || (ViewData["usertype"] as String).Equals("admin"))
                 {
                 <tr>
                     @for (int i = 0; i < 4; i++)
