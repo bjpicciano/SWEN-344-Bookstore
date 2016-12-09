@@ -87,7 +87,10 @@
                                     <br />
                                     <br />
                                     <h4>@("Write a Review for " + book.Name)</h4>
-                                    <textarea rows="5" cols="40" placeholder="Write Review"></textarea>
+                                    <form>
+                                        <textarea name="review" rows="5" cols="40" placeholder="Write Review" required></textarea>
+                                        <input type="submit" value="Publish Review" class="btn btn-primary col-xs-3 col-xs-offset-9" />
+                                    </form>
                                 </div>            
                                  <div class="modal-footer">
                                      <button type="button" class="btn btn-primary">Post Review</button>
