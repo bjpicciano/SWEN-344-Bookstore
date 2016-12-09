@@ -20,6 +20,7 @@ namespace SWEN_344_Bookstore.Controllers {
             if (Request.Cookies["LoginEmail"] != null)
             {
                 String value = Request.Cookies["LoginEmail"].Value;
+                ViewData["LoginEmail"] = value;
                 return RestAccess.GetInstance().GetUserByEmail(value);
             }
             return new User(-99,"dummy","dummy","dummy", "dummy");

@@ -48,9 +48,9 @@ namespace SWEN_344_Bookstore.Database
         }
 
         public int CreateUser(string email, string userType, string firstName, string lastName, string authToken, string googleId, int isActive) {
-            HttpResponseMessage response = client.PostAsync("User.php?action=create_user&email=" + email + "&type=" + userType + "&firstname=" + FormatSpaces(firstName) + "&lastname=" + FormatSpaces(lastName) + "&authtoken=" + FormatSpaces(authToken) + "&googleid=" + FormatSpaces(googleId), null).Result;
+            HttpResponseMessage response = client.PostAsync("User.php?action=create_user&email=" + FormatSpaces(email) + "&type=" + FormatSpaces(userType) + "&firstname=" + FormatSpaces(firstName) + "&lastname=" + FormatSpaces(lastName) + "&authtoken=" + FormatSpaces(authToken) + "&googleid=" + FormatSpaces(googleId), null).Result;
             if (response.IsSuccessStatusCode) {
-                return Convert.ToInt32(GetFieldsFromJSON((response.Content.ReadAsStringAsync().Result)).ToArray()[0]);
+                return 1;
             }
             return -1;
         }
@@ -250,6 +250,5 @@ namespace SWEN_344_Bookstore.Database
             toReturn.Add(field);
             return toReturn;
         }
-
     }
 }

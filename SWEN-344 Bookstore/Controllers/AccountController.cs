@@ -337,7 +337,7 @@ namespace SWEN_344_Bookstore.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-//                return RedirectToAction("Login");
+                return RedirectToAction("Login");
             }
 
             HttpCookie MyCookie = new HttpCookie("LoginEmail");
