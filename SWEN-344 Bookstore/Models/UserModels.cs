@@ -24,6 +24,10 @@ namespace SWEN_344_Bookstore.Models {
             return fname + " " + lname;
         }
 
+        public String getEmail () {
+            return email;
+        }
+
         public override string ToString()
         {
             return "First name: " + fname + " Last name:" + lname + " eMail:" + email + " ID:" + Uid;

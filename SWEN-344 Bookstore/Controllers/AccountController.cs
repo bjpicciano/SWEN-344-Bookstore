@@ -329,7 +329,7 @@ namespace SWEN_344_Bookstore.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
+        // ACCOUNT STUFF
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -349,13 +349,17 @@ namespace SWEN_344_Bookstore.Controllers
             User user = SWEN_344_Bookstore.Database.RestAccess.GetInstance().GetUserByEmail(email);
             if (user == null)
             {
-                return LogOff();
+                return RedirectToLocal("CreateUserInDB");
             }
             MyCookie = new HttpCookie("UserType");
             MyCookie.Value = user.getUserType();
             Response.Cookies.Add(MyCookie);
             return RedirectToLocal(returnUrl);
 
+        }
+
+        public ActionResult CreateUserInDB () {
+            return View();
         }
 
         //

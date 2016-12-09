@@ -1,0 +1,28 @@
+﻿@using SWEN_344_Bookstore.Database
+@using SWEN_344_Bookstore.Models
+
+@{
+    ViewBag.Title = "CreateUserInDB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Please Input A First Name and Last Name</h2>
+
+<form method="post">
+    <input name="firstname" placeholder="First Name" />
+    <input name="lastname" placeholder="Last Name" />
+
+    <input type="submit" value="Register" class="btn btn-default" />
+
+    @{
+        var firstname = Request.Form["firstname"];
+        var lastname = Request.Form["lastname"];
+
+        if (firstname != null && lastname != null) {
+            RestAccess remoteAccess = RestAccess.GetInstance();
+            var email = (ViewData["lgnusr"] as User).getEmail();
+
+            remoteAccess.CreateUser(email, "student", firstname, lastname, email, email, 1);
+        }
+    }
+</form>
