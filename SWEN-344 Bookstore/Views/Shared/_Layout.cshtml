@@ -9,8 +9,11 @@
 
 </head>
 @{ 
+    String username = "Unknown User.";
     SWEN_344_Bookstore.Models.User user = ViewData["lgnusr"] as SWEN_344_Bookstore.Models.User;
-    String username = user.getName();
+    if (user != null) {
+        username = user.getName();
+    }
 
 }
 <body>
