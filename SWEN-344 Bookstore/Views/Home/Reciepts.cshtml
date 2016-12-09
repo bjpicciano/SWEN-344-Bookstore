@@ -8,11 +8,11 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
         List<List<String>> info = ViewData["bookInfo"] as List<List<String>>;
 
-        SQLite_Database sd = SQLite_Database.GetInstance();
+        SQLite_Database localAccess = SQLite_Database.GetInstance();
         RestAccess remoteAccess = RestAccess.GetInstance();
 
         var UserId = 54;
-        List<Transaction> TBooks = sd.GetTransactionsByUserID(UserId);
+        List<Transaction> TBooks = localAccess.GetTransactionsByUserID(UserId);
 
     }
     <h2>Past Purchases</h2>
@@ -65,40 +65,49 @@
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">@book.Name</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h3>Author:</h3>
-                                    <br />
-                                    <p>@book.Author</p>
-                                    <br />
-                                    <h3>Description</h3>
-                                    <br />
-                                    <p>@book.desc</p>
-                                    <br />
-                                    <h3>Price</h3>
-                                    <br />
-                                    <p>@book.Price</p>
-                                    <br />
-                                    <h3>Review</h3>
-                                    <p>Reviews Go Here</p>
-                                    <br />
-                                    <br />
-                                    <h4>@("Write a Review for " + book.Name)</h4>
-                                    <form>
-                                        <textarea name="review" rows="5" cols="40" placeholder="Write Review" required></textarea>
-                                        <input type="submit" value="Publish Review" class="btn btn-primary col-xs-3 col-xs-offset-9" />
-                                    </form>
-                                </div>            
-                                 <div class="modal-footer">
-                                     <button type="button" class="btn btn-primary">Post Review</button>
-                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                 </div>
-                                    </div>
-                                </div>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">@book.Name</h4>
                             </div>
+                                <form method="post">
+                                    <div class="modal-body">
+                                        <h3>Author:</h3>
+                                        <br />
+                                        <p>@book.Author</p>
+                                        <br />
+                                        <h3>Description</h3>
+                                        <br />
+                                        <p>@book.desc</p>
+                                        <br />
+                                        <h3>Price</h3>
+                                        <br />
+                                        <p>@book.Price</p>
+                                        <br />
+                                        <h3>Review</h3>
+                                        <p>Reviews Go Here</p>
+                                        <br />
+                                        <br />
+                                        <h4>@("Write a Review for " + book.Name)</h4>
+
+                                        <textarea name="review" rows="5" cols="40" placeholder="Write Review" required></textarea>
+                                     </div>            
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Publish Review" class="btn btn-default col-xs-3 col-xs-offset-9" />
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    
+                                    @{
+                                        var review = Request.Form["review"];
+
+                                        if (review != null) {
+                                            int inventoryBookID = localAccess.GetInventoryBookByRemoteBookID(book.BookId).ibid;
+                                            localAccess.CreateReview(inventoryBookID, UserId, review);
+                                        }
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
