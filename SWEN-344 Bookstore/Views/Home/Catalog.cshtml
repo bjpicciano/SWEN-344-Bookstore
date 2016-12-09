@@ -111,7 +111,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("EditBook", "Admin", new { id = selectedBook[4] })'">Edit Book</button>
-                        <a href="/Home/ShoppingCart" onclick="buy()" class="btn btn-primary">Add to Shopping Cart</a>
+                        <a onclick="buy()" class="btn btn-primary">Add to Shopping Cart</a>
                         <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
                         <script>
                             function buy() {
