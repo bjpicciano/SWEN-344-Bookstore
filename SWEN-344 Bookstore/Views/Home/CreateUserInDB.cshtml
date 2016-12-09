@@ -20,7 +20,7 @@
 
         if (firstname != null && lastname != null) {
             RestAccess remoteAccess = RestAccess.GetInstance();
-            var email = (ViewData["lgnusr"] as User).getEmail();
+            String email = ViewData["LoginEmail"] as String;
 
             remoteAccess.CreateUser(email, "student", firstname, lastname, email, email, 1);
         }
