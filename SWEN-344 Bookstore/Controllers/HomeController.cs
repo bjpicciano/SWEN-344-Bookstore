@@ -50,6 +50,15 @@ namespace SWEN_344_Bookstore.Controllers {
             return View();
         }
 
+        public ActionResult AddToCart(int addid = -1)
+        {
+            if (addid != -1)
+            {
+                SQLite_Database.GetInstance().AddToShoppingCart(addid);
+            }
+            return Catalog();
+        }
+
         public ActionResult Catalog(String showid = null)
         {
             CommonData();

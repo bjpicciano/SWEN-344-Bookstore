@@ -112,17 +112,8 @@
                         {
                         <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("EditBook", "Admin", new { id = selectedBook[4] })'">Edit Book</button>
                         }
-                        <a href="/Home/Catalog" onclick="buy()" class="btn btn-primary">Add to Shopping Cart</a>
+                        <button type="button" onclick="location.href='@Url.Action("AddToCart", "Home", new { addid = selectedBook[4] })'" class="btn btn-primary">Add to Shopping Cart</button>
                         <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
-                        <script>
-                            function buy() {
-//                              Always runs, clicking view book from catalog adds it to shopping cart w/o clicking the button
-                                @{ 
-                                    var bookid = Convert.ToInt32(selectedBook[4]);
-                                    localAccess.AddToShoppingCart(bookid);
-                                }
-                            }
-                        </script>
                     </div>
                 </div>
             </div>
