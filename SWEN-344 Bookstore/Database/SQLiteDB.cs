@@ -240,7 +240,7 @@ namespace Database_Test
                 while (rdr.Read())
                 {
                     t = new Transaction(UserID);
-                    t.bookID = rdr.GetInt32(1);
+                    t.bookID = rdr.GetInt32(2);
                     trans.Add(t);
                 }
             }
@@ -253,10 +253,11 @@ namespace Database_Test
         }
 
         public Boolean CreateTransaction(int userID, int bookID, float price) {
-            String command = "INSERT INTO TransactionBook(BookStoreID, UserID, BookID, Date, Price) VALUES (1, @USERID, @BOOKID, 'March', @PRICE)";
+            String command = "INSERT INTO TransactionBook(BookStoreID, UserID, BookID, Date, Price) VALUES (1, @USERID, @BOOKID, @DATE, @PRICE)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
             insert.Parameters.Add(new SQLiteParameter("@USERID", userID));
             insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookID));
+            insert.Parameters.Add(new SQLiteParameter("@DATE", DateTimeSQLite(DateTime.Now)));
             insert.Parameters.Add(new SQLiteParameter("@PRICE", price));
 
             insert.ExecuteNonQuery();
