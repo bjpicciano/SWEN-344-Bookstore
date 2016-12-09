@@ -116,6 +116,8 @@
                 foreach (var sBook in SBooks) {
                     sd.RemoveFromShoppingCartBook(sBook.bookID);
                 }
+
+                Response.Redirect(Request.RawUrl);
             }
         }
     </div>
