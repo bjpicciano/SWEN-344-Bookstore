@@ -341,6 +341,7 @@ namespace SWEN_344_Bookstore.Controllers
             }
             MyCookie = new HttpCookie("UserType");
             MyCookie.Value = user.getUserType();
+            Response.Cookies.Add(MyCookie);
             return RedirectToLocal(returnUrl);
 
         }
