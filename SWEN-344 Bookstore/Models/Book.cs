@@ -65,6 +65,10 @@ namespace SWEN_344_Bookstore.Models {
     {
         public String review;
         public String date;
+
+        public override string ToString() {
+            return "Review! review: " + review + ", date: " + date;
+        }
     }
 
     public class InventoryBook {

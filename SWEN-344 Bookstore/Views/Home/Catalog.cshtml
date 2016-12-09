@@ -102,12 +102,21 @@
                         <br />
                         <h3>Reviews</h3>
                         <table border="1">
-                            @foreach (var review in ViewData["reviews"] as List<SWEN_344_Bookstore.Models.Review>)
-                            {
-                                <tr>
-                                    <td> @review.review </td>
-                                    <td> @review.date </td>
-                                </tr>
+                            @{
+                                int ibid = localAccess.GetInventoryBookByRemoteBookID(int.Parse(selectedBook[4])).ibid;
+                                var reviews = localAccess.GetReviews(ibid);
+                                <div style="overflow: scroll; overflow-x: hidden; height: 170px">
+                                    @foreach (var review in reviews) {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">@review.date</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                @review.review
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             }
                         </table>
                     </div>
