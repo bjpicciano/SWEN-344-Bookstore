@@ -23,14 +23,12 @@ namespace SWEN_344_Bookstore.Controllers {
         {
             User user = getCurrentUser();
             ViewData["lgnusr"] = user;
-            if(getCurrentUser().GetUid() == -99)
+            String usertype = "unknown";
+            if (Request.Cookies["UserType"] != null)
             {
-                ViewData["usertype"] = "unknown";
+                usertype = Request.Cookies["UserType"].Value;
             }
-            else
-            {
-                ViewData["usertype"] = user.getUserType();
-            }
+            ViewData["usertype"] = usertype;
         }
         
         public ActionResult Index() {
