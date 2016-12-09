@@ -26,10 +26,24 @@ namespace SWEN_344_Bookstore.Controllers
             return new User(-99, "dummy", "dummy", "dummy", "dummy");
         }
 
+        private void CommonData()
+        {
+            User user = getCurrentUser();
+            ViewData["lgnusr"] = user;
+            if (getCurrentUser().GetUid() == -99)
+            {
+                ViewData["usertype"] = "unknown";
+            }
+            else
+            {
+                ViewData["usertype"] = user.getUserType();
+            }
+        }
+
         // GET: Admin
         public ActionResult Index()
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             if (isAdmin())
             {
                 return View();
@@ -39,7 +53,7 @@ namespace SWEN_344_Bookstore.Controllers
 
         public ActionResult CreateBook()
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             if (isAdmin())
             {
                 return View();
@@ -48,7 +62,7 @@ namespace SWEN_344_Bookstore.Controllers
         }
 
         public ActionResult EditBook(string id = null) {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             if (isAdmin())
             {
                 if (id != null)
@@ -62,7 +76,7 @@ namespace SWEN_344_Bookstore.Controllers
 
         public ActionResult MakeMeAdmin()
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             HttpCookie MyCookie = new HttpCookie("UserType");
             MyCookie.Value = "admin";
             Response.Cookies.Add(MyCookie);
@@ -71,7 +85,7 @@ namespace SWEN_344_Bookstore.Controllers
 
         public ActionResult NotAdmin()
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             return View();
         }
     }
