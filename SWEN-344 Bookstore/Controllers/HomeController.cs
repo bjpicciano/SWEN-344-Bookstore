@@ -18,21 +18,35 @@ namespace SWEN_344_Bookstore.Controllers {
             }
             return new User(-99,"dummy","dummy","dummy", "dummy");
         }
+
+        private void CommonData()
+        {
+            User user = getCurrentUser();
+            ViewData["lgnusr"] = user;
+            if(getCurrentUser().GetUid() == -99)
+            {
+                ViewData["usertype"] = "unknown";
+            }
+            else
+            {
+                ViewData["usertype"] = user.getUserType();
+            }
+        }
         
         public ActionResult Index() {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             return View();
         }
 
         public ActionResult About() {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact() {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -40,7 +54,7 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult Catalog(String showid = null)
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             RestAccess ra = RestAccess.GetInstance();
             SQLite_Database sd = SQLite_Database.GetInstance();
             List<InventoryBook> IBooks = sd.GetInventoryBooks();
@@ -96,7 +110,7 @@ namespace SWEN_344_Bookstore.Controllers {
 
         public ActionResult Messages()
         {
-            ViewData["lgnusr"] = getCurrentUser();
+            CommonData();
             return View();
         }
         public ActionResult ShoppingCart()
