@@ -157,7 +157,12 @@ namespace Database_Test
 
         public List<Review> GetReviews(int InvBookID)
         {
+            System.Diagnostics.Debug.Print(InvBookID.ToString());
+
             string query = "SELECT * FROM Review where InventoryBookID == " + InvBookID;
+
+            System.Diagnostics.Debug.Print(InvBookID.ToString());
+
             List<Review> reviews = new List<Review>();
             SQLiteCommand command = new SQLiteCommand(query, dbConnection);
             SQLiteDataReader rdr = command.ExecuteReader();
@@ -169,6 +174,7 @@ namespace Database_Test
                     r = new Review();
                     r.review = rdr.GetString(5);
                     r.date = rdr.GetString(4);
+                    System.Diagnostics.Debug.Print(r.ToString());
                     reviews.Add(r);
                 }
             }
@@ -272,7 +278,7 @@ namespace Database_Test
 
         public Boolean AddToShoppingCart(int bookid)
         {
-            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, 'March', 54)";
+            String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, @DATE, @USERID)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
             insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
 

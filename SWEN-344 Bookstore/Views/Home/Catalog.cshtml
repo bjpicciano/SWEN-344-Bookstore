@@ -102,12 +102,21 @@
                         <br />
                         <h3>Reviews</h3>
                         <table border="1">
-                            @foreach (var review in ViewData["reviews"] as List<SWEN_344_Bookstore.Models.Review>)
-                            {
-                                <tr>
-                                    <td> @review.review </td>
-                                    <td> @review.date </td>
-                                </tr>
+                            @{
+                                int ibid = localAccess.GetInventoryBookByRemoteBookID(int.Parse(selectedBook[4])).ibid;
+                                var reviews = localAccess.GetReviews(ibid);
+                                <div style="overflow: scroll; overflow-x: hidden; height: 170px">
+                                    @foreach (var review in reviews) {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">@review.date</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                @review.review
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             }
                         </table>
                     </div>
@@ -116,9 +125,9 @@
                         {
                         <button type="button" class="btn btn-default btn-xs" id="showmodal" onclick="location.href='@Url.Action("EditBook", "Admin", new { id = selectedBook[4] })'">Edit Book</button>
                         }
-                        @if (!(ViewData["usertype"] as String).Equals("unknown")) {
+@*                        @if (!(ViewData["usertype"] as String).Equals("unknown")) {*@
                             <button type="button" onclick="location.href='@Url.Action("AddToCart", "Home", new { addid = selectedBook[4] })'" class="btn btn-primary">Add to Shopping Cart</button>
-                        }
+@*                        }*@
                         <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
                     </div>
                 </div>
