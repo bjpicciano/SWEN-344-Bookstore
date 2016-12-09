@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 using System.Data.SQLite;
 using SWEN_344_Bookstore.Models;
 using System.Collections;
+using System.Net.Cache;
+using Microsoft.Owin;
+using SWEN_344_Bookstore.Database;
 
 namespace Database_Test
 {
@@ -276,11 +279,14 @@ namespace Database_Test
             return true;
         }
 
-        public Boolean AddToShoppingCart(int bookid)
+        public Boolean AddToShoppingCart(int bookid, string email)
         {
             String command = "insert into ShoppingCartBook(BookID, BookStoreID, Date, UserID) values (@BOOKID, 1, @DATE, @USERID)";
             SQLiteCommand insert = new SQLiteCommand(command, dbConnection);
             insert.Parameters.Add(new SQLiteParameter("@BOOKID", bookid));
+            insert.Parameters.Add(new SQLiteParameter("@DATE", DateTimeSQLite(DateTime.Now)));
+            insert.Parameters.Add(new SQLiteParameter("@USERID", RestAccess.GetInstance().GetUserByEmail(email).GetUid()));
+
 
             insert.ExecuteNonQuery();
             return true;

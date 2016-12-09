@@ -10,7 +10,7 @@
 
 </head>
 @{ 
-    String username = "Unknown User.";
+    String username = "Please Login";
     User user = ViewData["lgnusr"] as User;
 
     if (user != null) {
@@ -38,11 +38,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@username<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/Home/Catalog">Catalog</a></li>
-                            <li><a href="/Home/ShoppingCart">Shopping Cart</a></li>
-                            <li><a href="/Home/Messages">Messages</a></li>
-                            <li><a href="/Home/Reciepts">Receipts</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/Home/Logout">Log out</a></li>
+                            @if (Request.Cookies["UserType"] != null) {
+                                <li><a href="/Home/ShoppingCart">Shopping Cart</a></li>
+                                <li><a href="/Home/Messages">Messages</a></li>
+                                <li><a href="/Home/Reciepts">Receipts</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/Home/Logout">Log out</a></li>
+                            }
                         </ul>
                     </li>
                 </ul>

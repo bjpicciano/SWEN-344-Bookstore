@@ -6,13 +6,12 @@
     ViewBag.Title = "ShoppingCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
     User user = ViewData["lgnusr"] as User;
-    int UserID = user.GetUid();
     SQLite_Database localAccess = SQLite_Database.GetInstance();
     RestAccess remoteAccess = RestAccess.GetInstance();
 
 
-    var UserId = 54;
-    List<ShoppingCartBook> SBooks = localAccess.GetUsersShoppingCart(UserId);
+    int UserID = user.GetUid();
+    List<ShoppingCartBook> SBooks = localAccess.GetUsersShoppingCart(UserID);
 }
     <div class="logged">
         <h2>Shopping Cart</h2>
@@ -83,18 +82,8 @@
                                         <p>Reviews Go Here</p>
                                     </div>
                                     <div class="modal-footer">
-                                        @*                                        <a onclick="deleteBook" href="/Home/ShoppingCart" class="btn btn-danger">Remove From Shopping Cart</a>*@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
-                                    <script>
-    function deleteBook() {
-//                                            @{
-                                                  //                                                var bookid = Convert.ToInt32(book.BookId);
-                                                  //                                                sd.RemoveFromShoppingCartBook(bookid);
-                                                  //                                            }
-                                              }
-        </script>
-
                                 </div>
                             </div>
                         </div>

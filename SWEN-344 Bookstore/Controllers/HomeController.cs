@@ -23,7 +23,7 @@ namespace SWEN_344_Bookstore.Controllers {
                 ViewData["LoginEmail"] = value;
                 return RestAccess.GetInstance().GetUserByEmail(value);
             }
-            return new User(-99,"dummy","dummy","dummy", "dummy");
+            return new User(-99,"dummy","Please","Login", "dummy");
         }
 
         private Boolean CommonData()
@@ -73,7 +73,7 @@ namespace SWEN_344_Bookstore.Controllers {
             }
             if (addid != -1)
             {
-                SQLite_Database.GetInstance().AddToShoppingCart(addid);
+                SQLite_Database.GetInstance().AddToShoppingCart(addid, Request.Cookies["LoginEmail"].Value);
             }
             return RedirectToAction("Catalog", "Home");
         }
