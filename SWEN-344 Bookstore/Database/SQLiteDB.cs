@@ -135,6 +135,7 @@ namespace Database_Test
             toReturn.SetEnabled(rdr.GetBoolean(4));
             toReturn.SetBook(rdr.GetInt32(1));
             toReturn.reviews = GetReviews(rdr.GetInt32(0));
+            toReturn.ibid = rdr.GetInt32(0);
             rdr.Close();
             return toReturn;
         }
@@ -149,6 +150,7 @@ namespace Database_Test
                 toReturn.SetEnabled(rdr.GetBoolean(4));
                 toReturn.SetBook(rdr.GetInt32(1));
                 toReturn.reviews = GetReviews(rdr.GetInt32(0));
+            toReturn.ibid = rdr.GetInt32(0);
             rdr.Close();
             return toReturn;
         }

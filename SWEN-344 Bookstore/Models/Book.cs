@@ -71,6 +71,7 @@ namespace SWEN_344_Bookstore.Models {
         private int Book { get; set; }
         private int Quantity { get; set; }
         public bool IsEnabled { get; set; }
+        public int ibid;
         public List<Review> reviews;
 
         public InventoryBook() {
