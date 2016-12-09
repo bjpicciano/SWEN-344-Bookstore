@@ -35,10 +35,9 @@
             </th>
         </tr>
      
-        @foreach (var line in TBooks)
+        @foreach (var transaction in TBooks)
         {
-            System.Diagnostics.Debug.Print("test" + line.bookID);
-            var book = remoteAccess.GetBook(line.bookID);
+            var book = remoteAccess.GetBook(transaction.bookID);
             <tr>
                 <td>
                     @book.Author
@@ -62,22 +61,22 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">@book.Title</h4>
+                                    <h4 class="modal-title">@book.Name</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <h6>Author:</h6>
+                                    <h3>Author:</h3>
                                     <br />
                                     <p>@book.Author</p>
                                     <br />
-                                    <h6>Description</h6>
+                                    <h3>Description</h3>
                                     <br />
                                     <p>@book.desc</p>
                                     <br />
-                                    <h6>Price</h6>
+                                    <h3>Price</h3>
                                     <br />
                                     <p>@book.Price</p>
                                     <br />
-                                    <h6>Review</h6>
+                                    <h3>Review</h3>
                                     <p>Reviews Go Here</p>
                                     <br />
                                     <br />
