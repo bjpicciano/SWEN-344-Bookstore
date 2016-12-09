@@ -9,12 +9,23 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SWEN_344_Bookstore.Models;
+using SWEN_344_Bookstore.Database;
 
 namespace SWEN_344_Bookstore.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private User getCurrentUser()
+        {
+            if (Request.Cookies["LoginEmail"] != null)
+            {
+                String value = Request.Cookies["LoginEmail"].Value;
+                return RestAccess.GetInstance().GetUserByEmail(value);
+            }
+            return new User(-99, "unknown@user.com", "Unknown", "User", "dummy");
+        }
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -68,6 +79,7 @@ namespace SWEN_344_Bookstore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewData["lgnusr"] = getCurrentUser();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -341,6 +353,7 @@ namespace SWEN_344_Bookstore.Controllers
             }
             MyCookie = new HttpCookie("UserType");
             MyCookie.Value = user.getUserType();
+            Response.Cookies.Add(MyCookie);
             return RedirectToLocal(returnUrl);
 
         }
