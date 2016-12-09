@@ -80,25 +80,23 @@
                         <h4 class="modal-title">@selectedBook[0]</h4>
                     </div>
                     <div class="modal-body">
-                        <h6>Author:</h6>
+                        <h3>Author:</h3>
                         <br />
                         <p>@selectedBook[1]</p>
                         <br />
-                        <h6>Description</h6>
+                        <h3>Description:</h3>
                         <br />
                         <p>@selectedBook[2]</p>
                         <br />
-                        <h6>Price</h6>
+                        <h3>Price:</h3>
                         <br />
                         <p>@selectedBook[3]</p>
                         <br />
-                        <h6>Quantity</h6>
-                        <br />
-                        <p>Put Inventory quantity here</p>
+                        <h3>Quantity in stock:</h3>
                         <br />
                         <p>@selectedBook[5]</p>
                         <br />
-                        <h6>Reviews</h6>
+                        <h3>Reviews</h3>
                         <table border="1">
                             @foreach (var review in ViewData["reviews"] as List<SWEN_344_Bookstore.Models.Review>)
                             {
@@ -118,6 +116,7 @@
                         <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Catalog", "Home")'">Close</button>
                         <script>
                             function buy() {
+//                              Always runs, clicking view book from catalog adds it to shopping cart w/o clicking the button
                                 @{ 
                                     var bookid = Convert.ToInt32(selectedBook[4]);
                                     localAccess.AddToShoppingCart(bookid);
