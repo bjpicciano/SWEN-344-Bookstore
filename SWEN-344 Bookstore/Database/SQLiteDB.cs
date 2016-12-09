@@ -228,7 +228,7 @@ namespace Database_Test
         */
 
 
-        public List<Transaction> GetTransactionByUserID(int UserID)
+        public List<Transaction> GetTransactionsByUserID(int UserID)
         {
             string query = "SELECT * FROM TransactionBook where UserId == " + UserID;
             List<Transaction> trans = new List<Transaction>();
@@ -239,8 +239,12 @@ namespace Database_Test
                 Transaction t = new Transaction(UserID);
                 while (rdr.Read())
                 {
-                    t = new Transaction(UserID);
-                    t.bookID = rdr.GetInt32(3);
+                    t = new Transaction(rdr.GetInt32(3));
+                    t.UserID = rdr.GetInt32(2);
+                    t.BookStoreID = rdr.GetInt32(1);
+                    t.Date = rdr.GetString(4);
+                    t.Price = rdr.GetFloat(5);
+
                     trans.Add(t);
                 }
             }

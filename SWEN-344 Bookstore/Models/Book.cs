@@ -145,16 +145,20 @@ namespace SWEN_344_Bookstore.Models {
 
     public class Transaction
     {
-        public int PurchaseDate { get; set; }
         public int UserID { get; set; }
         public int bookID { get; set; }
         public int BookStoreID { get; set; }
-        public string Date { get; set; }
+        public String Date { get; set; }
         public float Price { get; set; }
 
         public Transaction(int bookID)
         {
             this.bookID = bookID;
+            this.BookStoreID = 1;
+        }
+
+        public override string ToString() {
+            return "Transaction! UserID: " + UserID + ", bookID: " + bookID + ", Date: " + Date + ", Price: " + Price;
         }
 
         public static bool PurchaseShoppingCart(List<ShoppingCartBook> sBooks) {

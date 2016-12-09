@@ -12,7 +12,7 @@
         RestAccess remoteAccess = RestAccess.GetInstance();
 
         var UserId = 54;
-        List<Transaction> TBooks = sd.GetTransactionByUserID(UserId);
+        List<Transaction> TBooks = sd.GetTransactionsByUserID(UserId);
 
     }
     <h2>Past Purchases</h2>
@@ -33,6 +33,9 @@
             <th>
                 Price
             </th>
+            <th>
+                
+            </th>
         </tr>
      
         @foreach (var transaction in TBooks)
@@ -40,16 +43,19 @@
             var book = remoteAccess.GetBook(transaction.bookID);
             <tr>
                 <td>
-                    @book.Author
-                </td>
-                <td>
-                    @book.Price
+                    @transaction.Date
                 </td>
                 <td>
                     @book.Name
                 </td>
                 <td>
+                    @book.Author
+                </td>
+                <td>
                     @book.desc
+                </td>
+                <td>
+                    @book.Price
                 </td>
                 <td>
                     <!--button-->
